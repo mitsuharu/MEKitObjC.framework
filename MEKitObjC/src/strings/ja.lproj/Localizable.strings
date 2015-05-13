@@ -1,0 +1,27 @@
+/* 
+  Localizable.strings
+  MEKitObjC
+
+  Created by Mitsuharu Emoto on 2014/10/31.
+  Copyright (c) 2014年 Mitsuharu Emoto. All rights reserved.
+*/
+
+// MARK: commons
+
+"Close" = "閉じる";
+
+"Cancel" = "キャンセル";
+"OpenSafari" = "Safariで開く";
+
+"NowLoading" = "now loading";
+"LastUpdate" = "最終更新日:";
+
+// MARK: errors
+
+"NetworkFailed" = "ネットワークに接続できません";
+
+"LocationServiceDisabled" = "位置情報サービスが使えませんでした。";
+"LocationServiceDenied" = "設定.appの位置情報サービスを確認してください。";
+
+"NotFound"="見つかりませんでした";
+"NowLoading"="読み込み中です";
