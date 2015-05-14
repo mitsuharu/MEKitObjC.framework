@@ -55,6 +55,16 @@
     return (UIImage*)obj;
 }
 
+-(BOOL)boolForKey:(NSString*)key
+{
+    NSNumber *num = [self numberForKey:key];
+    BOOL result = false;
+    if (num) {
+        result = [num boolValue];
+    }
+    return result;
+}
+
 - (NSDictionary*)dictionaryByRemovingNSNull
 {
     return [self dictionaryByRemovingNSNullRecursively:YES];

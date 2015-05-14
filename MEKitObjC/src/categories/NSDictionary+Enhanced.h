@@ -6,6 +6,7 @@
 //  Copyright (c) 2014年 Mitsuharu Emoto. All rights reserved.
 //
 
+#import <UIKit/UIKit.h>
 #import <Foundation/Foundation.h>
 
 @interface NSDictionary (Enhanced)
@@ -13,7 +14,8 @@
 -(NSString*)stringForKey:(NSString*)key;
 -(NSNumber*)numberForKey:(NSString*)key;
 -(NSDate*)dateForKey:(NSString*)key;
-
+-(UIImage*)imageForKey:(NSString*)key;
+-(BOOL)boolForKey:(NSString*)key;
 
 - (NSDictionary*)dictionaryByRemovingNSNull;
 - (NSDictionary*)dictionaryByRemovingNSNullRecursively:(BOOL)recursive;
