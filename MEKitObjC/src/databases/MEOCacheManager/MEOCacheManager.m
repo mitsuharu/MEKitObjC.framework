@@ -39,6 +39,8 @@
     NSCache *cache_;
     NSFileManager *fileManager_;
     NSString *pathCacheDirectory_;
+    
+    NSTimeInterval validatedDays_;
 }
 
 +(MEOCacheManager*)sharedInstance;
@@ -54,6 +56,7 @@
 -(void)setData:(NSData *)data forKey:(NSString *)key;
 -(void)deleteCachedDataWithUrl:(NSString *)urlString;
 
+-(void)setValidatedDays:(NSTimeInterval)validatedDays;
 
 @end
 
@@ -80,6 +83,8 @@
         cache_ = [[NSCache alloc] init];
         cache_.countLimit = 20;
         
+        validatedDays_ = -1.0;
+        
         //        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory,
         //                                                             NSUserDomainMask,
         //                                                             YES);
@@ -105,6 +110,21 @@
 -(void)didReceiveMemoryWarning:(NSNotification *)notification
 {
     [self clearMemoryCache];
+}
+
+-(void)setValidatedDays:(NSTimeInterval)validatedDays
+{
+    validatedDays_ = validatedDays;
+}
+
+-(NSTimeInterval)elapsedDays:(NSDate*)basedDate
+{
+    NSTimeInterval days = 0.0;
+    if (basedDate) {
+        NSTimeInterval interval = [[NSDate date] timeIntervalSinceDate:basedDate];
+        days = (interval / (24.0*60.0*60.0));
+    }
+    return days;
 }
 
 
@@ -180,6 +200,16 @@
     if (cachedData == nil) {
         cachedData = [MEOCache cacheWithFile:[self pathForUrl:key]];
     }
+    
+    // 有効期限
+    if (validatedDays_ > 0 && cachedData.updatedAt) {
+        NSTimeInterval diff = [self elapsedDays:cachedData.updatedAt];
+        if (diff > validatedDays_) {
+            cachedData = nil;
+            [self deleteCachedDataWithUrl:key];
+        }
+    }
+    
     return cachedData;
 }
 
@@ -211,6 +241,13 @@
 
 #pragma mark - 公開用のメソッド
 
++(void)setValidatedDays:(NSTimeInterval)validatedDays
+{
+    MEOCacheManager *cm = [MEOCacheManager sharedInstance];
+    [cm setValidatedDays:validatedDays];
+}
+
+
 +(NSData*)dataForKey:(NSString *)key
 {
     return [MEOCacheManager dataForKey:key
@@ -223,12 +260,16 @@
     MEOCache *cache = [cm dataForKey:key];
     
     NSData *data = nil;
+    NSDate *createdAt = nil;
+    NSDate *updatedAt = nil;
     if (cache) {
         data = cache.data;
+        createdAt = cache.createdAt;
+        updatedAt = cache.updatedAt;
     }
     
     if (completion) {
-        completion(cache.data, cache.updatedAt, cache.updatedAt);
+        completion(data, createdAt, updatedAt);
     }
     return data;
 }

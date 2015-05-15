@@ -55,6 +55,19 @@
     return (UIImage*)obj;
 }
 
+-(NSDictionary*)dictionaryForKey:(NSString*)key
+{
+    id obj = [self valueForKey:key className:@"NSDictionary"];
+    return (NSDictionary*)obj;
+}
+
+-(NSArray*)arrayForKey:(NSString*)key
+{
+    id obj = [self valueForKey:key className:@"NSArray"];
+    return (NSArray*)obj;
+}
+
+
 -(BOOL)boolForKey:(NSString*)key
 {
     NSNumber *num = [self numberForKey:key];
@@ -64,6 +77,17 @@
     }
     return result;
 }
+
+-(NSInteger)integerForKey:(NSString*)key
+{
+    NSNumber *num = [self numberForKey:key];
+    NSInteger result = 0;
+    if (num) {
+        result = [num integerValue];
+    }
+    return result;
+}
+
 
 - (NSDictionary*)dictionaryByRemovingNSNull
 {

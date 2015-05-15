@@ -33,5 +33,8 @@ typedef void (^MEOCacheManagerCompletion) (NSData *data, NSDate *createdAt, NSDa
 +(NSString*)stringFromData:(NSData*)data;
 +(UIImage*)imageFromData:(NSData*)data;
 
++(void)setValidatedDays:(NSTimeInterval)validatedDays;
+
+
 
 @end
