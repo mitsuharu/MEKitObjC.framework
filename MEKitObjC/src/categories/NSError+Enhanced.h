@@ -20,6 +20,8 @@ typedef NS_ENUM(NSInteger, MEOErrorCode) {
 
 @interface NSError (Enhanced)
 
+-(BOOL)isNotConnectedToInternet;
+
 +(NSError*)errorWithErrorCode:(NSInteger)code
          localizedDescription:(NSString*)localizedDescription;
 

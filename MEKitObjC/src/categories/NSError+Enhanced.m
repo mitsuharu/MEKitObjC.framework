@@ -11,6 +11,17 @@
 @implementation NSError (Enhanced)
 
 
+-(BOOL)isNotConnectedToInternet
+{
+    BOOL failed = false;
+    if ([self.domain isEqualToString:@"NSURLErrorDomain"]) {
+        if (self.code == kCFURLErrorNotConnectedToInternet) {
+            failed = true;
+        }
+    }
+    return failed;
+}
+
 +(NSError*)errorWithErrorCode:(NSInteger)code
          localizedDescription:(NSString*)localizedDescription
 {

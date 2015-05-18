@@ -175,7 +175,9 @@
 
 -(UIImage *)exportImage
 {
-    UIGraphicsBeginImageContextWithOptions(self.bounds.size, self.opaque, 0.0);
+//    UIGraphicsBeginImageContextWithOptions(self.bounds.size, self.opaque, 0.0);
+    UIGraphicsBeginImageContextWithOptions(self.bounds.size, false, 0.0);
+    
     [self.layer renderInContext:UIGraphicsGetCurrentContext()];
     
     UIImage * img = UIGraphicsGetImageFromCurrentImageContext();

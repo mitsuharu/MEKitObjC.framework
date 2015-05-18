@@ -187,6 +187,14 @@ NSString* const MEOApiManagerHttpMethodDelete = @"DELETE";
                 resultStatus = MEOApiManagerResultStatusResponseSucsess;
             }
             
+            if (error) {
+                if ([error.domain isEqualToString:@"NSURLErrorDomain"]) {
+                    if (error.code == kCFURLErrorNotConnectedToInternet) {
+                        resultStatus = MEOApiManagerResultStatusNetworkFailed;
+                    }
+                }
+            }
+            
             if (completion) {
                 completion(resultStatus, data, userInfo_, statusCode, error);
             }

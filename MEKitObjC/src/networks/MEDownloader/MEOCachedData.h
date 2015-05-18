@@ -20,14 +20,23 @@
 //
 //+(void)clearMemoryCache;
 //+(void)deleteAllCacheFiles;
-//
-//// 以下は削除予定
 
-+(MEOCachedData *)sharedInstance;
--(NSData*)cachedDataWithURL:(NSString *)urlString;
--(void)store:(NSData *)data URL:(NSString *)urlString;
--(void)deleteCachedDataWithUrl:(NSString *)urlString;
--(void)clearMemoryCache;
--(void)deleteAllCacheFiles;
+/// 以下は削除予定
++(MEOCachedData *)sharedInstance  __attribute__((deprecated("use MEOCacheManager")));
+
+/// 以下は削除予定
+-(NSData*)cachedDataWithURL:(NSString *)urlString  __attribute__((deprecated("use MEOCacheManager")));
+
+/// 以下は削除予定
+-(void)store:(NSData *)data URL:(NSString *)urlString  __attribute__((deprecated("use MEOCacheManager")));
+
+/// 以下は削除予定
+-(void)deleteCachedDataWithUrl:(NSString *)urlString  __attribute__((deprecated("use MEOCacheManager")));
+
+/// 以下は削除予定
+-(void)clearMemoryCache  __attribute__((deprecated("use MEOCacheManager")));
+
+/// 以下は削除予定
+-(void)deleteAllCacheFiles  __attribute__((deprecated("use MEOCacheManager")));
 
 @end
