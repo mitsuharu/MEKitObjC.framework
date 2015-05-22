@@ -34,6 +34,24 @@
 
 -(UIImage*)rasterizedImage:(CGFloat)rasterizationScale;
 
+
+/*!
+ @brief すりガラス風ぼかし画像を生成する
+ @brief Accelerate.framework が必要
+ @return すりガラス風ぼかし画像
+ */
+-(UIImage*)blurredImage;
+
+/*!
+ @brief すりガラス風ぼかし画像を生成する
+ @brief Accelerate.framework が必要
+ @param [blurLevel] ぼかし具合(0.0 ~ 1.0)
+ @return すりガラス風ぼかし画像
+ */
+-(UIImage*)blurredImageWithBlurLevel:(CGFloat)blurLevel;
+
+
+
 @end
 
 @interface UIImage (Colorway)

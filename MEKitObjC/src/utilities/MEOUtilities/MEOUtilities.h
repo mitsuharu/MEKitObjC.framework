@@ -11,6 +11,9 @@
 
 @interface MEOUtilities : NSObject
 
++(NSString*)appVersion;
++(NSString*)bundleVersion;
+
 +(NSBundle*)resourceBundle;
 +(UIImage*)imageOfResourceBundle:(NSString*)name;
 

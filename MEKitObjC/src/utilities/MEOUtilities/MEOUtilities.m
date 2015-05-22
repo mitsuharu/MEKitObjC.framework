@@ -18,6 +18,16 @@ NSString *const kResourceBundleName = @"MEKitObjCResources";
 
 @implementation MEOUtilities
 
++(NSString*)appVersion{
+    return [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
+}
+
++(NSString*)bundleVersion
+{
+    return  [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"];
+}
+
+
 //
 // see http://paulsolt.com/2012/12/resource-bundles-for-iphone-frameworks-and-static-libraries/
 //
