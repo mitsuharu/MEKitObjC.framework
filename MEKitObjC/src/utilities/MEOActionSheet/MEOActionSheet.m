@@ -137,6 +137,14 @@ destructiveButtonTitle:(NSString *)destructiveButtonTitle
     return self;
 }
 
+-(void)dealloc
+{
+    NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+    [nc removeObserver:self
+                  name:UIApplicationWillResignActiveNotification
+                object:nil];
+}
+
 -(void)show:(MEOActionSheetShownCompletion)completion
 {
     UIWindow *window = [[UIApplication sharedApplication] keyWindow];

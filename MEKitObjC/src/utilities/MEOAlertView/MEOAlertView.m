@@ -118,6 +118,15 @@
     return self;
 }
 
+
+-(void)dealloc
+{
+    NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+    [nc removeObserver:self
+                  name:UIApplicationWillResignActiveNotification
+                object:nil];
+}
+
 -(void)show:(MEOAlertViewShownCompletion)completion
 {
     UIWindow *window = [[UIApplication sharedApplication] keyWindow];
