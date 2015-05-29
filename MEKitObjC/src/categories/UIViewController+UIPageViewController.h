@@ -39,9 +39,6 @@
     UIPageViewControllerDataSource
 >
 
--(UIPageViewController*)pageViewController;
--(void)setPageViewController:(UIPageViewController*)pageViewController;
-
 -(NSInteger)currentPageViewIndex;
 -(void)setCurrentPageViewIndex:(NSInteger)currentPageViewIndex;
 

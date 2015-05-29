@@ -18,4 +18,6 @@
 @property (nonatomic, retain) NSString *footerString;
 @property (nonatomic) NSInteger tag;
 
+-(void)clear;
+
 @end

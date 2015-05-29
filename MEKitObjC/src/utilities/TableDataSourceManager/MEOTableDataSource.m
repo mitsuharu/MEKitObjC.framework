@@ -32,6 +32,30 @@
 @synthesize cellIdentifiers = cellIdentifiers_;
 @synthesize cellHeights = cellHeights_;
 
-
+-(void)clear
+{
+    if (dataSource_) {
+        [dataSource_ removeAllObjects];
+        dataSource_ = nil;
+    }
+    if (detailSource_) {
+        [detailSource_ removeAllObjects];
+        detailSource_ = nil;
+    }
+    if (cellIdentifiers_) {
+        [cellIdentifiers_ removeAllObjects];
+        cellIdentifiers_ = nil;
+    }
+    if (cellHeights_) {
+        [cellHeights_ removeAllObjects];
+        cellHeights_ = nil;
+    }
+    if (headerString_) {
+        headerString_ = nil;
+    }
+    if (footerString_) {
+        footerString_ = nil;
+    }
+}
 
 @end

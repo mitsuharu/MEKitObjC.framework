@@ -15,6 +15,7 @@
     NSInteger cancelButtonIndex_;
     BOOL isShowing_;
     BOOL autoRemoving_;
+    BOOL hasNotification_;
     
     id alert_;
     MEOAlertViewCompletion completion_;
@@ -114,17 +115,35 @@
            selector:@selector(didEnterBackground:)
                name:UIApplicationWillResignActiveNotification
              object:nil];
+    hasNotification_ = true;
 
     return self;
 }
 
+-(void)clear
+{
+    if (isShowing_) {
+        [self remove:nil];
+    }
+    
+    if (hasNotification_) {
+        NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+        [nc removeObserver:self
+                      name:UIApplicationWillResignActiveNotification
+                    object:nil];
+        hasNotification_ = false;
+    }
+    if (buttonTitles_) {
+        [buttonTitles_ removeAllObjects];
+        buttonTitles_ = nil;
+    }
+    alert_ = nil;
+    completion_ = nil;
+}
 
 -(void)dealloc
 {
-    NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
-    [nc removeObserver:self
-                  name:UIApplicationWillResignActiveNotification
-                object:nil];
+    [self clear];
 }
 
 -(void)show:(MEOAlertViewShownCompletion)completion

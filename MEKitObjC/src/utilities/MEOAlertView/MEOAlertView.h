@@ -37,6 +37,6 @@ typedef void (^MEOAlertViewShownCompletion)();
 
 -(void)remove:(MEOAlertViewShownCompletion)completion;
 
-
+-(void)clear;
 
 @end

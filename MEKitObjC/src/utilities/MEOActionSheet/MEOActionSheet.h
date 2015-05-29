@@ -36,5 +36,6 @@ destructiveButtonTitle:(NSString *)destructiveButtonTitle
 
 -(void)remove:(MEOActionSheetShownCompletion)completion;
 
+-(void)clear;
 
 @end

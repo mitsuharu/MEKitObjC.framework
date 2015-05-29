@@ -16,22 +16,13 @@ NSString *const keyMaxPageViewIndex = @"keyMaxPageViewIndex";
 
 @implementation UIViewController (PageViewController)
 
+UIPageViewController *gPageViewController;
+
 #pragma mark - io
 
 -(UIPageViewController*)pageViewController
 {
-    id obj = [self associatedObjectForKey:keyPageViewController];
-    UIPageViewController *vc = nil;
-    if (obj && [obj isKindOfClass:[UIPageViewController class]]) {
-        vc = (UIPageViewController*)obj;
-    }
-    return nil;
-}
-
--(void)setPageViewController:(UIPageViewController*)pageViewController
-{
-    [self setAssociatedObject:pageViewController
-                       forKey:keyPageViewController];
+    return gPageViewController;
 }
 
 -(NSInteger)currentPageViewIndex
@@ -135,36 +126,35 @@ NSString *const keyMaxPageViewIndex = @"keyMaxPageViewIndex";
         return result;
     }
     
-    UIPageViewController *pvc = [self pageViewController];
-    if (pvc && pvc.view.superview != nil) {
+    if (gPageViewController && gPageViewController.view.superview != nil) {
     }else{
         result = true;
-        pvc = [[UIPageViewController alloc] initWithTransitionStyle:transitionStyle
+        gPageViewController = [[UIPageViewController alloc] initWithTransitionStyle:transitionStyle
                                               navigationOrientation:navigationOrientation
                                                             options:nil];
-        pvc.delegate = self;
-        pvc.dataSource = self;
-        pvc.view.frame = CGRectMake(0, 0, view.frame.size.width, view.frame.size.height);
+        gPageViewController.delegate = self;
+        gPageViewController.dataSource = self;
+        gPageViewController.view.frame = CGRectMake(0, 0, view.frame.size.width, view.frame.size.height);
         
-        [self addChildViewController:pvc];
+        [self addChildViewController:gPageViewController];
         
-        [pvc setViewControllers:@[viewController]
+        [gPageViewController setViewControllers:@[viewController]
                       direction:UIPageViewControllerNavigationDirectionForward
                        animated:0.5
                      completion:^(BOOL finished) {
                                      }];
         
         
-        for (UIGestureRecognizer* gestureRecognizer in pvc.gestureRecognizers) {
+        for (UIGestureRecognizer* gestureRecognizer in gPageViewController.gestureRecognizers) {
             if ([gestureRecognizer isKindOfClass:[UITapGestureRecognizer class]]) {
                 gestureRecognizer.enabled = NO;
             }
         }
         
-        [view addSubview:pvc.view];
-        [pvc didMoveToParentViewController:self];
+        [view addSubview:gPageViewController.view];
+        [gPageViewController didMoveToParentViewController:self];
         
-        [self setPageViewController:pvc];
+     //   [self setPageViewController:pvc];
     }
     
     return result;
@@ -172,20 +162,19 @@ NSString *const keyMaxPageViewIndex = @"keyMaxPageViewIndex";
 
 -(void)removePageViewController
 {
-    UIPageViewController *pvc = [self pageViewController];
-    if (pvc) {
-        if (pvc.view.superview != nil) {
-            [pvc.view removeFromSuperview];
+    if (gPageViewController) {
+        if (gPageViewController.view.superview != nil) {
+            [gPageViewController.view removeFromSuperview];
         }
         
-        if ([pvc parentViewController]) {
-            [pvc removeFromParentViewController];
+        if ([gPageViewController parentViewController]) {
+            [gPageViewController removeFromParentViewController];
         }
         
-        pvc.delegate = nil;
-        pvc.dataSource = nil;
-        [self setPageViewController:nil];
+        gPageViewController.delegate = nil;
+        gPageViewController.dataSource = nil;
     }
+    gPageViewController = nil;
 }
 
 -(void)showViewControllerAtPageViewIndex:(NSInteger)index
