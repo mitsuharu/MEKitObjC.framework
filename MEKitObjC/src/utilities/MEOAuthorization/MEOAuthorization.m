@@ -62,7 +62,7 @@
 
 -(MEOAuthorizationErrorCode)errorCode:(NSError*)error
 {
-    MEOAuthorizationErrorCode errorCode = MEOAuthorizationErrorCodeNone;
+    MEOAuthorizationErrorCode errorCode = MEOAuthorizationErrorCodeUnknown;
     if (error){
         errorCode = MEOAuthorizationErrorCodeUnknown;
         if ([error.domain isEqualToString:@"NSURLErrorDomain"]) {
@@ -121,13 +121,15 @@
         if (granted){
             NSArray *accounts = [self.accountStore accountsWithAccountType:facebookTypeAccount];
             self.facebookAccount = [accounts lastObject];
-        }else if (error){
+        }else{
             errorCode = [self errorCode:error];
         }
-        
-        if (completion) {
-            completion(self.facebookAccount, error, errorCode);
-        }
+                
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (completion) {
+                completion(self.facebookAccount, error, errorCode);
+            }
+        });
     }];
 }
 

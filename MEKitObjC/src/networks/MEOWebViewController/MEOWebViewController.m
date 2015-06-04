@@ -11,7 +11,7 @@
 
 @interface MEOWebViewController () < UIWebViewDelegate >
 {
-    
+    NSURLRequest *request_;
 }
 
 -(void)updateButtonStates;
@@ -34,9 +34,9 @@
             BOOL reachabile = [MEOSystemStatus reachabile];
             if (reachabile) {
                 NSURL *url = [NSURL URLWithString:self.urlString];
-                NSURLRequest *request = [NSURLRequest requestWithURL:url];
+                request_ = [NSURLRequest requestWithURL:url];
                 self.webView.scalesPageToFit = YES;
-                [self.webView loadRequest:request];
+                [self.webView loadRequest:request_];
                 [self updateButtonStates];
             }else{
                 if (self.blockNetworkFailed) {
@@ -106,7 +106,24 @@
 -(IBAction)doReloadWebview:(id)sender
 {
     if (self.webView) {
-        [self.webView reload];
+        
+        if (request_ == nil && self.urlString.length > 0) {
+            
+            if ( [MEOSystemStatus reachabile] == false) {
+                if (self.blockNetworkFailed) {
+                    self.blockNetworkFailed(nil);
+                }
+            }else{
+                NSURL *url = [NSURL URLWithString:self.urlString];
+                request_ = [NSURLRequest requestWithURL:url];
+                self.webView.scalesPageToFit = YES;
+                [self.webView loadRequest:request_];
+            }
+        }else{
+            [self.webView reload];
+            
+        }
+        
         [self updateButtonStates];
     }
 }
