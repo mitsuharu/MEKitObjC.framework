@@ -86,4 +86,26 @@ typedef void (^MEOBlockWithError)(NSError *error);
 
 @end
 
+#pragma mark - NSObject (Notifications)
+
+typedef void (^MEONotificationBlock)(NSNotification *notification);
+
+@interface NSObject(Notifications)
+
+-(NSString*)descriptionNotifications;
+
+-(BOOL)postNotificationName:(NSString*)name;
+
+-(BOOL)addNotificationName:(NSString*)name
+                  selector:(SEL)selector;
+
+-(BOOL)addNotificationName:(NSString *)name
+                     block:(MEONotificationBlock)block;
+
+-(BOOL)removeNotificationName:(NSString*)name;
+
+-(BOOL)removeNotifications;
+
+@end
+
 

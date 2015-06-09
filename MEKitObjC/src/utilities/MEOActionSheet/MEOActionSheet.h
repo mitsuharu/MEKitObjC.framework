@@ -13,6 +13,7 @@
 
 typedef void (^MEOActionSheetCompletion)(MEOActionSheet *actionSheet, NSInteger buttonIndex);
 typedef void (^MEOActionSheetShownCompletion)();
+typedef void (^MEOActionSheetRemovedCompletion)();
 
 @interface MEOActionSheet : NSObject
 
@@ -21,7 +22,10 @@ typedef void (^MEOActionSheetShownCompletion)();
 @property (nonatomic, readonly) NSInteger cancelButtonIndex;
 @property (nonatomic, readonly) NSInteger destructiveButtonIndex;
 @property (nonatomic, readonly) BOOL isShowing;
+
 @property (nonatomic) BOOL autoRemoving;
+@property (nonatomic, copy) MEOActionSheetRemovedCompletion autoRemovedCompletion;
+
 
 -(id)initWithTitle:(NSString *)title
            message:(NSString *)message
@@ -35,6 +39,10 @@ destructiveButtonTitle:(NSString *)destructiveButtonTitle
  completion:(MEOActionSheetShownCompletion)completion;
 
 -(void)remove:(MEOActionSheetShownCompletion)completion;
+
+-(void)setAutoRemoving:(BOOL)autoRemoving
+ autoRemovedCompletion:(MEOActionSheetRemovedCompletion)autoRemovedCompletion;
+
 
 -(void)clear;
 

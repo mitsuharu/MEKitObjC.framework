@@ -234,4 +234,154 @@ NSString *const kKeyboardAccessoryLeftButtonCompletion = @"kKeyboardAccessoryLef
 
 @end
 
+#pragma mark - NSObject (Notifications)
+
+NSString *const kNotificationKey = @"kNotificationKey";
+
+@implementation NSObject(Notifications)
+
+-(NSString*)descriptionNotifications
+{
+    return [NSString stringWithFormat:@"%@", [self notificationKeyDict]];
+}
+
+-(NSMutableDictionary*)notificationKeyDict
+{
+    NSMutableDictionary *dict = nil;
+    id obj = [self associatedObjectForKey:kNotificationKey];
+    if (obj && [obj isKindOfClass:[NSMutableDictionary class]]) {
+        dict = (NSMutableDictionary*)obj;
+    }else{
+        dict = [[NSMutableDictionary alloc] initWithCapacity:1];
+    }
+    return dict;
+}
+
+-(void)setNotificationKeyDict:(NSMutableDictionary*)dict
+{
+    [self setAssociatedObject:dict
+                       forKey:kNotificationKey];
+}
+
+
+-(BOOL)hasNotificationKey:(NSString*)name;
+{
+    BOOL result = false;
+    NSMutableDictionary *dict = [self notificationKeyDict];
+    if (dict && dict.allKeys.count > 0) {
+        result = [dict.allKeys containsObject:name];
+    }
+    return result;
+}
+
+-(BOOL)addNotificationKey:(NSString*)name value:(id)value;
+{
+    BOOL result = false;
+    if ([self hasNotificationKey:name] == false) {
+        result = true;
+        NSMutableDictionary *dict = [self notificationKeyDict];
+        [dict setValue:value forKey:name];
+        [self setNotificationKeyDict:dict];
+    }
+    return result;
+}
+
+-(BOOL)removeNotificationKey:(NSString*)name;
+{
+    BOOL result = false;
+    if ([self hasNotificationKey:name] == true) {
+        result = true;
+        NSMutableDictionary *dict = [self notificationKeyDict];
+        [dict removeObjectForKey:name];
+        [self setNotificationKeyDict:dict];
+    }
+    return result;
+}
+
+-(BOOL)postNotificationName:(NSString*)name
+{
+    BOOL result = (name && name.length > 0);
+    if (result) {
+        NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+        [nc postNotificationName:name
+                          object:nil];
+    }
+    return result;
+}
+
+-(BOOL)addNotificationName:(NSString*)name
+                  selector:(SEL)selector
+{
+    BOOL result = ([self hasNotificationKey:name] == false);
+    if (result) {
+        NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+        [nc addObserver:self
+               selector:selector
+                   name:name
+                 object:nil];
+        [self addNotificationKey:name
+                           value:NSStringFromSelector(selector)];
+    }
+    return result;
+}
+
+-(BOOL)addNotificationName:(NSString *)name
+                     block:(MEONotificationBlock)block
+{
+    BOOL result = ([self hasNotificationKey:name] == false);
+    if (result) {
+        NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+        id observer = [nc addObserverForName:name
+                                      object:nil
+                                       queue:nil
+                                  usingBlock:^(NSNotification *note)
+                       {
+                           if (block) {
+                               block(note);
+                           }
+                       }];
+        [self addNotificationKey:name value:observer];
+    }
+    return result;
+}
+
+
+-(BOOL)removeNotificationName:(NSString*)name
+{
+    BOOL result = ([self hasNotificationKey:name] == true);
+    if (result) {
+        NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+        NSMutableDictionary *dict = [self notificationKeyDict];
+        id value = [dict objectForKey:name];
+        if ([value isKindOfClass:[NSString class]]) {
+            [nc removeObserver:self
+                          name:name
+                        object:nil];
+        }else{
+            [nc removeObserver:value];
+        }
+        [self removeNotificationKey:name];
+    }
+    return result;
+}
+
+-(BOOL)removeNotifications
+{
+    NSMutableDictionary *dict = [self notificationKeyDict];
+    if (dict) {
+        NSArray *names = [dict.allKeys copy];
+        for (NSString *name in names) {
+            [self removeNotificationName:name];
+        }
+        [dict removeAllObjects];
+        [self setNotificationKeyDict:nil];
+    }
+    
+    NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+    [nc removeObserver:self];
+    
+    return true;
+}
+
+@end
 

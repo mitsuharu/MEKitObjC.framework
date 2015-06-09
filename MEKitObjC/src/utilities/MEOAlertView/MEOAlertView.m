@@ -19,6 +19,8 @@
     
     id alert_;
     MEOAlertViewCompletion completion_;
+    
+    MEOAlertViewRemovedCompletion autoRemovedCompletion_;
 }
 
 -(void)didEnterBackground:(NSNotification*)notification;
@@ -28,6 +30,7 @@
 
 @implementation MEOAlertView
 
+@synthesize autoRemovedCompletion = autoRemovedCompletion_;
 @synthesize autoRemoving = autoRemoving_;
 @synthesize tag = tag_;
 @synthesize buttonTitles = buttonTitles_;
@@ -108,7 +111,7 @@
         }
     });
     
-    autoRemoving_ = YES;
+    autoRemoving_ = false;
     
     NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
     [nc addObserver:self
@@ -119,6 +122,20 @@
 
     return self;
 }
+
+-(void)setAutoRemoving:(BOOL)autoRemoving
+ autoRemovedCompletion:(MEOAlertViewRemovedCompletion)autoRemovedCompletion
+{
+    autoRemoving_ = autoRemoving;
+    
+    if (autoRemovedCompletion) {
+        autoRemovedCompletion_ = [autoRemovedCompletion copy];
+    }else{
+        autoRemovedCompletion_ = nil;
+    }
+}
+
+
 
 -(void)clear
 {
@@ -133,6 +150,8 @@
                     object:nil];
         hasNotification_ = false;
     }
+    autoRemovedCompletion_ = nil;
+    
     if (buttonTitles_) {
         [buttonTitles_ removeAllObjects];
         buttonTitles_ = nil;
@@ -184,7 +203,7 @@
     });
 }
 
--(void)remove:(MEOAlertViewShownCompletion)completion
+-(void)remove:(MEOAlertViewRemovedCompletion)completion
 {
     dispatch_async(dispatch_get_main_queue(), ^{
         if ([MEOAlertView hasAlertController]) {
@@ -224,7 +243,7 @@
 -(void)didEnterBackground:(NSNotification*)notification
 {
     if (autoRemoving_ && isShowing_) {
-        [self remove:nil];
+        [self remove:autoRemovedCompletion_];
     }
 }
 

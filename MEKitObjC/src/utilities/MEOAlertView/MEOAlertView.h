@@ -14,6 +14,7 @@
 
 typedef void (^MEOAlertViewCompletion)(MEOAlertView *alertView, NSInteger buttonIndex);
 typedef void (^MEOAlertViewShownCompletion)();
+typedef void (^MEOAlertViewRemovedCompletion)();
 
 @interface MEOAlertView : NSObject
 
@@ -23,7 +24,10 @@ typedef void (^MEOAlertViewShownCompletion)();
 @property (nonatomic, retain, readonly) NSMutableArray *buttonTitles;
 @property (nonatomic, readonly) NSInteger cancelButtonIndex;
 @property (nonatomic, readonly) BOOL isShowing;
+
 @property (nonatomic) BOOL autoRemoving;
+@property (nonatomic, copy) MEOAlertViewRemovedCompletion autoRemovedCompletion;
+
 
 -(id)initWithTitle:(NSString *)title
            message:(NSString *)message
@@ -35,7 +39,10 @@ typedef void (^MEOAlertViewShownCompletion)();
 -(void)show:(UIViewController*)viewController
  completion:(MEOAlertViewShownCompletion)completion;
 
--(void)remove:(MEOAlertViewShownCompletion)completion;
+-(void)remove:(MEOAlertViewRemovedCompletion)completion;
+
+-(void)setAutoRemoving:(BOOL)autoRemoving
+ autoRemovedCompletion:(MEOAlertViewRemovedCompletion)autoRemovedCompletion;
 
 -(void)clear;
 

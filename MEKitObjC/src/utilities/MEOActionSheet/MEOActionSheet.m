@@ -20,6 +20,7 @@
     
     id alert_;
     MEOActionSheetCompletion completion_;
+    MEOActionSheetRemovedCompletion autoRemovedCompletion_;
 }
 
 -(void)didEnterBackground:(NSNotification*)notification;
@@ -33,6 +34,7 @@
 
 @implementation MEOActionSheet
 
+@synthesize autoRemovedCompletion = autoRemovedCompletion_;
 @synthesize autoRemoving = autoRemoving_;
 @synthesize tag = tag_;
 @synthesize buttonTitles = buttonTitles_;
@@ -127,7 +129,7 @@ destructiveButtonTitle:(NSString *)destructiveButtonTitle
         }
     });
     
-    autoRemoving_ = YES;
+    autoRemoving_ = false;
     
     NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
     [nc addObserver:self
@@ -151,6 +153,7 @@ destructiveButtonTitle:(NSString *)destructiveButtonTitle
                       name:UIApplicationWillResignActiveNotification
                     object:nil];
     }
+    autoRemovedCompletion_ = nil;
     
     if (buttonTitles_) {
         [buttonTitles_ removeAllObjects];
@@ -159,6 +162,19 @@ destructiveButtonTitle:(NSString *)destructiveButtonTitle
     
     alert_ = nil;
     completion_ = nil;
+}
+
+
+-(void)setAutoRemoving:(BOOL)autoRemoving
+ autoRemovedCompletion:(MEOActionSheetRemovedCompletion)autoRemovedCompletion
+{
+    autoRemoving_ = autoRemoving;
+    
+    if (autoRemovedCompletion) {
+        autoRemovedCompletion_ = [autoRemovedCompletion copy];
+    }else{
+        autoRemovedCompletion_ = nil;
+    }
 }
 
 -(void)dealloc
@@ -243,8 +259,8 @@ destructiveButtonTitle:(NSString *)destructiveButtonTitle
 
 -(void)didEnterBackground:(NSNotification*)notification
 {
-    if (autoRemoving_ && isShowing_) {
-        [self remove:nil];
+    if (autoRemoving_ && isShowing_) {        
+        [self remove:autoRemovedCompletion_];
     }
 }
 
