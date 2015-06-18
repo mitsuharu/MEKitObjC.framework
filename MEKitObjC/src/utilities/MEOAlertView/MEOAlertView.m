@@ -113,13 +113,6 @@
     
     autoRemoving_ = false;
     
-    NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
-    [nc addObserver:self
-           selector:@selector(didEnterBackground:)
-               name:UIApplicationWillResignActiveNotification
-             object:nil];
-    hasNotification_ = true;
-
     return self;
 }
 
@@ -181,6 +174,14 @@
  completion:(MEOAlertViewShownCompletion)completion
 {
     dispatch_async(dispatch_get_main_queue(), ^{
+        
+        NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+        [nc addObserver:self
+               selector:@selector(didEnterBackground:)
+                   name:UIApplicationWillResignActiveNotification
+                 object:nil];
+        hasNotification_ = true;
+        
         isShowing_ = true;
         if ([MEOAlertView hasAlertController]) {
             UIAlertController *ac = (UIAlertController*)alert_;
@@ -206,6 +207,15 @@
 -(void)remove:(MEOAlertViewRemovedCompletion)completion
 {
     dispatch_async(dispatch_get_main_queue(), ^{
+        
+        if (hasNotification_) {
+            NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+            [nc removeObserver:self
+                          name:UIApplicationWillResignActiveNotification
+                        object:nil];
+            hasNotification_ = false;
+        }
+        
         if ([MEOAlertView hasAlertController]) {
             UIAlertController *ac = (UIAlertController*)alert_;
             [ac dismissViewControllerAnimated:true

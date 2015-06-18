@@ -163,6 +163,7 @@
 		9BB524101AEF4DA700A13E69 /* LINEActivityIcon~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 9BB5240E1AEF4DA700A13E69 /* LINEActivityIcon~ipad.png */; };
 		9BD4F5381ACE39E300535693 /* MEOActionSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BD4F5371ACE39E300535693 /* MEOActionSheet.m */; };
 		9BD4F5391ACE39E300535693 /* MEOActionSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BD4F5371ACE39E300535693 /* MEOActionSheet.m */; };
+		9BFB4D491B32930B008833E5 /* UILabel+Enhanced.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BFB4D481B32930B008833E5 /* UILabel+Enhanced.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -337,6 +338,8 @@
 		9BBF190D1B02F64200515F4B /* MEKitObjCResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = MEKitObjCResources.bundle; sourceTree = "<group>"; };
 		9BD4F5361ACE39E300535693 /* MEOActionSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEOActionSheet.h; sourceTree = "<group>"; };
 		9BD4F5371ACE39E300535693 /* MEOActionSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MEOActionSheet.m; sourceTree = "<group>"; };
+		9BFB4D471B32930B008833E5 /* UILabel+Enhanced.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UILabel+Enhanced.h"; sourceTree = "<group>"; };
+		9BFB4D481B32930B008833E5 /* UILabel+Enhanced.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UILabel+Enhanced.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -495,6 +498,8 @@
 				9B3155791ACB764600611592 /* UIViewController+Popover.m */,
 				9B340C7F1AF1C8D200D18E71 /* NSError+Enhanced.h */,
 				9B340C801AF1C8D200D18E71 /* NSError+Enhanced.m */,
+				9BFB4D471B32930B008833E5 /* UILabel+Enhanced.h */,
+				9BFB4D481B32930B008833E5 /* UILabel+Enhanced.m */,
 			);
 			path = categories;
 			sourceTree = "<group>";
@@ -1034,6 +1039,7 @@
 				9B3155E61ACB764600611592 /* NSString+Enhanced.m in Sources */,
 				9B3155FC1ACB764600611592 /* UIView+Enhanced.m in Sources */,
 				9B3156251ACB764600611592 /* MEOKeyChain.m in Sources */,
+				9BFB4D491B32930B008833E5 /* UILabel+Enhanced.m in Sources */,
 				9B10BA8A1ADB3E4000B70BA5 /* LINEActivity.m in Sources */,
 				9B3156391ACB764600611592 /* MEOTableViewCell.m in Sources */,
 				9B3155F81ACB764600611592 /* UITableViewCell+Enhanced.m in Sources */,

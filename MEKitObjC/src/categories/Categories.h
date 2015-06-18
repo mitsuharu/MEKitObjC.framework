@@ -34,6 +34,7 @@
 #import "UIResponder+Enhanced.h"
 #import "UIViewController+UIPageViewController.h"
 #import "NSError+Enhanced.h"
+#import "UILabel+Enhanced.h"
 
 @interface Categories : NSObject
 

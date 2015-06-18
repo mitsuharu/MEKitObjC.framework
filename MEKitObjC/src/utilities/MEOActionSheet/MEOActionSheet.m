@@ -131,13 +131,6 @@ destructiveButtonTitle:(NSString *)destructiveButtonTitle
     
     autoRemoving_ = false;
     
-    NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
-    [nc addObserver:self
-           selector:@selector(didEnterBackground:)
-               name:UIApplicationWillResignActiveNotification
-             object:nil];
-    hasNotification_ = true;
-    
     return self;
 }
 
@@ -198,6 +191,14 @@ destructiveButtonTitle:(NSString *)destructiveButtonTitle
  completion:(MEOActionSheetShownCompletion)completion
 {
     dispatch_async(dispatch_get_main_queue(), ^{
+        
+        NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+        [nc addObserver:self
+               selector:@selector(didEnterBackground:)
+                   name:UIApplicationWillResignActiveNotification
+                 object:nil];
+        hasNotification_ = true;
+        
         isShowing_ = true;
         if ([MEOActionSheet hasAlertController]) {
             UIAlertController *ac = (UIAlertController*)alert_;
@@ -224,6 +225,15 @@ destructiveButtonTitle:(NSString *)destructiveButtonTitle
 -(void)remove:(MEOActionSheetShownCompletion)completion
 {
     dispatch_async(dispatch_get_main_queue(), ^{
+        
+        if (hasNotification_) {
+            NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+            [nc removeObserver:self
+                          name:UIApplicationWillResignActiveNotification
+                        object:nil];
+        }
+        autoRemovedCompletion_ = nil;
+        
         if ([MEOActionSheet hasAlertController]) {
             UIAlertController *ac = (UIAlertController*)alert_;
             [ac dismissViewControllerAnimated:true
