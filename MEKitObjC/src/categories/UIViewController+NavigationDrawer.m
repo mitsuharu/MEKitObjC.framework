@@ -17,6 +17,7 @@
 #define KeyClosureWindow @"KeyClosureWindow"
 #define KeyTapCompletion @"KeyTapCompletion"
 #define KeyIsDrawing @"KeyIsDrawing"
+#define KeyFromLeft @"KeyFromLeft"
 
 typedef void (^TapCompletion)(void);
 
@@ -40,6 +41,9 @@ typedef void (^TapCompletion)(void);
 
 -(BOOL)isDrawing;
 -(void)setIsDrawing:(BOOL)isDrawing;
+
+-(BOOL)fromLeft;
+-(void)setFromLeft:(BOOL)fromLeft;
 
 @end
 
@@ -100,6 +104,25 @@ typedef void (^TapCompletion)(void);
                              [NSNumber numberWithBool:isDrawing],
                              OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
+
+-(BOOL)fromLeft
+{
+    BOOL result = true;
+    NSNumber *number = objc_getAssociatedObject(self, KeyFromLeft);
+    if (number) {
+        result = [number boolValue];
+    }
+    return result;
+}
+
+-(void)setFromLeft:(BOOL)fromLeft
+{
+    objc_setAssociatedObject(self,
+                             KeyFromLeft,
+                             [NSNumber numberWithBool:fromLeft],
+                             OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
 
 -(void)handleTapGestureRecognizer:(UITapGestureRecognizer *)gr
 {
@@ -162,6 +185,7 @@ typedef void (^TapCompletion)(void);
             UIWindow *window = [windows objectAtIndex:(index-1)];
             [window makeKeyAndVisible];
         }
+        closureWindow = nil;
     }
     objc_setAssociatedObject(self,
                              KeyClosureWindow,
@@ -218,11 +242,153 @@ typedef void (^TapCompletion)(void);
 
 -(void)setNavigationDrawerWidthScale:(CGFloat)widthScale
 {
-    objc_setAssociatedObject(self,
-                             KeyWidthScale,
-                             [NSNumber numberWithFloat:widthScale],
-                             OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    if (0 < widthScale && widthScale <= 1.0) {
+        objc_setAssociatedObject(self,
+                                 KeyWidthScale,
+                                 [NSNumber numberWithFloat:widthScale],
+                                 OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    }
 }
+
+-(void)presentNavigationDrawer:(UIViewController*)viewController
+                      animated:(BOOL)animated
+{
+    [self presentNavigationDrawer:viewController
+                         animated:animated
+                       widthScale:[viewController widthScale]
+                         fromLeft:true
+                 alongCurrentView:false];
+}
+
+
+-(void)presentNavigationDrawer:(UIViewController*)viewController
+                      animated:(BOOL)animated
+                    widthScale:(CGFloat)widthScale
+                       fromLeft:(BOOL)fromLeft
+              alongCurrentView:(BOOL)currentView
+{
+    if (viewController == nil) {
+        return;
+    }
+    
+    if ([viewController isDrawing]) {
+        return;
+    }
+    [viewController setIsDrawing:YES];
+    
+    [viewController setNavigationDrawerWidthScale:widthScale];
+    [viewController setFromLeft:fromLeft];
+    
+    UIImageView *imageView = nil;
+    if (currentView) {
+        imageView = [viewController imageView];
+    }else{
+        [viewController deleteImageView];
+    }
+    
+    UIView *closureView = [viewController closureView:^{
+        [viewController dismissNavigationDrawerAnimated:true
+                                             completion:^(BOOL finished) {
+                                             }];
+    }];
+    
+    CGRect starting = [viewController screenRect];
+    starting.size.width = (starting.size.width)*[viewController widthScale];
+    if ([viewController fromLeft]) {
+        starting.origin.x = -(starting.size.width);
+    }else{
+        CGRect screenRect = [[UIScreen mainScreen] bounds];
+        starting.origin.x = screenRect.size.width + (starting.size.width);
+    }
+    viewController.view.frame = starting;
+    
+    UIWindow *window = [viewController closureWindow];
+    [window makeKeyAndVisible];
+    if (imageView) {
+        [window addSubview:imageView];
+    }
+    [window addSubview:closureView];
+    [window addSubview:viewController.view];
+    
+    closureView.alpha = 0.1;
+    [UIView animateWithDuration:[viewController timeInterval:animated]
+                     animations:^{
+                         
+                         CGRect finished = viewController.view.frame;
+                         if ([viewController fromLeft]) {
+                             finished.origin.x = 0;
+                         }else{
+                             CGRect screenRect = [[UIScreen mainScreen] bounds];
+                             finished.origin.x = screenRect.size.width - (starting.size.width);
+                         }
+                         viewController.view.frame = finished;
+                         
+                         if (imageView) {
+                             CGRect ivRect = imageView.frame;
+                             if ([viewController fromLeft]) {
+                                 ivRect.origin.x = viewController.view.frame.size.width;
+                             }else{
+                                 ivRect.origin.x = -viewController.view.frame.size.width;
+                             }
+                             imageView.frame = ivRect;
+                         }
+                         
+                         closureView.alpha = 0.5;
+                         
+                     } completion:^(BOOL finished) {
+                     }];
+}
+
+-(void)dismissNavigationDrawerAnimated:(BOOL)animated
+                            completion:(void (^)(BOOL finished))completion
+{
+    if ( [self isDrawing] ) {
+        
+        UIView *closureView = [self closureView:nil];
+        UIImageView *imageView = [self imageView];
+        
+        [UIView animateWithDuration:[self timeInterval:animated]
+                         animations:^{
+                             
+                             CGRect finished = self.view.frame;
+                             if ([self fromLeft]) {
+                                 finished.origin.x = -(finished.size.width);
+                             }else{
+                                 CGRect screenRect = [[UIScreen mainScreen] bounds];
+                                 finished.origin.x = screenRect.size.width;
+                             }
+                             self.view.frame = finished;
+                             
+                             if (imageView) {
+                                 CGRect rect = imageView.frame;
+                                 if ([self fromLeft]) {
+                                     rect.origin.x = 0;
+                                 }else{
+                                     rect.origin.x = 0;
+                                 }
+                                 imageView.frame = rect;
+                             }
+                             
+                             closureView.alpha = 0.1;
+                             
+                         } completion:^(BOOL finished) {
+                             [self deleteImageView];
+                             [self deleteClosureView];
+                             [self.view removeFromSuperview];
+                             [self deleteClosureWindow];
+                             [self setIsDrawing:NO];
+                             
+                             if (completion) {
+                                 completion(finished);
+                             }
+                         }];
+    }
+
+}
+
+
+
+#pragma mark - 以下削除対象
 
 -(BOOL)isPresentingNavigationDrawer
 {
@@ -233,11 +399,6 @@ typedef void (^TapCompletion)(void);
 {
     return [self presentNavigationDrawer:animated
                           withBackground:YES];
-}
-
--(void)presentNavigationDrawer:(BOOL)animated withScreenshot:(BOOL)screenshot;
-{
-    [self presentNavigationDrawer:animated withBackground:screenshot];
 }
 
 -(void)presentNavigationDrawer:(BOOL)animated withBackground:(BOOL)screenshot;
