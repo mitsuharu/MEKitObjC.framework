@@ -20,6 +20,14 @@ typedef NS_ENUM(NSInteger, MEOAuthorizationErrorCode) {
     MEOAuthorizationErrorCodePermissionDenied,
 };
 
+typedef NS_ENUM(NSInteger, MEOAuthorizationStatus) {
+    MEOAuthorizationStatusNone = 0,
+    MEOAuthorizationStatusNotDetermined,
+    MEOAuthorizationStatusRestricted,
+    MEOAuthorizationStatusDenied,
+    MEOAuthorizationStatusAuthorized,
+};
+
 /**
  It is blocks of MEOAuthorization
  */
@@ -48,6 +56,13 @@ typedef void (^MEOAuthorizationWithResponse)(NSDictionary *response,
 
 @property (nonatomic, retain) ACAccountStore *accountStore;
 @property (nonatomic, retain) ACAccount *facebookAccount;
+
+#pragma mark - 画像
+
++(void)authorizePhotoLibray:(void(^)(MEOAuthorizationStatus status))completion;
++(void)authorizeCameraDevice:(void(^)(BOOL granted))completion;
++(BOOL)openSettingApp;
++(BOOL)isCameraAvailable;
 
 #pragma mark - facebook
 

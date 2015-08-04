@@ -12,6 +12,9 @@
 #import "NSError+Enhanced.h"
 #import <Social/Social.h>
 
+#import <AssetsLibrary/AssetsLibrary.h>
+#import <Photos/Photos.h>
+
 @interface MEOAuthorization ()
 {
     NSString *facebookAppId_;
@@ -81,6 +84,111 @@
 }
 
 
+#pragma mark - 画像ライブラリ
+
++(void)authorizePhotoLibray:(void(^)(MEOAuthorizationStatus status))completion
+{
+    id object = NSClassFromString(@"PHPhotoLibrary");
+    if (object) {
+        
+        MEOAuthorizationStatus (^convertStatus)(PHAuthorizationStatus status0) = ^(PHAuthorizationStatus status0) {
+            MEOAuthorizationStatus result0 = MEOAuthorizationStatusNotDetermined;
+            if (status0 == PHAuthorizationStatusNotDetermined){
+                result0 = MEOAuthorizationStatusNotDetermined;
+            } else if (status0 == PHAuthorizationStatusRestricted){
+                result0 = MEOAuthorizationStatusRestricted;
+            } else if (status0 == PHAuthorizationStatusDenied){
+                result0 = MEOAuthorizationStatusDenied;
+            } else if (status0 == PHAuthorizationStatusAuthorized){
+                result0 = MEOAuthorizationStatusAuthorized;
+            }
+            return result0;
+        };
+        
+        PHAuthorizationStatus status0 = [PHPhotoLibrary authorizationStatus];
+        if (status0 == PHAuthorizationStatusNotDetermined){
+            [PHPhotoLibrary requestAuthorization:^(PHAuthorizationStatus status1) {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    if (completion) {
+                        completion(convertStatus(status1));
+                    }
+                });
+            }];
+        }else{
+            if (completion) {
+                completion(convertStatus(status0));
+            }
+        }
+        
+    }else{
+        MEOAuthorizationStatus result = MEOAuthorizationStatusNotDetermined;
+        ALAuthorizationStatus status0 = [ALAssetsLibrary authorizationStatus];
+        if (status0 == ALAuthorizationStatusNotDetermined){
+            result = MEOAuthorizationStatusNotDetermined;
+        } else if (status0 == ALAuthorizationStatusRestricted){
+            result = MEOAuthorizationStatusRestricted;
+        } else if (status0 == ALAuthorizationStatusDenied){
+            result = MEOAuthorizationStatusDenied;
+        } else if (status0 == ALAuthorizationStatusAuthorized){
+            result = MEOAuthorizationStatusAuthorized;
+        }
+        
+        if (completion) {
+            completion(result);
+        }
+    }
+    
+}
+
++(void)authorizeCameraDevice:(void(^)(BOOL granted))completion
+{
+    AVAuthorizationStatus status = [AVCaptureDevice authorizationStatusForMediaType:AVMediaTypeVideo];
+    
+    if (status == AVAuthorizationStatusNotDetermined){
+        [AVCaptureDevice requestAccessForMediaType:AVMediaTypeVideo
+                                 completionHandler:^(BOOL granted)
+         {
+             dispatch_async(dispatch_get_main_queue(), ^{
+                 if (completion) {
+                     completion(granted);
+                 }
+             });
+         }];
+    }else if (status == AVAuthorizationStatusRestricted
+              || status == AVAuthorizationStatusDenied){
+        if (completion) {
+            completion(false);
+        }
+    }else if (status == AVAuthorizationStatusAuthorized) {
+        if (completion) {
+            completion(true);
+        }
+    }
+}
+
++(BOOL)openSettingApp
+{
+    BOOL result = false;
+    if (&UIApplicationOpenSettingsURLString != Nil) {
+        NSURL *url = [NSURL URLWithString:UIApplicationOpenSettingsURLString];
+        UIApplication *app = [UIApplication sharedApplication];
+        result = [app canOpenURL:url];
+        if (result) {
+            [app openURL:url];
+        }
+    }
+    return result;
+}
+
++(BOOL)isCameraAvailable
+{
+    BOOL result = false;
+#if(TARGET_IPHONE_SIMULATOR)
+#else
+    result = [UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera];
+#endif
+    return result;
+}
 
 #pragma mark - facebook
 

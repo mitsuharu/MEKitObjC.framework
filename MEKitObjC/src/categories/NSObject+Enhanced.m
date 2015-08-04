@@ -32,6 +32,7 @@ NSString *const kKeyboardAccessoryLeftButtonCompletion = @"kKeyboardAccessoryLef
 #pragma mark - NSObject (Enhanced)
 
 @implementation NSObject (Enhanced)
+
 @end
 
 
@@ -104,6 +105,49 @@ NSString *const kKeyboardAccessoryLeftButtonCompletion = @"kKeyboardAccessoryLef
         singleton = [[self alloc] init];
     });
     return singleton;
+}
+
+@end
+
+#pragma mark - NSObject (keyboard)
+
+@implementation NSObject (keyboard)
+
+-(void)cacheKeyboard
+{
+    [NSObject cacheKeyboard];
+}
+
+-(void)cacheKeyboardOnNextRunloop:(BOOL)nextRunloop
+{
+    [NSObject cacheKeyboardOnNextRunloop:nextRunloop];
+}
+
+
++(void)cacheKeyboard
+{
+    [NSObject cacheKeyboardOnNextRunloop:false];
+}
+
++(void)cacheKeyboardOnNextRunloop:(BOOL)nextRunloop
+{
+    void (^block)(void) = ^(void) {
+        UITextField *tempTextField = [UITextField new];
+        [[[[UIApplication sharedApplication] windows] firstObject] addSubview:tempTextField];
+        [tempTextField becomeFirstResponder];
+        [tempTextField resignFirstResponder];
+        [tempTextField removeFromSuperview];
+    };
+    
+    if (nextRunloop) {
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.0),
+                       dispatch_get_main_queue(),
+                       ^(void){
+                           block();
+                       });
+    }else{
+        block();
+    }
 }
 
 @end

@@ -189,3 +189,45 @@
 
 @end
 
+@implementation UIView (Layout)
+
+- (void)copyLayoutConstraintsFrom:(UIView*)aView
+{
+    self.frame = aView.frame;
+    self.autoresizingMask = aView.autoresizingMask;
+    self.translatesAutoresizingMaskIntoConstraints = aView.translatesAutoresizingMaskIntoConstraints;
+    
+    for (NSLayoutConstraint *constraint in aView.constraints){
+        id firstItem = constraint.firstItem;
+        if (firstItem == aView){
+            firstItem = self;
+        }
+        id secondItem = constraint.secondItem;
+        if (secondItem == aView){
+            secondItem = self;
+        }
+        
+        [self addConstraint:[NSLayoutConstraint constraintWithItem:firstItem
+                                                         attribute:constraint.firstAttribute
+                                                         relatedBy:constraint.relation
+                                                            toItem:secondItem
+                                                         attribute:constraint.secondAttribute
+                                                        multiplier:constraint.multiplier
+                                                          constant:constraint.constant]];
+    }
+}
+
+- (instancetype)instantiateWithAwakeAfterUsingCoder
+{
+    if (self.subviews.count == 0) {
+        Class cls = NSClassFromString([[self class] description]);
+        UIView *view = [cls instantiateWithNib];
+        [view copyLayoutConstraintsFrom:self];
+        return view;
+    }else{
+        return self;
+    }
+}
+
+@end
+

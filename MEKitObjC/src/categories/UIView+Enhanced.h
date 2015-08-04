@@ -45,3 +45,29 @@
 -(UIImage *)exportImage;
 
 @end
+
+@interface UIView (Layout)
+
+/**
+ *  Storybardにおいて，Xibで作成するビューを配置した場合に使用する初期化メソッドを補助する
+ *
+ * @code
+ - (id)awakeAfterUsingCoder:(NSCoder *)aDecoder
+ {
+ return [self instantiateWithAwakeAfterUsingCoder];
+ }
+ * @endcode
+ * @see http://poormemory.seesaa.net/article/396945550.html
+ * @see http://cocoanuts.mobi/2014/03/26/reusable/
+ *  @return カスタムビューのインスタンス
+ */
+- (instancetype)instantiateWithAwakeAfterUsingCoder;
+
+/**
+ *  AutoLayoutでの設定したLayouyConstraintsをコピーする
+ *
+ *  @param aView コピー元のビュー
+ */
+- (void)copyLayoutConstraintsFrom:(UIView*)aView;
+
+@end

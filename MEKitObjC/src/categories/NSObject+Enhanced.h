@@ -48,9 +48,19 @@ typedef void (^MEOBlockWithError)(NSError *error);
                           leftButtonCompletion:(MEOBlock)leftButtonCompletion
                               rightButtonTitle:(NSString*)rightButtonTitle
                          rightButtonCompletion:(MEOBlock)rightButtonCompletion;
-
 @end
 
+#pragma mark - NSObject (keyboardAccessory)
+
+@interface NSObject (keyboard)
+
+-(void)cacheKeyboard;
+-(void)cacheKeyboardOnNextRunloop:(BOOL)nextRunloop;
+
++(void)cacheKeyboard;
++(void)cacheKeyboardOnNextRunloop:(BOOL)nextRunloop;
+
+@end
 
 #pragma mark - NSObject (MethodSwizzling)
 
