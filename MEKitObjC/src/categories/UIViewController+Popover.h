@@ -13,6 +13,29 @@
 
 @interface UIViewController (Popover)
 
+/**
+ *  ポップオーバー風にUIViewを表示する
+ *
+ *  @param view       <#view description#>
+ *  @param animated   <#animated description#>
+ *  @param completion <#completion description#>
+ */
+-(void)addPopoverView:(UIView*)view
+             animated:(BOOL)animated
+           completion:(void (^)(BOOL finished))completion;
+
+/**
+ *  ポップオーバー風にUIViewを表示する
+ *
+ *  @param view       popovered view
+ *  @param animated   true or false
+ *  @param duration   aimation duration
+ *  @param completion It called when a view has been shown.
+ */
+-(void)addPopoverView:(UIView*)view
+             animated:(BOOL)animated
+             duration:(NSTimeInterval)duration
+           completion:(void (^)(BOOL finished))completion;
 
 /**
  @brief ポップオーバー風にviewcontrollerを表示する
@@ -43,3 +66,17 @@
 
 
 @end
+
+@interface UIView (Popover)
+
+/**
+ *  ポップオーバーで表示されたUIViewを取り除く
+ *
+ *  @param animated   true or false
+ *  @param completion completion
+ */
+-(void)removeFromPopoverAnimated:(BOOL)animated
+                      completion:(void (^)(BOOL finished))completion;
+
+@end
+

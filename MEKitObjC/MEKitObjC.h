@@ -55,6 +55,8 @@
 #import "MEOUtilities.h"
 #import "MEOKeyChain.h"
 
+#import "MEOCaptureSessionManager.h"
+
 
 
 @interface MEKitObjC : NSObject

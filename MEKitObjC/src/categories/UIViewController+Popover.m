@@ -14,12 +14,18 @@
 #define KEY_VIEWCONTROLLER_POPOVER_BLANKVIEW @"KEY_VIEWCONTROLLER_POPOVER_BLANKVIEW"
 
 #define ALPHA_BLANLVIEW 0.5
-//#define POPOVER_ANIMATION_DURATION 0.25
-//#define POPOVER_ANIMATION_DURATION_CLOSE 0.3
+
+NSString *const kPopoeverSupportViewKey = @"kPopoeverSupportViewKey";
+CGFloat const kPopoeverSupportViewAlhpa = 0.5;
+CGFloat const kPopoeverSupportViewDuration = 0.25;
 
 static BOOL isPopping = NO;
 
+#pragma mark - UIViewController (Popover)
+
 @implementation UIViewController (Popover)
+
+#pragma mark UIViewControllerのポップオーバー表示
 
 -(void)presentPopoverViewController:(UIViewController*)viewController
                            animated:(BOOL)animated
@@ -190,8 +196,107 @@ static BOOL isPopping = NO;
     }
 }
 
+#pragma mark UIViewのポップオーバー表示
 
-#pragma mark - キーボード通知
+-(void)addPopoverView:(UIView*)view
+             animated:(BOOL)animated
+           completion:(void (^)(BOOL finished))completion
+{
+    [self addPopoverView:view
+                animated:animated
+                duration:kPopoeverSupportViewDuration
+              completion:completion];
+}
+
+
+-(void)addPopoverView:(UIView*)view
+             animated:(BOOL)animated
+             duration:(NSTimeInterval)duration
+           completion:(void (^)(BOOL finished))completion
+{
+    if (view == nil || view.superview) {
+        if (completion) {
+            completion(false);
+        }
+        return;
+    }
+    
+    UIWindow *window = [[[UIApplication sharedApplication] windows] firstObject];
+    
+    
+    UIView *blankView = [[UIView alloc] initWithFrame:window.frame];
+    blankView.alpha = kPopoeverSupportViewAlhpa;
+    blankView.backgroundColor = [UIColor blackColor];
+    [window addSubview:blankView];
+    
+    objc_setAssociatedObject(view,
+                             (__bridge const void *)(kPopoeverSupportViewKey),
+                             blankView,
+                             OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    
+    // キーボードの通知を開始する
+    NSNotificationCenter *notification = [NSNotificationCenter defaultCenter];
+    [notification addObserver:view
+                     selector:@selector(keyboardWillShow:)
+                         name:UIKeyboardDidShowNotification
+                       object:nil];
+    [notification addObserver:view
+                     selector:@selector(keyboardWillHide:)
+                         name:UIKeyboardWillHideNotification
+                       object:nil];
+    
+    
+    [window addSubview:view];
+    view.alpha = 1.0;
+    view.center = CGPointMake(window.frame.size.width/2,
+                              window.frame.size.height/2);
+    
+    view.layer.cornerRadius = 5;
+    view.clipsToBounds = true;
+    
+    //    // 影付け
+    //    view.layer.shadowOpacity = 0.2;
+    //    view.layer.shadowOffset = CGSizeMake(10.0, 10.0);
+    
+    if (animated) {
+        
+        NSTimeInterval animateDuration = duration;
+        
+        blankView.alpha = 0.0;
+        view.alpha = 0.0;
+        for (UIView *v in view.subviews) {
+            v.alpha = 0.0;
+        }
+        
+        CGFloat scale = 0.5;
+        view.transform = CGAffineTransformMakeScale(scale, scale);
+        
+        [UIView animateWithDuration:animateDuration
+                              delay:0.0
+                            options:UIViewAnimationOptionCurveEaseIn
+                         animations:^{
+                             blankView.alpha = kPopoeverSupportViewAlhpa;
+                             view.alpha = 1.0;
+                             view.transform = CGAffineTransformIdentity;
+                             for (UIView *v in view.subviews) {
+                                 v.alpha = 1.0;
+                             }
+                         } completion:^(BOOL finished) {
+                             if (completion) {
+                                 completion(finished);
+                             }
+                         }];
+    }else{
+        view.alpha = 1.0;
+        if (completion) {
+            completion(true);
+        }
+    }
+    
+}
+
+
+#pragma mark キーボード通知
 
 -(void)keyboardWillShow:(NSNotification*)notification
 {
@@ -212,4 +317,75 @@ static BOOL isPopping = NO;
 
 @end
 
+#pragma mark - UIView (Popover)
+
+
+@implementation UIView (Popover)
+
+-(void)removeFromPopoverAnimated:(BOOL)animated
+                      completion:(void (^)(BOOL finished))completion
+{
+    if (self == nil || self.superview == nil) {
+        if (completion) {
+            completion(false);
+        }
+        return;
+    }
+    
+    
+    UIView *blankView = objc_getAssociatedObject(self, (__bridge const void *)(kPopoeverSupportViewKey));
+    
+    NSNotificationCenter *notification = [NSNotificationCenter defaultCenter];
+    [notification removeObserver:self name:UIKeyboardWillHideNotification object:nil];
+    [notification removeObserver:self name:UIKeyboardDidShowNotification object:nil];
+    
+    void (^completionBlock)(BOOL finish) = ^(BOOL finished) {
+        if (blankView) {
+            [blankView removeFromSuperview];
+            objc_removeAssociatedObjects(blankView);
+        }
+        [self removeFromSuperview];
+        if (completion) {
+            completion(finished);
+        }
+    };
+    
+    if (animated) {
+        self.alpha = 1.0;
+        if (blankView) {
+            blankView.alpha = kPopoeverSupportViewAlhpa;
+        }
+        
+        [UIView animateWithDuration:kPopoeverSupportViewDuration
+                         animations:^{
+                             self.alpha = 0.0;
+                             if (blankView) {
+                                 blankView.alpha = 0.0;
+                             }
+                         } completion:^(BOOL finished) {
+                             completionBlock(finished);
+                         }];
+    }else{
+        completionBlock(true);
+    }
+}
+
+-(void)keyboardWillShow:(NSNotification*)notification
+{
+    // DLog(@"");
+    
+    UIView *superview = self.superview;
+    UIView *blankView = objc_getAssociatedObject(self, (__bridge const void *)(kPopoeverSupportViewKey));
+    if (blankView) {
+        [superview bringSubviewToFront:blankView];
+    }
+    [superview bringSubviewToFront:self];
+}
+
+-(void)keyboardWillHide:(NSNotification*)notification
+{
+    // DLog(@"");
+}
+
+@end
 
