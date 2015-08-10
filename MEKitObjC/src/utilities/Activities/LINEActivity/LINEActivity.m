@@ -65,6 +65,8 @@
         LINEURLString = [NSString stringWithFormat:@"line://msg/text/%@", item];
     } else if ([item isKindOfClass:[UIImage class]]) {
         UIPasteboard *pasteboard = [UIPasteboard pasteboardWithUniqueName];
+        // UIPasteboard *pasteboard =  [UIPasteboard generalPasteboard];
+        // http://d.hatena.ne.jp/s-0samu/20140323/1395552188
         [pasteboard setData:UIImagePNGRepresentation(item) forPasteboardType:@"public.png"];
         LINEURLString = [NSString stringWithFormat:@"line://msg/image/%@", pasteboard.name];
     } else {
