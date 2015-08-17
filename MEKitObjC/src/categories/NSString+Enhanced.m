@@ -60,6 +60,11 @@
 
 -(CGRect)drawnRectWithSize:(CGSize)size font:(UIFont*)font
 {
+    return [self rectWithDrawnSize:size font:font];
+}
+
+-(CGRect)rectWithDrawnSize:(CGSize)size font:(UIFont*)font
+{
     @try {
         NSDictionary *attributes = @{NSFontAttributeName:font};
      CGRect rect = [self boundingRectWithSize:CGSizeMake(size.width, FLT_MAX)
@@ -76,6 +81,11 @@
     }
 }
 
+-(CGSize)sizeWithDrawnSize:(CGSize)size font:(UIFont*)font
+{
+    CGRect rect = [self rectWithDrawnSize:size font:font];
+    return CGSizeMake(ceilf(CGRectGetWidth(rect)), ceilf(CGRectGetHeight(rect)));
+}
 
 -(CGSize)sizeWithFontAboveiOS7:(UIFont *)font
 {

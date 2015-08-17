@@ -41,6 +41,8 @@
 -(NSArray*)detectedUrls;
 
 -(CGRect)drawnRectWithSize:(CGSize)size font:(UIFont*)font;
+-(CGRect)rectWithDrawnSize:(CGSize)size font:(UIFont*)font;
+-(CGSize)sizeWithDrawnSize:(CGSize)size font:(UIFont*)font;
 -(CGSize)sizeWithFontAboveiOS7:(UIFont *)font;
 
 // 半角カタカナに変換
