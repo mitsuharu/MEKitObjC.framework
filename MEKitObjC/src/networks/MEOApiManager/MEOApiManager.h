@@ -50,9 +50,7 @@ typedef void (^MEOApiManagerCompletion) (MEOApiManagerResultStatus result,
  
  @param [headerField] headerField @[@"Content-Type":@"application/json"]
  
- 
  @param [httpMethod] httpMethod @"POST"や@"GET"を指定する
- 
  
  */
 -(void)request:(NSString*)urlString
@@ -60,11 +58,27 @@ typedef void (^MEOApiManagerCompletion) (MEOApiManagerResultStatus result,
     httpMethod:(NSString*)httpMethod
       httpBody:(NSString*)httpBody
       userInfo:(NSDictionary*)userInfo
-    completion:(MEOApiManagerCompletion)completion;
+    completion:(MEOApiManagerCompletion)completion  __attribute__((deprecated("クラスメソッドを使ってください")));;
 
--(NSDictionary*)parseJson:(NSData*)jsonData;
+/**
+ *  Jsonデータを辞書型配列にパースする
+ *
+ *  @param jsonData
+ *
+ *  @return 辞書型配列
+ */
+-(NSDictionary*)parseJson:(NSData*)jsonData  __attribute__((deprecated("クラスメソッドを使ってください")));;
 
-
+/**
+ *  httpリクエストを行う（bodyは文字列）
+ *
+ *  @param urlString
+ *  @param headerField
+ *  @param httpMethod
+ *  @param httpBody
+ *  @param userInfo
+ *  @param completion
+ */
 +(void)request:(NSString*)urlString
    headerField:(NSDictionary*)headerField
     httpMethod:(NSString*)httpMethod
@@ -72,6 +86,16 @@ typedef void (^MEOApiManagerCompletion) (MEOApiManagerResultStatus result,
       userInfo:(NSDictionary*)userInfo
     completion:(MEOApiManagerCompletion)completion;
 
+/**
+ *  httpリクエストを行う（bodyはデータ型）
+ *
+ *  @param urlString
+ *  @param headerField
+ *  @param httpMethod
+ *  @param httpBodyData
+ *  @param userInfo
+ *  @param completion
+ */
 +(void)request:(NSString*)urlString
    headerField:(NSDictionary*)headerField
     httpMethod:(NSString*)httpMethod
@@ -79,6 +103,18 @@ typedef void (^MEOApiManagerCompletion) (MEOApiManagerResultStatus result,
       userInfo:(NSDictionary*)userInfo
     completion:(MEOApiManagerCompletion)completion;
 
+/**
+ *  httpリクエストを行う（bodyは文字列型，ベーシック認証付き）
+ *
+ *  @param urlString
+ *  @param headerField
+ *  @param httpMethod
+ *  @param httpBody
+ *  @param userInfo
+ *  @param username
+ *  @param password
+ *  @param completion
+ */
 +(void)request:(NSString*)urlString
    headerField:(NSDictionary*)headerField
     httpMethod:(NSString*)httpMethod
@@ -88,6 +124,18 @@ typedef void (^MEOApiManagerCompletion) (MEOApiManagerResultStatus result,
       password:(NSString*)password
     completion:(MEOApiManagerCompletion)completion;
 
+/**
+ *  httpリクエストを行う（bodyはデータ型，ベーシック認証付き）
+ *
+ *  @param urlString
+ *  @param headerField
+ *  @param httpMethod
+ *  @param httpBodyData
+ *  @param userInfo
+ *  @param username
+ *  @param password
+ *  @param completion
+ */
 +(void)request:(NSString*)urlString
    headerField:(NSDictionary*)headerField
     httpMethod:(NSString*)httpMethod
@@ -97,16 +145,39 @@ typedef void (^MEOApiManagerCompletion) (MEOApiManagerResultStatus result,
       password:(NSString*)password
     completion:(MEOApiManagerCompletion)completion;
 
+/**
+ *  ダウンロードを行う
+ *
+ *  @param urlString
+ *  @param userInfo
+ *  @param completion
+ */
 +(void)download:(NSString*)urlString
        userInfo:(NSDictionary*)userInfo
      completion:(MEOApiManagerCompletion)completion;
 
+/**
+ *  ダウンロードを行う（ベーシック認証付き）
+ *
+ *  @param urlString
+ *  @param userInfo
+ *  @param username
+ *  @param password
+ *  @param completion
+ */
 +(void)download:(NSString*)urlString
        userInfo:(NSDictionary*)userInfo
        username:(NSString*)username
        password:(NSString*)password
      completion:(MEOApiManagerCompletion)completion;
 
+/**
+ *  Jsonデータを辞書型配列にパースする
+ *
+ *  @param jsonData
+ *
+ *  @return パースされた辞書型配列
+ */
 +(NSDictionary*)parseJson:(NSData*)jsonData;
 
 
