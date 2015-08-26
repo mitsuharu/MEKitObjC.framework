@@ -29,45 +29,31 @@ typedef void (^MEOApiManagerCompletion) (MEOApiManagerResultStatus result,
                                          NSInteger httpStatus,
                                          NSError *error);
 
+#pragma mark - MEOApiOption
 
-@protocol MEOApiManagerDelegate <NSObject>
+@interface MEOApiOption : NSObject
 
-@optional
--(void)apiManagerCompleted:(MEOApiManager*)apiManager
-                    result:(MEOApiManagerResultStatus)result
-                      data:(NSData*)data
-                  userInfo:(NSDictionary*)userInfo
-                httpStatus:(NSInteger)httpStatus
-                     error:(NSError*)error;
+@property (nonatomic, assign) BOOL ignoreCacheData;
+@property (nonatomic, assign) NSURLRequestCachePolicy cachePolicy;
+@property (nonatomic, retain) NSString *username;
+@property (nonatomic, retain) NSString *password;
+@property (nonatomic, retain) NSDictionary *userInfo;
+
 @end
+
+
+#pragma mark - MEOApiManager
 
 @interface MEOApiManager : NSObject
 
-@property (nonatomic, weak) id<MEOApiManagerDelegate> delegate;
-
 /**
- @brief URLリクエストを行う
- 
- @param [headerField] headerField @[@"Content-Type":@"application/json"]
- 
- @param [httpMethod] httpMethod @"POST"や@"GET"を指定する
- 
- */
--(void)request:(NSString*)urlString
-   headerField:(NSDictionary*)headerField
-    httpMethod:(NSString*)httpMethod
-      httpBody:(NSString*)httpBody
-      userInfo:(NSDictionary*)userInfo
-    completion:(MEOApiManagerCompletion)completion  __attribute__((deprecated("クラスメソッドを使ってください")));;
-
-/**
- *  Jsonデータを辞書型配列にパースする
+ *  Jsonデータをパースして辞書列配列で返す
  *
  *  @param jsonData
  *
- *  @return 辞書型配列
+ *  @return 辞書列配列
  */
--(NSDictionary*)parseJson:(NSData*)jsonData  __attribute__((deprecated("クラスメソッドを使ってください")));;
++(NSDictionary*)parseJson:(NSData*)jsonData;
 
 /**
  *  httpリクエストを行う（bodyは文字列）
@@ -76,14 +62,14 @@ typedef void (^MEOApiManagerCompletion) (MEOApiManagerResultStatus result,
  *  @param headerField
  *  @param httpMethod
  *  @param httpBody
- *  @param userInfo
+ *  @param option
  *  @param completion
  */
 +(void)request:(NSString*)urlString
    headerField:(NSDictionary*)headerField
     httpMethod:(NSString*)httpMethod
       httpBody:(NSString*)httpBody
-      userInfo:(NSDictionary*)userInfo
+        option:(MEOApiOption*)option
     completion:(MEOApiManagerCompletion)completion;
 
 /**
@@ -93,28 +79,43 @@ typedef void (^MEOApiManagerCompletion) (MEOApiManagerResultStatus result,
  *  @param headerField
  *  @param httpMethod
  *  @param httpBodyData
- *  @param userInfo
+ *  @param option
  *  @param completion
  */
 +(void)request:(NSString*)urlString
    headerField:(NSDictionary*)headerField
     httpMethod:(NSString*)httpMethod
   httpBodyData:(NSData*)httpBodyData
-      userInfo:(NSDictionary*)userInfo
+        option:(MEOApiOption*)option
     completion:(MEOApiManagerCompletion)completion;
 
 /**
- *  httpリクエストを行う（bodyは文字列型，ベーシック認証付き）
+ *  ダウンロードする
  *
  *  @param urlString
- *  @param headerField
- *  @param httpMethod
- *  @param httpBody
- *  @param userInfo
- *  @param username
- *  @param password
+ *  @param option
  *  @param completion
  */
++(void)download:(NSString*)urlString
+         option:(MEOApiOption*)option
+     completion:(MEOApiManagerCompletion)completion;
+
+// 以下，削除します
+
++(void)request:(NSString*)urlString
+   headerField:(NSDictionary*)headerField
+    httpMethod:(NSString*)httpMethod
+      httpBody:(NSString*)httpBody
+      userInfo:(NSDictionary*)userInfo
+    completion:(MEOApiManagerCompletion)completion __attribute__((deprecated("付加情報をoptionクラスで指定に変更する")));
+
++(void)request:(NSString*)urlString
+   headerField:(NSDictionary*)headerField
+    httpMethod:(NSString*)httpMethod
+  httpBodyData:(NSData*)httpBodyData
+      userInfo:(NSDictionary*)userInfo
+    completion:(MEOApiManagerCompletion)completion __attribute__((deprecated("付加情報をoptionクラスで指定に変更する")));
+
 +(void)request:(NSString*)urlString
    headerField:(NSDictionary*)headerField
     httpMethod:(NSString*)httpMethod
@@ -122,20 +123,8 @@ typedef void (^MEOApiManagerCompletion) (MEOApiManagerResultStatus result,
       userInfo:(NSDictionary*)userInfo
       username:(NSString*)username
       password:(NSString*)password
-    completion:(MEOApiManagerCompletion)completion;
+    completion:(MEOApiManagerCompletion)completion __attribute__((deprecated("付加情報をoptionクラスで指定に変更する")));
 
-/**
- *  httpリクエストを行う（bodyはデータ型，ベーシック認証付き）
- *
- *  @param urlString
- *  @param headerField
- *  @param httpMethod
- *  @param httpBodyData
- *  @param userInfo
- *  @param username
- *  @param password
- *  @param completion
- */
 +(void)request:(NSString*)urlString
    headerField:(NSDictionary*)headerField
     httpMethod:(NSString*)httpMethod
@@ -143,42 +132,16 @@ typedef void (^MEOApiManagerCompletion) (MEOApiManagerResultStatus result,
       userInfo:(NSDictionary*)userInfo
       username:(NSString*)username
       password:(NSString*)password
-    completion:(MEOApiManagerCompletion)completion;
+    completion:(MEOApiManagerCompletion)completion __attribute__((deprecated("付加情報をoptionクラスで指定に変更する")));
 
-/**
- *  ダウンロードを行う
- *
- *  @param urlString
- *  @param userInfo
- *  @param completion
- */
 +(void)download:(NSString*)urlString
        userInfo:(NSDictionary*)userInfo
-     completion:(MEOApiManagerCompletion)completion;
+     completion:(MEOApiManagerCompletion)completion __attribute__((deprecated("付加情報をoptionクラスで指定に変更する")));
 
-/**
- *  ダウンロードを行う（ベーシック認証付き）
- *
- *  @param urlString
- *  @param userInfo
- *  @param username
- *  @param password
- *  @param completion
- */
 +(void)download:(NSString*)urlString
        userInfo:(NSDictionary*)userInfo
        username:(NSString*)username
        password:(NSString*)password
-     completion:(MEOApiManagerCompletion)completion;
-
-/**
- *  Jsonデータを辞書型配列にパースする
- *
- *  @param jsonData
- *
- *  @return パースされた辞書型配列
- */
-+(NSDictionary*)parseJson:(NSData*)jsonData;
-
+     completion:(MEOApiManagerCompletion)completion __attribute__((deprecated("付加情報をoptionクラスで指定に変更する")));
 
 @end

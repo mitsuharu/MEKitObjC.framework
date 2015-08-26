@@ -14,24 +14,48 @@ NSString* const MEOApiManagerHttpMethodPut = @"PUT";
 NSString* const MEOApiManagerHttpMethodGet = @"GET";
 NSString* const MEOApiManagerHttpMethodDelete = @"DELETE";
 
-@interface MEOApiManager () < NSURLSessionDelegate >
+#pragma mark - MEOApiOption -
+
+@implementation MEOApiOption
+
+- (instancetype)init
 {
-    __weak id<MEOApiManagerDelegate> delegate_;
-    NSString *username_;
-    NSString *password_;
-    NSDictionary *userInfo_;
+    self = [super init];
+    if (self) {
+        [self setIgnoreCacheData:false];
+        _username = nil;
+        _password = nil;
+        _userInfo = nil;
+    }
+    return self;
 }
 
--(void)setUsername:(NSString*)username password:(NSString*)password;
--(void)showsNetworkActivityIndicator:(BOOL)visible;
+-(void)setIgnoreCacheData:(BOOL)ignoreCacheData
+{
+    // http://www.masayoshi1978.com/tech/?p=30
+    // http://orih.io/2015/04/suspicious-header-definition-of-nsurlrequestcachepolicy/
+    
+    _ignoreCacheData = ignoreCacheData;
+    if (ignoreCacheData) {
+        _cachePolicy = NSURLRequestReloadIgnoringLocalCacheData;
+    }else{
+        _cachePolicy = NSURLRequestUseProtocolCachePolicy;
+    }
+}
 
-//-(void)setHttpHeaderFields:(NSDictionary*)hfDict;
+
+@end
+
+#pragma mark - MEOApiManager -
+
+@interface MEOApiManager () < NSURLSessionDelegate >
+
+@property (nonatomic, retain) MEOApiOption *option;
+-(void)showsNetworkActivityIndicator:(BOOL)visible;
 
 @end
 
 @implementation MEOApiManager
-
-@synthesize delegate = delegate_;
 
 -(id)init
 {
@@ -40,26 +64,12 @@ NSString* const MEOApiManagerHttpMethodDelete = @"DELETE";
     return self;
 }
 
--(id)initWithDelegate:(id<MEOApiManagerDelegate>)delegate
-{
-    if (self = [self init]) {
-        delegate_ = delegate;
-    }
-    return self;
-}
-
--(void)setUsername:(NSString*)username
-          password:(NSString*)password
-{
-    username_ = username;
-    password_ = password;
-}
-
 -(void)dealloc
 {
     [self showsNetworkActivityIndicator:false];
 }
 
+#pragma mark 補助メソッド
 
 -(BOOL)reachabile
 {
@@ -90,70 +100,72 @@ NSString* const MEOApiManagerHttpMethodDelete = @"DELETE";
     return statusCode;
 }
 
--(BOOL)enableDelegate
+- (NSError*)errorWithErrorCode:(NSInteger)code
+          localizedDescription:(NSString*)localizedDescription
 {
-    return (delegate_ && [delegate_ respondsToSelector:@selector(apiManagerCompleted:result:data:userInfo:httpStatus:error:)]);
+    NSString *str = @"It is unknown error.";
+    if (localizedDescription && localizedDescription.length > 0) {
+        str = localizedDescription;
+    }
+    
+    NSDictionary *dict = [NSDictionary dictionaryWithObject:str
+                                                     forKey:NSLocalizedDescriptionKey];
+    NSError *error = [NSError errorWithDomain:[[NSBundle mainBundle] bundleIdentifier]
+                                         code:code
+                                     userInfo:dict];
+    return error;
 }
+
+#pragma mark HTTPリクエスト
 
 -(void)request:(NSString*)urlString
    headerField:(NSDictionary*)headerField
     httpMethod:(NSString*)httpMethod
       httpBody:(NSString*)httpBody
-      userInfo:(NSDictionary*)userInfo
+        option:(MEOApiOption*)option
     completion:(MEOApiManagerCompletion)completion
 {
     [self request:urlString
       headerField:headerField
        httpMethod:httpMethod
      httpBodyData:[httpBody dataUsingEncoding:NSUTF8StringEncoding]
-         userInfo:userInfo
+           option:option
        completion:completion];
 }
 
--(void)request:(NSString*)urlString
-   headerField:(NSDictionary*)headerField
-    httpMethod:(NSString*)httpMethod
-  httpBodyData:(NSData*)httpBodyData
-      userInfo:(NSDictionary*)userInfo
-    completion:(MEOApiManagerCompletion)completion
+- (void)request:(NSString*)urlString
+    headerField:(NSDictionary*)headerField
+     httpMethod:(NSString*)httpMethod
+   httpBodyData:(NSData*)httpBodyData
+         option:(MEOApiOption*)option
+     completion:(MEOApiManagerCompletion)completion
 {
-    userInfo_ = userInfo;
+    self.option = option;
     
     if (urlString && urlString.length > 0) {
     }else{
         dispatch_async(dispatch_get_main_queue(), ^{
-            if ([self enableDelegate]) {
-                [delegate_ apiManagerCompleted:self
-                                        result:MEOApiManagerResultStatusRequestFailed
-                                          data:nil
-                                      userInfo:userInfo_
-                                    httpStatus:-1
-                                         error:nil];
-            }
             if (completion) {
-                completion(MEOApiManagerResultStatusRequestFailed, nil, userInfo_, -1, nil);
+                NSError *err = [self errorWithErrorCode:MEOApiManagerResultStatusRequestFailed
+                                   localizedDescription:@"URL is invalid"];
+                completion(MEOApiManagerResultStatusRequestFailed, nil, self.option.userInfo, -1, err);
             }
         });
     }
     
     if ([self reachabile] == false) {
         dispatch_async(dispatch_get_main_queue(), ^{
-            if ([self enableDelegate]) {
-                [delegate_ apiManagerCompleted:self
-                                        result:MEOApiManagerResultStatusNetworkFailed
-                                          data:nil
-                                      userInfo:userInfo_
-                                    httpStatus:-1
-                                         error:nil];
-            }
             if (completion) {
-                completion(MEOApiManagerResultStatusNetworkFailed, nil, userInfo_, -1, nil);
+                NSError *err = [self errorWithErrorCode:MEOApiManagerResultStatusNetworkFailed
+                                   localizedDescription:@"Network is failed"];
+                completion(MEOApiManagerResultStatusNetworkFailed, nil, self.option.userInfo, -1, err);
             }
         });
     }
     
     NSURL *url = [NSURL URLWithString:urlString];
     NSURLSessionConfiguration *config = [NSURLSessionConfiguration defaultSessionConfiguration];
+    config.requestCachePolicy = self.option.cachePolicy;
     
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
     if (headerField && headerField.allKeys.count > 0) {
@@ -170,6 +182,7 @@ NSString* const MEOApiManagerHttpMethodDelete = @"DELETE";
         request.HTTPMethod = MEOApiManagerHttpMethodPost;
     }
     request.HTTPBody = httpBodyData;
+    request.cachePolicy = self.option.cachePolicy;
     
     NSURLSession *session = [NSURLSession sessionWithConfiguration:config
                                                           delegate:self
@@ -180,8 +193,17 @@ NSString* const MEOApiManagerHttpMethodDelete = @"DELETE";
         dispatch_async(dispatch_get_main_queue(), ^{
             
             [self showsNetworkActivityIndicator:false];
-            NSInteger statusCode = [self httpStatusCode:response];
             
+            if (self.option.ignoreCacheData) {
+                NSURLCache *uc = [NSURLCache sharedURLCache];
+                [uc removeCachedResponseForRequest:request];
+                NSURLSessionDataTask *dtask = (NSURLSessionDataTask *)task;
+                if (dtask) {
+                    [uc removeCachedResponseForDataTask:dtask];                    
+                }
+            }
+            
+            NSInteger statusCode = [self httpStatusCode:response];
             MEOApiManagerResultStatus resultStatus = MEOApiManagerResultStatusResponseFailed;
             if ( 0 <= (statusCode-200) && (statusCode-200) < 100) {
                 resultStatus = MEOApiManagerResultStatusResponseSucsess;
@@ -196,22 +218,17 @@ NSString* const MEOApiManagerHttpMethodDelete = @"DELETE";
             }
             
             if (completion) {
-                completion(resultStatus, data, userInfo_, statusCode, error);
+                completion(resultStatus, data, self.option.userInfo, statusCode, error);
             }
-            if ([self enableDelegate]) {
-                [delegate_ apiManagerCompleted:self
-                                        result:resultStatus
-                                          data:data
-                                      userInfo:userInfo_
-                                    httpStatus:statusCode
-                                         error:error];
-            }
+            
+            [session invalidateAndCancel];
         });
     }];
     [task resume];
     [self showsNetworkActivityIndicator:true];
 }
 
+#pragma mark NSURLSessionDelegate
 
 -(void)URLSession:(NSURLSession *)session
 didReceiveChallenge:(NSURLAuthenticationChallenge *)challenge
@@ -235,11 +252,11 @@ didReceiveChallenge:(NSURLAuthenticationChallenge *)challenge
   completionHandler:(void (^)(NSURLSessionAuthChallengeDisposition, NSURLCredential *))completionHandler
 {
     if ([challenge proposedCredential]) {
-    } else if (username_.length > 0 && password_.length > 0){
+    } else if (self.option.username.length > 0 && self.option.password.length > 0){
         // Basic Auth.
         NSURLSessionAuthChallengeDisposition disposition = NSURLSessionAuthChallengeUseCredential;
-        NSURLCredential *credential = [[NSURLCredential alloc] initWithUser:username_
-                                                                   password:password_
+        NSURLCredential *credential = [[NSURLCredential alloc] initWithUser:self.option.username
+                                                                   password:self.option.password
                                                                 persistence:NSURLCredentialPersistenceNone];
         completionHandler(disposition, credential);
     }
@@ -261,7 +278,7 @@ didReceiveChallenge:(NSURLAuthenticationChallenge *)challenge
     return jsonDict;
 }
 
-// MARK: - クラスメソッド
+#pragma mark 公開されるクラスメソッド
 
 +(NSDictionary*)parseJson:(NSData*)jsonData
 {
@@ -279,6 +296,56 @@ didReceiveChallenge:(NSURLAuthenticationChallenge *)challenge
     return jsonDict;
 }
 
+
++(void)request:(NSString*)urlString
+   headerField:(NSDictionary*)headerField
+    httpMethod:(NSString*)httpMethod
+      httpBody:(NSString*)httpBody
+        option:(MEOApiOption*)option
+    completion:(MEOApiManagerCompletion)completion
+{
+    MEOApiManager *apiManager = [[MEOApiManager alloc] init];
+    [apiManager request:urlString
+            headerField:headerField
+             httpMethod:httpMethod
+               httpBody:httpBody
+               option:option
+             completion:completion];
+}
+
++(void)request:(NSString*)urlString
+   headerField:(NSDictionary*)headerField
+    httpMethod:(NSString*)httpMethod
+  httpBodyData:(NSData*)httpBodyData
+        option:(MEOApiOption*)option
+    completion:(MEOApiManagerCompletion)completion
+{
+    MEOApiManager *apiManager = [[MEOApiManager alloc] init];
+    [apiManager request:urlString
+            headerField:headerField
+             httpMethod:httpMethod
+           httpBodyData:httpBodyData
+                 option:option
+             completion:completion];
+}
+
++(void)download:(NSString*)urlString
+         option:(MEOApiOption*)option
+     completion:(MEOApiManagerCompletion)completion
+{
+    MEOApiManager *apiManager = [[MEOApiManager alloc] init];
+    [apiManager request:urlString
+            headerField:nil
+             httpMethod:MEOApiManagerHttpMethodGet
+               httpBody:nil
+               option:option
+             completion:completion];
+}
+
+
+#pragma mark 削除メソッドの仮対応
+
+
 +(void)request:(NSString*)urlString
    headerField:(NSDictionary*)headerField
     httpMethod:(NSString*)httpMethod
@@ -286,13 +353,13 @@ didReceiveChallenge:(NSURLAuthenticationChallenge *)challenge
       userInfo:(NSDictionary*)userInfo
     completion:(MEOApiManagerCompletion)completion
 {
+    MEOApiOption *option = [[MEOApiOption alloc] init];
+    option.userInfo = userInfo;
     [MEOApiManager request:urlString
                headerField:headerField
                 httpMethod:httpMethod
                   httpBody:httpBody
-                  userInfo:userInfo
-                  username:nil
-                  password:nil
+                    option:option
                 completion:completion];
 }
 
@@ -306,14 +373,16 @@ didReceiveChallenge:(NSURLAuthenticationChallenge *)challenge
       password:(NSString*)password
     completion:(MEOApiManagerCompletion)completion
 {
-    MEOApiManager *apiManager = [[MEOApiManager alloc] init];
-    [apiManager setUsername:username password:password];
-    [apiManager request:urlString
-            headerField:headerField
-             httpMethod:httpMethod
-               httpBody:httpBody
-               userInfo:userInfo
-             completion:completion];
+    MEOApiOption *option = [[MEOApiOption alloc] init];
+    option.userInfo = userInfo;
+    option.username = username;
+    option.password = password;
+    [MEOApiManager request:urlString
+               headerField:headerField
+                httpMethod:httpMethod
+                  httpBody:httpBody
+                    option:option
+                completion:completion];
 }
 
 +(void)request:(NSString*)urlString
@@ -323,13 +392,14 @@ didReceiveChallenge:(NSURLAuthenticationChallenge *)challenge
       userInfo:(NSDictionary*)userInfo
     completion:(MEOApiManagerCompletion)completion
 {
-    MEOApiManager *apiManager = [[MEOApiManager alloc] init];
-    [apiManager request:urlString
-            headerField:headerField
-             httpMethod:httpMethod
-           httpBodyData:httpBodyData
-               userInfo:userInfo
-             completion:completion];
+    MEOApiOption *option = [[MEOApiOption alloc] init];
+    option.userInfo = userInfo;
+    [MEOApiManager request:urlString
+               headerField:headerField
+                httpMethod:httpMethod
+                  httpBodyData:httpBodyData
+                    option:option
+                completion:completion];
 }
 
 +(void)request:(NSString*)urlString
@@ -341,15 +411,16 @@ didReceiveChallenge:(NSURLAuthenticationChallenge *)challenge
       password:(NSString*)password
     completion:(MEOApiManagerCompletion)completion
 {
-    MEOApiManager *apiManager = [[MEOApiManager alloc] init];
-    [apiManager setUsername:username password:password];
-    [apiManager request:urlString
-            headerField:headerField
-             httpMethod:httpMethod
-           httpBodyData:httpBodyData
-               userInfo:userInfo
-             completion:completion];
-
+    MEOApiOption *option = [[MEOApiOption alloc] init];
+    option.userInfo = userInfo;
+    option.username = username;
+    option.password = password;
+    [MEOApiManager request:urlString
+               headerField:headerField
+                httpMethod:httpMethod
+              httpBodyData:httpBodyData
+                    option:option
+                completion:completion];
 }
 
 +(void)download:(NSString*)urlString
@@ -358,24 +429,24 @@ didReceiveChallenge:(NSURLAuthenticationChallenge *)challenge
        password:(NSString*)password
      completion:(MEOApiManagerCompletion)completion
 {
-    MEOApiManager *apiManager = [[MEOApiManager alloc] init];
-    [apiManager setUsername:username password:password];
-    [apiManager request:urlString
-            headerField:nil
-             httpMethod:MEOApiManagerHttpMethodGet
-               httpBody:nil
-               userInfo:userInfo
-             completion:completion];
+    MEOApiOption *option = [[MEOApiOption alloc] init];
+    option.userInfo = userInfo;
+    option.username = username;
+    option.password = password;
+    [MEOApiManager download:urlString
+                     option:option
+                 completion:completion];
 }
 
 +(void)download:(NSString*)urlString
        userInfo:(NSDictionary*)userInfo
      completion:(MEOApiManagerCompletion)completion
 {
+    MEOApiOption *option = [[MEOApiOption alloc] init];
+    option.userInfo = userInfo;
     [MEOApiManager download:urlString
-                   userInfo:userInfo
-                   username:nil
-                   password:nil
+                     option:option
                  completion:completion];
 }
+
 @end
