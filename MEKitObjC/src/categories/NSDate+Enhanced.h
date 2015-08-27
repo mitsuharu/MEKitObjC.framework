@@ -12,6 +12,7 @@
 
 -(NSDateComponents*)dateComponents;
 -(BOOL)isToday;
+-(NSInteger)age;
 
 @end
 

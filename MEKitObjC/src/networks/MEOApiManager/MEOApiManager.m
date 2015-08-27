@@ -151,23 +151,29 @@ NSString* const MEOApiManagerHttpMethodDelete = @"DELETE";
                 completion(MEOApiManagerResultStatusRequestFailed, nil, self.option.userInfo, -1, err);
             }
         });
+        return;
     }
     
     if ([self reachabile] == false) {
         dispatch_async(dispatch_get_main_queue(), ^{
             if (completion) {
                 NSError *err = [self errorWithErrorCode:MEOApiManagerResultStatusNetworkFailed
-                                   localizedDescription:@"Network is failed"];
+                                   localizedDescription:@"The Internet connection appears to be offline."];
                 completion(MEOApiManagerResultStatusNetworkFailed, nil, self.option.userInfo, -1, err);
             }
         });
+        return;
     }
     
     NSURL *url = [NSURL URLWithString:urlString];
     NSURLSessionConfiguration *config = [NSURLSessionConfiguration defaultSessionConfiguration];
     config.requestCachePolicy = self.option.cachePolicy;
+    if (self.option.ignoreCacheData) {
+        config.URLCache = nil;
+    }
     
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+    
     if (headerField && headerField.allKeys.count > 0) {
 //        [request addValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
 //        [request addValue:@"application/json" forHTTPHeaderField:@"Accept"];

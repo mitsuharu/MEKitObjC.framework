@@ -7,6 +7,7 @@
 //
 
 #import "NSDate+Enhanced.h"
+#import <UIKit/UIKit.h>
 
 @implementation NSDate (Enhanced)
 
@@ -36,6 +37,24 @@
     }
     
     return today;
+}
+
+- (NSInteger)age
+{
+    NSCalendarUnit unit;
+    float version = [[[UIDevice currentDevice] systemVersion] floatValue];
+    if(version >= 8.0){
+        unit = NSCalendarUnitYear;
+    }else{
+        unit = NSYearCalendarUnit;
+    }
+    
+    NSCalendar *cal = [NSCalendar currentCalendar];
+    NSDateComponents *def = [cal components:unit
+                                   fromDate:self
+                                     toDate:[NSDate date]
+                                    options:0];
+    return def.year;
 }
 
 @end
