@@ -166,9 +166,20 @@ NSString* const MEOApiManagerHttpMethodDelete = @"DELETE";
     }
     
     NSURL *url = [NSURL URLWithString:urlString];
-    NSURLSessionConfiguration *config = [NSURLSessionConfiguration defaultSessionConfiguration];
-    config.requestCachePolicy = self.option.cachePolicy;
+    
+    NSURLSessionConfiguration *config = nil;
     if (self.option.ignoreCacheData) {
+        /*
+         iOS8 - NSURLSessionConfigurationについてメモ - Qiita 
+         <http://qiita.com/nomadmonad/items/c7f69dc9f8c7c1c77cb2>
+         */
+        config = [NSURLSessionConfiguration ephemeralSessionConfiguration];
+    }else{
+        config = [NSURLSessionConfiguration defaultSessionConfiguration];
+    }
+
+    if (self.option.ignoreCacheData) {
+        config.requestCachePolicy = self.option.cachePolicy;
         config.URLCache = nil;
     }
     
