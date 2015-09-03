@@ -9,6 +9,13 @@
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
+
+typedef NS_ENUM (NSInteger, MEOCopyDataStatus) {
+    MEOCopyDataStatusIsFailedBecauseDoNotHaveData = -1,
+    MEOCopyDataStatusIsFailedBecauseAlreadyExisted = 0,
+    MEOCopyDataStatusIsSuccess = 1,
+};
+
 @interface MEOCoreDataManager : NSObject
 
 
@@ -27,6 +34,8 @@
 +(void)deleteAll;
 
 +(BOOL)save;
+
++ (MEOCopyDataStatus)copyBundledCoreDataToDocumentsWithOverWriting:(BOOL)overWriting;
 
 // 以下は削除予定
 

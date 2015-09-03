@@ -265,6 +265,27 @@
     return privateDocs;
 }
 
+
+
+- (MEOCopyDataStatus)copyBundledCoreDataToDocumentsWithOverWriting:(BOOL)overWriting
+{
+    MEOCopyDataStatus result = MEOCopyDataStatusIsFailedBecauseDoNotHaveData;
+    NSString *dPath = [[self applicationDocumentsDirectory] stringByAppendingPathComponent:COREDATA_SQLITE_FILE];
+    if (overWriting == false && [[NSFileManager defaultManager] fileExistsAtPath:dPath]) {
+        result = MEOCopyDataStatusIsFailedBecauseAlreadyExisted;
+    }else{
+        NSString *path = [[NSBundle mainBundle] pathForResource:COREDATA_SQLITE_FILE ofType:nil];
+        if (path) {
+            NSData *data = [NSData dataWithContentsOfFile:path];
+            if (data && [data writeToFile:dPath atomically:true]) {
+                result = MEOCopyDataStatusIsSuccess;
+            }
+        }
+    }
+    return result;
+}
+
+
 -(BOOL)save
 {
     BOOL err = NO;
@@ -322,5 +343,10 @@
     return [cdm save];
 }
 
++ (MEOCopyDataStatus)copyBundledCoreDataToDocumentsWithOverWriting:(BOOL)overWriting
+{
+    MEOCoreDataManager *cdm = [MEOCoreDataManager defaultCoreDataManager];
+    return [cdm copyBundledCoreDataToDocumentsWithOverWriting:overWriting];
+}
 
 @end
