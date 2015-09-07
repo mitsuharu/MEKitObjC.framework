@@ -81,7 +81,7 @@
         }
         
         persistentStoreCoordinator_ = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:managedObjectModel_];
-        NSString *path = [[self applicationDocumentsDirectory] stringByAppendingPathComponent:COREDATA_SQLITE_FILE];
+        NSString *path = [[MEOCoreDataManager applicationDocumentsDirectory] stringByAppendingPathComponent:COREDATA_SQLITE_FILE];
         NSError *error = nil;
         [persistentStoreCoordinator_ addPersistentStoreWithType:NSSQLiteStoreType
                                                   configuration:nil
@@ -246,7 +246,7 @@
     }
 }
 
--(NSString*)applicationDocumentsDirectory
++ (NSString*)applicationDocumentsDirectory
 {
     NSFileManager *fileManager = [NSFileManager defaultManager];
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES);
@@ -265,12 +265,18 @@
     return privateDocs;
 }
 
+//typedef NS_ENUM (NSInteger, MEOCopyDataStatus) {
+//    MEOCopyDataStatusIsFailedBecauseDoNotHaveData = -1,
+//    MEOCopyDataStatusIsFailedBecauseAlreadyExisted = 0,
+//    MEOCopyDataStatusIsSuccess = 1,
+//};
 
-
-- (MEOCopyDataStatus)copyBundledCoreDataToDocumentsWithOverWriting:(BOOL)overWriting
++ (MEOCopyDataStatus)copyBundledCoreDataToDocumentsWithOverWriting:(BOOL)overWriting
 {
     MEOCopyDataStatus result = MEOCopyDataStatusIsFailedBecauseDoNotHaveData;
-    NSString *dPath = [[self applicationDocumentsDirectory] stringByAppendingPathComponent:COREDATA_SQLITE_FILE];
+    NSString *directory = [MEOCoreDataManager applicationDocumentsDirectory];
+    NSString *dPath = [directory stringByAppendingPathComponent:COREDATA_SQLITE_FILE];
+        
     if (overWriting == false && [[NSFileManager defaultManager] fileExistsAtPath:dPath]) {
         result = MEOCopyDataStatusIsFailedBecauseAlreadyExisted;
     }else{
@@ -343,10 +349,6 @@
     return [cdm save];
 }
 
-+ (MEOCopyDataStatus)copyBundledCoreDataToDocumentsWithOverWriting:(BOOL)overWriting
-{
-    MEOCoreDataManager *cdm = [MEOCoreDataManager defaultCoreDataManager];
-    return [cdm copyBundledCoreDataToDocumentsWithOverWriting:overWriting];
-}
+
 
 @end
