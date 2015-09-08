@@ -26,6 +26,13 @@
 
 @interface UIView (Enhanced)
 
+/**
+ *  自身がaddSubviewされているかの判定
+ *
+ *  @return もしaddされていればtrue，そうでなければfalse
+ */
+- (BOOL)isShowing;
+
 -(void)setBackgroundImageFitted:(UIImage*)backgroundImage;
 -(void)setBackgroundImage:(UIImage*)backgroundImage;
 

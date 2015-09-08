@@ -82,6 +82,13 @@
 
 @implementation UIView (Enhanced)
 
+- (BOOL)isShowing
+{
+    return (self.superview!=nil);
+}
+
+
+
 -(void)setBackgroundImageFitted:(UIImage*)backgroundImage
 {
     UIImage *image = backgroundImage;
