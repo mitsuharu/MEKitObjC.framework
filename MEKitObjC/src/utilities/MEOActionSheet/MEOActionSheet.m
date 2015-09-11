@@ -70,6 +70,8 @@ destructiveButtonTitle:(NSString *)destructiveButtonTitle
             if (others && others.count > 0) {
                 [buttonTitles_ addObjectsFromArray:others];
             }
+            
+            destructiveButtonIndex_ = -1;
             if (destructiveButtonTitle && destructiveButtonTitle.length > 0) {
                 destructiveButtonIndex_ = buttonTitles_.count;
                 [buttonTitles_ addObject:destructiveButtonTitle];

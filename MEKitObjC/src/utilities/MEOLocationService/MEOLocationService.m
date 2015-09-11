@@ -157,13 +157,20 @@
 {
     BOOL auth = false;
     if (NSFoundationVersionNumber > NSFoundationVersionNumber_iOS_7_1){
-        auth = (status == kCLAuthorizationStatusAuthorized
-                || status == kCLAuthorizationStatusAuthorizedAlways);
+        auth = (status == kCLAuthorizationStatusAuthorizedAlways
+                || status == kCLAuthorizationStatusAuthorizedWhenInUse);
     }
     else{
-        auth = (status == kCLAuthorizationStatusAuthorizedAlways
-                || status == kCLAuthorizationStatusAuthorizedAlways);
+        auth = (status == kCLAuthorizationStatusAuthorized);
     }
+//    if (NSFoundationVersionNumber > NSFoundationVersionNumber_iOS_7_1){
+//        auth = (status == kCLAuthorizationStatusAuthorized
+//                || status == kCLAuthorizationStatusAuthorizedAlways);
+//    }
+//    else{
+//        auth = (status == kCLAuthorizationStatusAuthorizedAlways
+//                || status == kCLAuthorizationStatusAuthorizedAlways);
+//    }
     return auth;
 }
 
@@ -240,6 +247,7 @@
     }
     
     if (isMonitoring_) {
+        NSLog(@"return isMonitoring_");
         return result;
     }
     
