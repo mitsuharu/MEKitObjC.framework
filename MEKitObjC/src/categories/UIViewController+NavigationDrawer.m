@@ -18,6 +18,7 @@
 #define KeyTapCompletion @"KeyTapCompletion"
 #define KeyIsDrawing @"KeyIsDrawing"
 #define KeyFromLeft @"KeyFromLeft"
+#define KeyPreKeyWindowIndex @"KeyPreKeyWindowIndex"
 
 typedef void (^TapCompletion)(void);
 
@@ -161,6 +162,20 @@ typedef void (^TapCompletion)(void);
 
 -(UIWindow*)closureWindow
 {
+    NSInteger preIndex = 0;
+    NSArray *windows = [[UIApplication sharedApplication] windows];
+    for (int i = 0 ; i < windows.count; i++) {
+        UIWindow *win = [windows objectAtIndex:i];
+        if (win.keyWindow) {
+            preIndex = i;
+            break;
+        }
+    }
+    objc_setAssociatedObject(self,
+                             KeyPreKeyWindowIndex,
+                             [NSNumber numberWithInteger:preIndex],
+                             OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    
     UIWindow *window = objc_getAssociatedObject(self, KeyClosureWindow);
     if (window == nil) {
         window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
@@ -176,15 +191,30 @@ typedef void (^TapCompletion)(void);
 
 -(void)deleteClosureWindow
 {
+    NSInteger preIndex = 0;
+    NSNumber *preKeyWindowIndexNumber = objc_getAssociatedObject(self, KeyPreKeyWindowIndex);
+    if (preKeyWindowIndexNumber) {
+        preIndex = [preKeyWindowIndexNumber integerValue];
+    }
+    
     UIWindow *closureWindow = objc_getAssociatedObject(self, KeyClosureWindow);
     if (closureWindow ) {
         closureWindow.hidden = YES;
         NSArray *windows = [[UIApplication sharedApplication] windows];
-        NSInteger index = [windows indexOfObject:closureWindow];
-        if ( index != NSNotFound && 0 <= index -1 ) {
-            UIWindow *window = [windows objectAtIndex:(index-1)];
-            [window makeKeyAndVisible];
+        for (int i = 0 ; i < windows.count; i++) {
+            UIWindow *win = [windows objectAtIndex:i];
+            if (preIndex == i) {
+                [win makeKeyWindow];
+                break;
+            }
         }
+//        NSInteger index = [windows indexOfObject:closureWindow];
+//        if ( index != NSNotFound && 0 <= index -1 ) {
+//            UIWindow *window = [windows objectAtIndex:(index-1)];
+//            [closureWindow resignKeyWindow];
+//            [window makeKeyWindow];
+//        }
+        
         closureWindow = nil;
     }
     objc_setAssociatedObject(self,
