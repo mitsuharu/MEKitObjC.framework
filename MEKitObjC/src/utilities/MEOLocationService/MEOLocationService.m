@@ -171,6 +171,9 @@
 //        auth = (status == kCLAuthorizationStatusAuthorizedAlways
 //                || status == kCLAuthorizationStatusAuthorizedAlways);
 //    }
+    
+//    NSLog(@"%s, auth %d", __func__, auth);
+    
     return auth;
 }
 
@@ -235,7 +238,7 @@
 {
     BOOL result = false;
     CLAuthorizationStatus status = [CLLocationManager authorizationStatus];
-    
+  
     if ([CLLocationManager locationServicesEnabled] == false) {
         if (compeltion) {
             NSString *key = @"LocationServiceDisabled";
@@ -255,6 +258,7 @@
         if ([locationManager_ respondsToSelector:@selector(requestAlwaysAuthorization)]) {
             isRequestingLocation_ = true;
             completion_ = compeltion;
+
             if (permissionUsedLocationServiceAlways_) {
                 [locationManager_ requestAlwaysAuthorization];
             }else{
@@ -438,8 +442,6 @@ didChangeAuthorizationStatus:(CLAuthorizationStatus)status
             completion_(self, status, error);
         }
     }
-    isRequestingRegion_ = false;
-    isRequestingLocation_ = false;
 }
 
 // MARK: for CLLocationManagerDelagate (Location)
