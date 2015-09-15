@@ -18,6 +18,8 @@
 @property (nonatomic, retain) NSString *footerString;
 @property (nonatomic) NSInteger tag;
 
+@property (nonatomic) NSMutableArray *editActions;
+
 -(void)clear;
 
 @end

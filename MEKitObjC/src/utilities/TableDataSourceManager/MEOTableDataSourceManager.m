@@ -757,7 +757,27 @@
     return cell;
 }
 
+#pragma mark - edit action
 
+- (void)tableView:(UITableView *)tableView
+commitEditingStyle:(UITableViewCellEditingStyle)editingStyle
+forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    
+}
+
+// http://dev.classmethod.jp/references/ios-8-uitableviewrowaction/
+- (NSArray*)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSArray *arr = nil;
+    
+    MEOTableDataSource *tds = [dataSources_ objectAtIndex:indexPath.section];
+    if (tds.editActions && tds.editActions.count > indexPath.row) {
+        arr = (NSArray *)[tds.editActions objectAtIndex:indexPath.row];
+    }
+    
+    return arr;
+}
 
 #pragma mark - UIScrollViewDelegate
 

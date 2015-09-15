@@ -56,6 +56,10 @@
     if (footerString_) {
         footerString_ = nil;
     }
+    if (_editActions) {
+        [_editActions removeAllObjects];
+        _editActions = nil;
+    }
 }
 
 @end
