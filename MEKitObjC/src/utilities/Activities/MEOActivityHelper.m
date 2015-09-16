@@ -7,6 +7,7 @@
 //
 
 #import "MEOActivityHelper.h"
+#import "MEOUtilities.h"
 
 @interface MEOActivityHelper () < UIActivityItemSource >
 {
