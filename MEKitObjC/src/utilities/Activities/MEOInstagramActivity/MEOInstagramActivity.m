@@ -115,6 +115,7 @@
     if (!present) {
         NSLog(@"このファイルを開けるアプリが存在しない。");
     }
+//    [self activityDidFinish:true];
 }
 
 +(UIViewController*)viewController
@@ -143,5 +144,9 @@
     return resizedImage;
 }
 
+- (void)documentInteractionControllerDidDismissOpenInMenu:(UIDocumentInteractionController *)controller
+{
+    [self activityDidFinish:true];
+}
 
 @end
