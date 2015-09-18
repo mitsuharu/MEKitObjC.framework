@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
-        <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -14,34 +13,65 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="b0G-ZH-yJG">
                     <rect key="frame" x="2" y="2" width="596" height="40"/>
                     <subviews>
-                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="nw_info.png" translatesAutoresizingMaskIntoConstraints="NO" id="csD-IM-hYM">
+                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="nw_info.png" translatesAutoresizingMaskIntoConstraints="NO" id="csD-IM-hYM">
                             <rect key="frame" x="4" y="4" width="30" height="30"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="30" id="Abi-ZM-yAz"/>
+                                <constraint firstAttribute="height" constant="30" id="rRI-2b-gKn"/>
+                            </constraints>
                         </imageView>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="aC9-vL-REW">
-                            <rect key="frame" x="40" y="5" width="532" height="15"/>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="aC9-vL-REW">
+                            <rect key="frame" x="40" y="5" width="540" height="15"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="15" id="ZVv-4e-avW"/>
+                            </constraints>
                             <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="message" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="rzb-gy-JSD">
-                            <rect key="frame" x="40" y="20" width="532" height="15"/>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="message" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="rzb-gy-JSD">
+                            <rect key="frame" x="40" y="20" width="540" height="15"/>
                             <fontDescription key="fontDescription" type="system" pointSize="13"/>
                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                             <nil key="highlightedColor"/>
                         </label>
                     </subviews>
                     <color key="backgroundColor" red="0.90196078431372551" green="0.90196078431372551" blue="0.90196078431372551" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstItem="rzb-gy-JSD" firstAttribute="top" secondItem="aC9-vL-REW" secondAttribute="bottom" id="7H8-dN-20m"/>
+                        <constraint firstAttribute="trailing" secondItem="rzb-gy-JSD" secondAttribute="trailing" constant="16" id="8ZQ-zJ-Xd2"/>
+                        <constraint firstItem="csD-IM-hYM" firstAttribute="leading" secondItem="b0G-ZH-yJG" secondAttribute="leading" constant="4" id="Ppc-ax-Rby"/>
+                        <constraint firstItem="rzb-gy-JSD" firstAttribute="leading" secondItem="csD-IM-hYM" secondAttribute="trailing" constant="6" id="Q55-Pe-48Z"/>
+                        <constraint firstItem="aC9-vL-REW" firstAttribute="leading" secondItem="csD-IM-hYM" secondAttribute="trailing" constant="6" id="SGq-CP-PiH"/>
+                        <constraint firstAttribute="bottom" secondItem="rzb-gy-JSD" secondAttribute="bottom" constant="5" id="WOr-al-FRm"/>
+                        <constraint firstItem="aC9-vL-REW" firstAttribute="top" secondItem="b0G-ZH-yJG" secondAttribute="top" constant="5" id="cal-ho-7yF"/>
+                        <constraint firstItem="csD-IM-hYM" firstAttribute="top" secondItem="b0G-ZH-yJG" secondAttribute="top" constant="4" id="i9e-SZ-8db"/>
+                        <constraint firstAttribute="bottom" secondItem="csD-IM-hYM" secondAttribute="bottom" constant="6" id="pRQ-FG-rj3"/>
+                        <constraint firstAttribute="trailing" secondItem="aC9-vL-REW" secondAttribute="trailing" constant="16" id="qzd-yp-MPd"/>
+                    </constraints>
                 </view>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstItem="b0G-ZH-yJG" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="2" id="Du0-St-dvf"/>
                 <constraint firstAttribute="trailing" secondItem="b0G-ZH-yJG" secondAttribute="trailing" constant="2" id="JU0-WQ-KhL"/>
+                <constraint firstItem="b0G-ZH-yJG" firstAttribute="top" relation="greaterThanOrEqual" secondItem="iN0-l3-epB" secondAttribute="top" constant="2" id="Jgk-QO-tS5"/>
+                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="b0G-ZH-yJG" secondAttribute="trailing" constant="2" id="aF6-lo-9jt"/>
                 <constraint firstAttribute="bottom" secondItem="b0G-ZH-yJG" secondAttribute="bottom" constant="2" id="gha-yF-hiL"/>
+                <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="b0G-ZH-yJG" secondAttribute="bottom" constant="2" id="kmI-2w-OMn"/>
+                <constraint firstItem="b0G-ZH-yJG" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="iN0-l3-epB" secondAttribute="leading" constant="2" id="uI5-k9-kxA"/>
                 <constraint firstItem="b0G-ZH-yJG" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="2" id="xeg-SM-C24"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <variation key="default">
+                <mask key="constraints">
+                    <exclude reference="Jgk-QO-tS5"/>
+                    <exclude reference="aF6-lo-9jt"/>
+                    <exclude reference="kmI-2w-OMn"/>
+                    <exclude reference="uI5-k9-kxA"/>
+                </mask>
+            </variation>
             <connections>
                 <outlet property="backView_" destination="b0G-ZH-yJG" id="RZO-46-2fF"/>
                 <outlet property="iconImageView_" destination="csD-IM-hYM" id="eh8-3q-aZw"/>

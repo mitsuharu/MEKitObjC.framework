@@ -96,6 +96,7 @@
     }
     if (messageLabel_) {
         messageLabel_.text = nil;
+        messageLabel_.autoresizingMask = UIViewAutoresizingFlexibleWidth;
     }
     if (backView_) {
         backView_.layer.cornerRadius = 10;
