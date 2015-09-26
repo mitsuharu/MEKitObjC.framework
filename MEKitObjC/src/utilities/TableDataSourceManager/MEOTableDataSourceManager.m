@@ -724,6 +724,7 @@
                 MEOTableDataSource *tds = [dataSources_ objectAtIndex:indexPath.section];
                 
                 if (tds.dataSource && indexPath.row < tds.dataSource.count) {
+                    cell.accessoryView = nil;
                     NSString *str = [tds.dataSource objectAtIndex:indexPath.row];
                     if (str && [str isKindOfClass:[NSString class]]) {
                         cell.textLabel.text = str;
