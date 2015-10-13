@@ -8,6 +8,8 @@
 #import "MEOInstagramActivity.h"
 #import "MEOUtilities.h"
 
+NSString *const MEOActivityTypeInstagram = @"MEOActivityTypeInstagram";
+
 @interface MEOInstagramActivity ()
 <
     UIDocumentInteractionControllerDelegate
@@ -22,9 +24,16 @@
 
 @implementation MEOInstagramActivity
 
++ (BOOL)canOpenInstagram
+{
+    NSURL *instagramURL = [NSURL URLWithString:@"instagram://app"];
+    BOOL result =  [[UIApplication sharedApplication] canOpenURL:instagramURL];
+    return result;
+}
+
 - (NSString *)activityType
 {
-    return @"UIActivityTypePostToInstagram";
+    return MEOActivityTypeInstagram;
 }
 
 - (NSString *)activityTitle
@@ -38,12 +47,10 @@
     return image;
 }
 
-
 - (BOOL)canPerformWithActivityItems:(NSArray *)activityItems
 {
-    NSURL *instagramURL = [NSURL URLWithString:@"instagram://app"];
-    if (![[UIApplication sharedApplication] canOpenURL:instagramURL]) {
-        NSLog(@"no instagram");
+    BOOL result = [MEOInstagramActivity canOpenInstagram];
+    if (result == false) {
         return false;
     }
     for (UIActivityItemProvider *item in activityItems) {

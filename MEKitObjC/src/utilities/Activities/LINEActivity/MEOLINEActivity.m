@@ -1,17 +1,23 @@
 //
-//  LINEActivity.m
-//
-//  Created by Noda Shimpei on 2012/12/04.
-//  Copyright (c) 2012年 @noda_sin. All rights reserved.
+//  MEOLINEActivity.m
 //
 
-#import "LINEActivity.h"
+#import "MEOLINEActivity.h"
 #import "MEOUtilities.h"
 
-@implementation LINEActivity
+NSString *const MEOActivityTypeLINE = @"jp.naver.LINEActivity";
+
+@implementation MEOLINEActivity
+
++ (BOOL)canOpenLINE
+{
+    NSURL *instagramURL = [NSURL URLWithString:@"line://"];
+    BOOL result =  [[UIApplication sharedApplication] canOpenURL:instagramURL];
+    return result;
+}
 
 - (NSString *)activityType {
-    return @"jp.naver.LINEActivity";
+    return MEOActivityTypeLINE;
 }
 
 - (UIImage *)activityImage
@@ -27,6 +33,11 @@
 
 - (BOOL)canPerformWithActivityItems:(NSArray *)activityItems
 {
+    BOOL result = [MEOLINEActivity canOpenLINE];
+    if (result == false) {
+        return false;
+    }
+    
     for (id activityItem in activityItems) {
         if ([activityItem isKindOfClass:[NSString class]] || [activityItem isKindOfClass:[UIImage class]]) {
             return YES;

@@ -49,7 +49,7 @@
     }
     
     id resultl = text_;
-    if ([activityType isEqualToString:ActivityTypeLINE]) {
+    if ([activityType isEqualToString:MEOActivityTypeLINE]) {
         NSString *str = [NSString stringWithFormat:@"%@ %@", text_, url_.absoluteString];
         // DLog(@"%@", str);
         return str;
@@ -75,7 +75,7 @@
     MEOActivityHelper *achpText = [[MEOActivityHelper alloc] initWithItemBlock:^id(UIActivityViewController *activityViewController,
                                                                                    NSString *activityType)
     {
-        if ([activityType isEqualToString:ActivityTypeLINE]) {
+        if ([activityType isEqualToString:MEOActivityTypeLINE]) {
             NSString *str = [NSString stringWithFormat:@"%@ %@", text, urlString];
             return str;
         }
@@ -133,7 +133,7 @@
             activities = [[NSMutableArray alloc] initWithCapacity:1];
         }
         
-        LINEActivity *act = [[LINEActivity alloc] init];
+        MEOLINEActivity *act = [[MEOLINEActivity alloc] init];
         [activities addObject:act];
     }
     

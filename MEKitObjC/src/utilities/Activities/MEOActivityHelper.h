@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import <Foundation/Foundation.h>
 
-#import "LINEActivity.h"
+#import "MEOLINEActivity.h"
 #import "MEOInstagramActivity.h"
 
 typedef id (^AHItemBlock)(UIActivityViewController* activityViewController, NSString* activityType);

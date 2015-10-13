@@ -7,6 +7,10 @@
 
 #import <UIKit/UIKit.h>
 
+extern NSString *const MEOActivityTypeInstagram;
+
 @interface MEOInstagramActivity : UIActivity
+
++ (BOOL)canOpenInstagram;
 
 @end

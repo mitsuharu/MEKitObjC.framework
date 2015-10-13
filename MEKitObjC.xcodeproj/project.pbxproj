@@ -25,8 +25,8 @@
 		9B0404501ACAAD960071090C /* MEKitObjC.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 9B04044F1ACAAD960071090C /* MEKitObjC.h */; };
 		9B0404521ACAAD960071090C /* MEKitObjC.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B0404511ACAAD960071090C /* MEKitObjC.m */; };
 		9B0404581ACAAD960071090C /* libMEKitObjC.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B04044C1ACAAD960071090C /* libMEKitObjC.a */; };
-		9B10BA8A1ADB3E4000B70BA5 /* LINEActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B10BA831ADB3E4000B70BA5 /* LINEActivity.m */; };
-		9B10BA8B1ADB3E4000B70BA5 /* LINEActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B10BA831ADB3E4000B70BA5 /* LINEActivity.m */; };
+		9B10BA8A1ADB3E4000B70BA5 /* MEOLINEActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B10BA831ADB3E4000B70BA5 /* MEOLINEActivity.m */; };
+		9B10BA8B1ADB3E4000B70BA5 /* MEOLINEActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B10BA831ADB3E4000B70BA5 /* MEOLINEActivity.m */; };
 		9B10BA8C1ADB3E4000B70BA5 /* LINEActivityIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 9B10BA841ADB3E4000B70BA5 /* LINEActivityIcon.png */; };
 		9B10BA8D1ADB3E4000B70BA5 /* LINEActivityIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9B10BA851ADB3E4000B70BA5 /* LINEActivityIcon@2x.png */; };
 		9B10BA8E1ADB3E4000B70BA5 /* LINEActivityIcon@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 9B10BA861ADB3E4000B70BA5 /* LINEActivityIcon@2x~ipad.png */; };
@@ -209,8 +209,8 @@
 		9B0404571ACAAD960071090C /* MEKitObjCTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MEKitObjCTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		9B04045D1ACAAD960071090C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9B0405B61ACACC160071090C /* MEKitObjCResources.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MEKitObjCResources.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
-		9B10BA821ADB3E4000B70BA5 /* LINEActivity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LINEActivity.h; sourceTree = "<group>"; };
-		9B10BA831ADB3E4000B70BA5 /* LINEActivity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LINEActivity.m; sourceTree = "<group>"; };
+		9B10BA821ADB3E4000B70BA5 /* MEOLINEActivity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEOLINEActivity.h; sourceTree = "<group>"; };
+		9B10BA831ADB3E4000B70BA5 /* MEOLINEActivity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MEOLINEActivity.m; sourceTree = "<group>"; };
 		9B10BA841ADB3E4000B70BA5 /* LINEActivityIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LINEActivityIcon.png; sourceTree = "<group>"; };
 		9B10BA851ADB3E4000B70BA5 /* LINEActivityIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "LINEActivityIcon@2x.png"; sourceTree = "<group>"; };
 		9B10BA861ADB3E4000B70BA5 /* LINEActivityIcon@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "LINEActivityIcon@2x~ipad.png"; sourceTree = "<group>"; };
@@ -435,8 +435,8 @@
 		9B10BA811ADB3E4000B70BA5 /* LINEActivity */ = {
 			isa = PBXGroup;
 			children = (
-				9B10BA821ADB3E4000B70BA5 /* LINEActivity.h */,
-				9B10BA831ADB3E4000B70BA5 /* LINEActivity.m */,
+				9B10BA821ADB3E4000B70BA5 /* MEOLINEActivity.h */,
+				9B10BA831ADB3E4000B70BA5 /* MEOLINEActivity.m */,
 				9B10BA841ADB3E4000B70BA5 /* LINEActivityIcon.png */,
 				9B10BA851ADB3E4000B70BA5 /* LINEActivityIcon@2x.png */,
 				9B10BA861ADB3E4000B70BA5 /* LINEActivityIcon@2x~ipad.png */,
@@ -953,7 +953,7 @@
 		9B0404441ACAAD960071090C /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0630;
+				LastUpgradeCheck = 0700;
 				ORGANIZATIONNAME = "Mitsuharu Emoto";
 				TargetAttributes = {
 					9B04044B1ACAAD960071090C = {
@@ -1095,7 +1095,7 @@
 				9B3155FC1ACB764600611592 /* UIView+Enhanced.m in Sources */,
 				9B3156251ACB764600611592 /* MEOKeyChain.m in Sources */,
 				9BFB4D491B32930B008833E5 /* UILabel+Enhanced.m in Sources */,
-				9B10BA8A1ADB3E4000B70BA5 /* LINEActivity.m in Sources */,
+				9B10BA8A1ADB3E4000B70BA5 /* MEOLINEActivity.m in Sources */,
 				9B3156391ACB764600611592 /* MEOTableViewCell.m in Sources */,
 				9B3155F81ACB764600611592 /* UITableViewCell+Enhanced.m in Sources */,
 				9B3156061ACB764600611592 /* MEOCache.m in Sources */,
@@ -1190,7 +1190,7 @@
 				9B802E091ACBE9B5003A596D /* MEOCollectionDataSourceManager.m in Sources */,
 				9B3156281ACB764600611592 /* MEOLocationService.m in Sources */,
 				9B3155E31ACB764600611592 /* NSObject+Enhanced.m in Sources */,
-				9B10BA8B1ADB3E4000B70BA5 /* LINEActivity.m in Sources */,
+				9B10BA8B1ADB3E4000B70BA5 /* MEOLINEActivity.m in Sources */,
 				9B3156051ACB764600611592 /* MEOCoreDataManager.m in Sources */,
 				9B3156201ACB764600611592 /* MEOAlertView.m in Sources */,
 				9B31562C1ACB764600611592 /* MEONotificationView.m in Sources */,
@@ -1264,6 +1264,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -1351,6 +1352,7 @@
 				);
 				INFOPLIST_FILE = MEKitObjCTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "jp.co.Mitsuharu Emoto.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -1364,6 +1366,7 @@
 				);
 				INFOPLIST_FILE = MEKitObjCTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "jp.co.Mitsuharu Emoto.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -1395,6 +1398,7 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				ONLY_ACTIVE_ARCH = NO;
+				PRODUCT_BUNDLE_IDENTIFIER = "jp.co.Mitsuharu.Emoto.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
@@ -1411,6 +1415,7 @@
 				INFOPLIST_FILE = MEKitObjCResources/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				PRODUCT_BUNDLE_IDENTIFIER = "jp.co.Mitsuharu.Emoto.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
