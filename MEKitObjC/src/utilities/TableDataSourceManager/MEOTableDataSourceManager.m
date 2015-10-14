@@ -16,7 +16,7 @@
 {
     NSMutableArray *dataSources_;
     NSString *cellIdentifier_;
-    id<MEOTableDataSourceManagerDelegate> delegate_;
+    __weak id<MEOTableDataSourceManagerDelegate> delegate_;
 
     NSString *strNowLoading_;
     NSString *strLastUpdate_;

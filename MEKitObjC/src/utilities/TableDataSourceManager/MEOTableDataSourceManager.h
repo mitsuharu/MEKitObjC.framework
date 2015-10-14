@@ -70,7 +70,7 @@
 
 @property (nonatomic, retain) NSMutableArray *dataSources;
 @property (nonatomic, retain) NSString *cellIdentifier;
-@property (nonatomic, retain) id<MEOTableDataSourceManagerDelegate> delegate;
+@property (nonatomic, weak) id<MEOTableDataSourceManagerDelegate> delegate;
 
 @property (nonatomic) BOOL showNotFoundCell;
 @property (nonatomic) BOOL showNowLoadingCell;
