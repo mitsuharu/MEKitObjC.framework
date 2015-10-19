@@ -764,7 +764,28 @@
 commitEditingStyle:(UITableViewCellEditingStyle)editingStyle
 forRowAtIndexPath:(NSIndexPath *)indexPath
 {
+}
+
+- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView
+           editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+
+    UITableViewCellEditingStyle style = UITableViewCellEditingStyleNone;
+    if (tableView.editing) {
+        style =  UITableViewCellEditingStyleDelete;
+    }
     
+    MEOTableDataSource *tds = [dataSources_ objectAtIndex:indexPath.section];
+    if (tds.editActions && tds.editActions.count > indexPath.row) {
+        NSArray *arr = (NSArray *)[tds.editActions objectAtIndex:indexPath.row];
+        if (arr && arr.count > 0) {
+            style = UITableViewCellEditingStyleDelete;
+        }else{
+            style = UITableViewCellEditingStyleNone;
+        }
+    }
+    
+    return style;
 }
 
 // http://dev.classmethod.jp/references/ios-8-uitableviewrowaction/
