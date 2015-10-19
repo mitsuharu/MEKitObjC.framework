@@ -25,6 +25,7 @@ typedef void (^MEOBlockWithError)(NSError *error);
 -(void)dispatchAsync:(MEOBlock)block;
 -(void)dispatchSync:(MEOBlock)block;
 -(void)dispatchDelay:(NSTimeInterval)delay block:(MEOBlock)block;
+- (void)dispatchOnNextRunloop:(MEOBlock)block;
 
 -(void)performBlockInBackground:(MEOBlock)block;
 -(void)performBlockOnMainThread:(MEOBlock)block;

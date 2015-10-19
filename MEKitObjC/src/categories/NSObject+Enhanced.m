@@ -61,6 +61,15 @@ NSString *const kKeyboardAccessoryLeftButtonCompletion = @"kKeyboardAccessoryLef
 }
 
 
+- (void)dispatchOnNextRunloop:(MEOBlock)block
+{
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.0),
+                   dispatch_get_main_queue(),
+                   ^(void){
+                       block();
+                   });
+}
+
 -(void)performBlock:(MEOBlock)block afterDelay:(NSTimeInterval)delay
 {
     [self performSelector:@selector(callBlock:)
