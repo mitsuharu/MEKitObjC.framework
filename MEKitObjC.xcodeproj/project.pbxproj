@@ -180,6 +180,13 @@
 			remoteGlobalIDString = 9B04044B1ACAAD960071090C;
 			remoteInfo = MEKitObjC;
 		};
+		9B4D01191BD484C900B80857 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9B0404441ACAAD960071090C /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 9B0405B51ACACC160071090C;
+			remoteInfo = MEKitObjCResources;
+		};
 		9BBF190E1B02F64C00515F4B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 9B0404441ACAAD960071090C /* Project object */;
@@ -351,7 +358,6 @@
 		9BB5240E1AEF4DA700A13E69 /* LINEActivityIcon~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "LINEActivityIcon~ipad.png"; sourceTree = "<group>"; };
 		9BBB54391B7449FA00DCB9C1 /* MEOCaptureSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEOCaptureSessionManager.h; sourceTree = "<group>"; };
 		9BBB543A1B7449FA00DCB9C1 /* MEOCaptureSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MEOCaptureSessionManager.m; sourceTree = "<group>"; };
-		9BBF190D1B02F64200515F4B /* MEKitObjCResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = MEKitObjCResources.bundle; sourceTree = "<group>"; };
 		9BD4F5361ACE39E300535693 /* MEOActionSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEOActionSheet.h; sourceTree = "<group>"; };
 		9BD4F5371ACE39E300535693 /* MEOActionSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MEOActionSheet.m; sourceTree = "<group>"; };
 		9BFB4D471B32930B008833E5 /* UILabel+Enhanced.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UILabel+Enhanced.h"; sourceTree = "<group>"; };
@@ -877,7 +883,6 @@
 		9BBF190C1B02F64200515F4B /* resources */ = {
 			isa = PBXGroup;
 			children = (
-				9BBF190D1B02F64200515F4B /* MEKitObjCResources.bundle */,
 			);
 			path = resources;
 			sourceTree = "<group>";
@@ -905,6 +910,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				9B4D011A1BD484C900B80857 /* PBXTargetDependency */,
 			);
 			name = MEKitObjC;
 			productName = MEKitObjC;
@@ -1213,6 +1219,11 @@
 			isa = PBXTargetDependency;
 			target = 9B04044B1ACAAD960071090C /* MEKitObjC */;
 			targetProxy = 9B0404591ACAAD960071090C /* PBXContainerItemProxy */;
+		};
+		9B4D011A1BD484C900B80857 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 9B0405B51ACACC160071090C /* MEKitObjCResources */;
+			targetProxy = 9B4D01191BD484C900B80857 /* PBXContainerItemProxy */;
 		};
 		9BBF190F1B02F64C00515F4B /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
