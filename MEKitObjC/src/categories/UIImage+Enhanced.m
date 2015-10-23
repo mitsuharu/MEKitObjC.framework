@@ -370,7 +370,7 @@
     UIGraphicsBeginImageContextWithOptions(rect.size, false, 0.0);
     CGContextRef context = UIGraphicsGetCurrentContext();
     
-    CGContextSetRGBFillColor(context, r, g, b, 1);
+    CGContextSetRGBFillColor(context, r, g, b, a);
     CGContextFillEllipseInRect(context, rect);
     
     UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
