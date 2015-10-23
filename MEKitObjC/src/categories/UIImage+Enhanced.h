@@ -74,4 +74,7 @@
 +(UIImage*)imageWithUIColor:(UIColor*)color;
 
 
++ (UIImage*)circleImageWithRadius:(CGFloat)radius color:(UIColor*)color;
+
+
 @end

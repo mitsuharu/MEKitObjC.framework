@@ -360,6 +360,25 @@
     return image;
 }
 
++ (UIImage*)circleImageWithRadius:(CGFloat)radius color:(UIColor*)color
+{
+    CGRect rect = CGRectMake(0, 0, ceilf(radius*2), ceilf(radius*2));
+    
+    CGFloat r, g, b, a;
+    [color getRed:&r green:&g blue:&b alpha:&a];
+    
+    UIGraphicsBeginImageContextWithOptions(rect.size, false, 0.0);
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    
+    CGContextSetRGBFillColor(context, r, g, b, 1);
+    CGContextFillEllipseInRect(context, rect);
+    
+    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    return image;
+}
+
 
 @end
 
