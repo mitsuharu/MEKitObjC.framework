@@ -42,9 +42,17 @@
     return self;
 }
 
+
+- (void)dealloc
+{
+    [self initialize];
+}
+
 -(void)initialize
 {
-    
+    self.delegate = nil;
+    self.collectionView.delegate = nil;
+    self.collectionView = nil;
 }
 
 #pragma mark - Parameter io
