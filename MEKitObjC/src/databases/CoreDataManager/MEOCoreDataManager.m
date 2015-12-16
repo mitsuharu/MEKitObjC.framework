@@ -22,7 +22,7 @@
 -(BOOL)makeManagedObjectModel;
 -(BOOL)makePersistentStoreCoordinator;
 
--(NSString*)applicationDocumentsDirectory;
++(NSString*)applicationDocumentsDirectory;
 
 @end
 

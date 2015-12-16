@@ -76,29 +76,29 @@
 {
     NSNotificationCenter *notification = [NSNotificationCenter defaultCenter];
     
-    if (self && [self respondsToSelector:@selector(keyboardWillShow:)]) {
+    if (self && [self respondsToSelector:@selector(meoKeyboardWillShow:)]) {
         [notification addObserver:self
-                         selector:@selector(keyboardWillShow:)
+                         selector:@selector(meoKeyboardWillShow:)
                              name:UIKeyboardWillShowNotification
                            object:nil];
     }
-    if (self && [self respondsToSelector:@selector(keyboardDidShow:)]) {
+    if (self && [self respondsToSelector:@selector(meoKeyboardDidShow:)]) {
         [notification addObserver:self
-                         selector:@selector(keyboardDidShow:)
+                         selector:@selector(meoKeyboardDidShow:)
                              name:UIKeyboardDidShowNotification
                            object:nil];
     }
     
-    if (self && [self respondsToSelector:@selector(keyboardWillHide:)]) {
+    if (self && [self respondsToSelector:@selector(meoKeyboardWillHide:)]) {
         [notification addObserver:self
-                         selector:@selector(keyboardWillHide:)
+                         selector:@selector(meoKeyboardWillHide:)
                              name:UIKeyboardWillHideNotification
                            object:nil];
     }
     
-    if (self && [self respondsToSelector:@selector(keyboardDidHide:)]) {
+    if (self && [self respondsToSelector:@selector(meoKeyboardDidHide:)]) {
         [notification addObserver:self
-                         selector:@selector(keyboardDidHide:)
+                         selector:@selector(meoKeyboardDidHide:)
                              name:UIKeyboardDidHideNotification
                            object:nil];
     }
@@ -109,25 +109,25 @@
 {
     NSNotificationCenter *notification = [NSNotificationCenter defaultCenter];
     
-    if (self && [self respondsToSelector:@selector(keyboardWillShow:)]) {
+    if (self && [self respondsToSelector:@selector(meoKeyboardWillShow:)]) {
         [notification removeObserver:self
                                 name:UIKeyboardWillShowNotification
                               object:nil];
     }
     
-    if (self && [self respondsToSelector:@selector(keyboardDidShow:)]) {
+    if (self && [self respondsToSelector:@selector(meoKeyboardDidShow:)]) {
         [notification removeObserver:self
                                 name:UIKeyboardDidShowNotification
                               object:nil];
     }
     
-    if (self && [self respondsToSelector:@selector(keyboardWillHide:)]) {
+    if (self && [self respondsToSelector:@selector(meoKeyboardWillHide:)]) {
         [notification removeObserver:self
                                 name:UIKeyboardWillHideNotification
                               object:nil];
     }
     
-    if (self && [self respondsToSelector:@selector(keyboardDidHide:)]) {
+    if (self && [self respondsToSelector:@selector(meoKeyboardDidHide:)]) {
         [notification removeObserver:self
                                 name:UIKeyboardDidHideNotification
                               object:nil];

@@ -38,12 +38,12 @@
 @protocol MEOKeyboardNotification <NSObject>
 
 @required
--(void)keyboardWillShow:(NSNotification*)notification;
--(void)keyboardWillHide:(NSNotification*)notification;
+-(void)meoKeyboardWillShow:(NSNotification*)notification;
+-(void)meoKeyboardWillHide:(NSNotification*)notification;
 
 @optional
--(void)keyboardDidShow:(NSNotification*)notification;
--(void)keyboardDidHide:(NSNotification*)notification;
+-(void)meoKeyboardDidShow:(NSNotification*)notification;
+-(void)meoKeyboardDidHide:(NSNotification*)notification;
 
 @end
 
