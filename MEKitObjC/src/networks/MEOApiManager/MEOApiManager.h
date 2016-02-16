@@ -15,6 +15,7 @@ extern NSString* const MEOApiManagerHttpMethodPost;
 extern NSString* const MEOApiManagerHttpMethodPut;
 extern NSString* const MEOApiManagerHttpMethodGet;
 extern NSString* const MEOApiManagerHttpMethodDelete;
+extern NSString* const MEOApiManagerLastModified;
 
 typedef enum {
     MEOApiManagerResultStatusNetworkFailed = 0,
@@ -54,6 +55,16 @@ typedef void (^MEOApiManagerCompletion) (MEOApiManagerResultStatus result,
  *  @return 辞書列配列
  */
 +(NSDictionary*)parseJson:(NSData*)jsonData;
+
+
+/**
+ *  UserInfoからlastModifiedを取得する
+ *
+ *  @param userInfo リクエストメソッドから取得される
+ *
+ *  @return ファイルの更新日時，なければnil
+ */
++ (NSDate*)lastModified:(NSDictionary*)userInfo;
 
 /**
  *  httpリクエストを行う（bodyは文字列）

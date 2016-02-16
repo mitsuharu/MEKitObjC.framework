@@ -13,6 +13,7 @@ NSString* const MEOApiManagerHttpMethodPost = @"POST";
 NSString* const MEOApiManagerHttpMethodPut = @"PUT";
 NSString* const MEOApiManagerHttpMethodGet = @"GET";
 NSString* const MEOApiManagerHttpMethodDelete = @"DELETE";
+NSString* const MEOApiManagerLastModified = @"MEOApiManagerLastModified";
 
 #pragma mark - MEOApiOption -
 
@@ -98,6 +99,27 @@ NSString* const MEOApiManagerHttpMethodDelete = @"DELETE";
         statusCode = [httpUrlResponse statusCode];
     }
     return statusCode;
+}
+
+- (NSDate*)lastModified:(NSURLResponse*)response
+{
+    NSDate *lastModified = nil;
+    
+    NSHTTPURLResponse *httpUrlResponse = (NSHTTPURLResponse*)response;
+    NSDictionary *header = httpUrlResponse.allHeaderFields;
+    NSString *key = @"Last-Modified";
+    if ([header.allKeys containsObject:key]) {
+        NSString *str = [header objectForKey:key];
+        if (str && str.length > 0) {
+            NSDateFormatter *df = [[NSDateFormatter alloc] init];
+            df.locale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US"];
+            df.timeZone = [NSTimeZone timeZoneWithAbbreviation:@"GMT"];
+            df.dateFormat = @"EEE',' dd MMM yyyy HH':'mm':'ss 'GMT'";
+            lastModified = [df dateFromString:str];
+        }
+    }
+    
+    return lastModified;
 }
 
 - (NSError*)errorWithErrorCode:(NSInteger)code
@@ -220,6 +242,16 @@ NSString* const MEOApiManagerHttpMethodDelete = @"DELETE";
                 }
             }
             
+            NSDate *lastModified = [self lastModified:response];
+            if (lastModified) {
+                if (self.option.userInfo == nil) {
+                    self.option.userInfo = [[NSDictionary alloc] init];
+                }
+                NSMutableDictionary *dict = (NSMutableDictionary*)self.option.userInfo;
+                [dict setValue:lastModified forKey:MEOApiManagerLastModified];
+                self.option.userInfo = (NSDictionary*)dict;
+            }
+            
             NSInteger statusCode = [self httpStatusCode:response];
             MEOApiManagerResultStatus resultStatus = MEOApiManagerResultStatusResponseFailed;
             if ( 0 <= (statusCode-200) && (statusCode-200) < 100) {
@@ -296,6 +328,17 @@ didReceiveChallenge:(NSURLAuthenticationChallenge *)challenge
 }
 
 #pragma mark 公開されるクラスメソッド
+
++ (NSDate*)lastModified:(NSDictionary*)userInfo
+{
+    NSDate *date = nil;
+    if (userInfo
+        && [userInfo isKindOfClass:[NSDictionary class]]
+        && [userInfo.allKeys containsObject:MEOApiManagerLastModified]) {
+        date = [userInfo objectForKey:MEOApiManagerLastModified];
+    }
+    return date;
+}
 
 +(NSDictionary*)parseJson:(NSData*)jsonData
 {
