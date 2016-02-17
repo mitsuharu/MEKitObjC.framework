@@ -30,6 +30,7 @@
         data_ = nil;
         uuid_ = [[NSUUID UUID] UUIDString];
         updatedAt_ = createdAt_ = [NSDate date];
+        self.validatedDays = 0;
     }
     return self;
 }
@@ -38,6 +39,9 @@
 {
     if (self = [self init]) {
         data_ = data;
+        uuid_ = [[NSUUID UUID] UUIDString];
+        updatedAt_ = createdAt_ = [NSDate date];
+        self.validatedDays = 0;
     }
     return self;
 }
@@ -57,11 +61,14 @@
     return cache;
 }
 
--(void)encodeWithCoder:(NSCoder *)encoder{
+-(void)encodeWithCoder:(NSCoder *)encoder
+{
     [encoder encodeObject:data_ forKey:@"data"];
     [encoder encodeObject:uuid_ forKey:@"uuid"];
     [encoder encodeObject:updatedAt_ forKey:@"updatedAt"];
     [encoder encodeObject:createdAt_ forKey:@"createdAt"];
+    [encoder encodeObject:[NSNumber numberWithDouble:self.validatedDays]
+                   forKey:@"validatedDays"];
 }
 
 - (id)initWithCoder:(NSCoder *)decoder
@@ -70,6 +77,7 @@
     uuid_ = [decoder decodeObjectForKey:@"uuid"];
     updatedAt_ = [decoder decodeObjectForKey:@"updatedAt"];
     createdAt_ = [decoder decodeObjectForKey:@"createdAt"];
+    self.validatedDays = [[decoder decodeObjectForKey:@"validatedDays"] doubleValue];
     return self;
 }
 

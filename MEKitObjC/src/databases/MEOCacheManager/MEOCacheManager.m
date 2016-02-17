@@ -13,12 +13,12 @@
 #define CACHE_DIR @"CACHE_MEOCacheManager"
 
 @interface NSString (MD5)
--(NSString *)MD5;
+- (NSString *)MD5;
 @end
 
 @implementation NSString (MD5)
 
--(NSString *)MD5
+- (NSString *)MD5
 {
     const char *cStr = [self UTF8String];
     unsigned char result[CC_MD5_DIGEST_LENGTH];
@@ -43,26 +43,26 @@
     NSTimeInterval validatedDays_;
 }
 
-+(MEOCacheManager*)sharedInstance;
++ (MEOCacheManager*)sharedInstance;
 
--(NSString *)pathForUrl:(NSString *)urlString;
--(void)createDirectories;
--(void)didReceiveMemoryWarning:(NSNotification *)notification;
+- (NSString *)pathForUrl:(NSString *)urlString;
+- (void)createDirectories;
+- (void)didReceiveMemoryWarning:(NSNotification *)notification;
 
--(void)clearMemoryCache;
--(void)deleteAllCacheFiles;
+- (void)clearMemoryCache;
+- (void)deleteAllCacheFiles;
 
--(MEOCache*)dataForKey:(NSString *)key;
--(void)setData:(NSData *)data forKey:(NSString *)key;
--(void)deleteCachedDataWithUrl:(NSString *)urlString;
+- (MEOCache*)dataForKey:(NSString *)key;
+- (void)setData:(NSData *)data forKey:(NSString *)key;
+- (void)deleteCachedDataWithUrl:(NSString *)urlString;
 
--(void)setValidatedDays:(NSTimeInterval)validatedDays;
+- (void)setValidatedDays:(NSTimeInterval)validatedDays;
 
 @end
 
 @implementation MEOCacheManager
 
-+(MEOCacheManager*)sharedInstance
++ (MEOCacheManager*)sharedInstance
 {
     static MEOCacheManager *sharedInstance;
     static dispatch_once_t pred;
@@ -72,7 +72,7 @@
     return sharedInstance;
 }
 
--(id)init
+- (id)init
 {
     if (self = [super init]) {
         [[NSNotificationCenter defaultCenter] addObserver:self
@@ -99,7 +99,7 @@
     return self;
 }
 
--(void)dealloc
+- (void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     cache_ = nil;
@@ -107,17 +107,17 @@
     pathCacheDirectory_ = nil;
 }
 
--(void)didReceiveMemoryWarning:(NSNotification *)notification
+- (void)didReceiveMemoryWarning:(NSNotification *)notification
 {
     [self clearMemoryCache];
 }
 
--(void)setValidatedDays:(NSTimeInterval)validatedDays
+- (void)setValidatedDays:(NSTimeInterval)validatedDays
 {
     validatedDays_ = validatedDays;
 }
 
--(NSTimeInterval)elapsedDays:(NSDate*)basedDate
+- (NSTimeInterval)elapsedDays:(NSDate*)basedDate
 {
     NSTimeInterval days = 0.0;
     if (basedDate) {
@@ -128,7 +128,7 @@
 }
 
 
--(void)createDirectories
+- (void)createDirectories
 {
     BOOL isDirectory = NO;
     BOOL exists = [fileManager_ fileExistsAtPath:pathCacheDirectory_
@@ -183,7 +183,7 @@
 }
 
 
--(NSString *)pathForUrl:(NSString *)urlString
+- (NSString *)pathForUrl:(NSString *)urlString
 {
     NSString *md5 = [urlString MD5];
     
@@ -194,7 +194,7 @@
 }
 
 
--(MEOCache*)dataForKey:(NSString *)key
+- (MEOCache*)dataForKey:(NSString *)key
 {
     MEOCache *cachedData = [cache_ objectForKey:[key MD5]];
     if (cachedData == nil) {
@@ -202,9 +202,13 @@
     }
     
     // 有効期限
-    if (validatedDays_ > 0 && cachedData.updatedAt) {
+    NSTimeInterval validate = validatedDays_;
+    if (cachedData.validatedDays > 0) {
+        validate = cachedData.validatedDays;
+    }
+    if (validate > 0 && cachedData.updatedAt) {
         NSTimeInterval diff = [self elapsedDays:cachedData.updatedAt];
-        if (diff > validatedDays_) {
+        if (diff > validate) {
             cachedData = nil;
             [self deleteCachedDataWithUrl:key];
         }
@@ -213,10 +217,11 @@
     return cachedData;
 }
 
-
--(void)setData:(NSData *)data forKey:(NSString *)key
+- (void)setData:(NSData *)data
+ validatedDays:(NSTimeInterval )validatedDays
+        forKey:(NSString *)key
 {
-    if (data) {
+    if (data && key) {
         MEOCache *tempCache = [self dataForKey:key];
         if (tempCache) {
             tempCache.data = data;
@@ -224,13 +229,18 @@
         }else{
             tempCache = [[MEOCache alloc] initWithData:data];
         }
+        tempCache.validatedDays = validatedDays;
         [cache_ setObject:tempCache forKey:[key MD5]];
         [tempCache writeToFile:[self pathForUrl:key]];
     }
-    
 }
 
--(void)deleteCachedDataWithUrl:(NSString *)urlString
+- (void)setData:(NSData *)data forKey:(NSString *)key
+{
+    [self setData:data validatedDays:0 forKey:key];
+}
+
+- (void)deleteCachedDataWithUrl:(NSString *)urlString
 {
     [cache_ removeObjectForKey:[urlString MD5]];
     if ([fileManager_ fileExistsAtPath:[self pathForUrl:urlString]]) {
@@ -241,20 +251,20 @@
 
 #pragma mark - 公開用のメソッド
 
-+(void)setValidatedDays:(NSTimeInterval)validatedDays
++ (void)setValidatedDays:(NSTimeInterval)validatedDays
 {
     MEOCacheManager *cm = [MEOCacheManager sharedInstance];
     [cm setValidatedDays:validatedDays];
 }
 
 
-+(NSData*)dataForKey:(NSString *)key
++ (NSData*)dataForKey:(NSString *)key
 {
     return [MEOCacheManager dataForKey:key
                             completion:nil];
 }
 
-+(NSData*)dataForKey:(NSString *)key completion:(MEOCacheManagerCompletion)completion
++ (NSData*)dataForKey:(NSString *)key completion:(MEOCacheManagerCompletion)completion
 {
     MEOCacheManager *cm = [MEOCacheManager sharedInstance];
     MEOCache *cache = [cm dataForKey:key];
@@ -274,12 +284,12 @@
     return data;
 }
 
-+(UIImage*)imageForKey:(NSString *)key
++ (UIImage*)imageForKey:(NSString *)key
 {
     return [MEOCacheManager imageForKey:key completion:nil];
 }
 
-+(UIImage*)imageForKey:(NSString *)key completion:(MEOCacheManagerCompletion)completion
++ (UIImage*)imageForKey:(NSString *)key completion:(MEOCacheManagerCompletion)completion
 {
     NSData *data = [MEOCacheManager dataForKey:key completion:completion];
     UIImage *image = nil;
@@ -289,12 +299,12 @@
     return image;
 }
 
-+(NSString*)stringForKey:(NSString *)key
++ (NSString*)stringForKey:(NSString *)key
 {
     return [MEOCacheManager stringForKey:key completion:nil];
 }
 
-+(NSString*)stringForKey:(NSString *)key completion:(MEOCacheManagerCompletion)completion
++ (NSString*)stringForKey:(NSString *)key completion:(MEOCacheManagerCompletion)completion
 {
     NSData *data = [MEOCacheManager dataForKey:key completion:completion];
     NSString *string = nil;
@@ -304,43 +314,71 @@
     return string;
 }
 
-+(NSString*)stringFromData:(NSData*)data
++ (NSString*)stringFromData:(NSData*)data
 {
     return [MEOCache stringFromData:data];
 }
 
-+(UIImage*)imageFromData:(NSData*)data
++ (UIImage*)imageFromData:(NSData*)data
 {
     return [UIImage imageWithData:data];
 }
 
-+(void)setData:(NSData *)data forKey:(NSString *)key
++ (void)setData:(NSData *)data
+  validatedDays:(NSTimeInterval)validatedDays
+         forKey:(NSString *)key
+{
+    MEOCacheManager *cm = [MEOCacheManager sharedInstance];
+    [cm setData:data validatedDays:validatedDays forKey:key];
+}
+
++ (void)setData:(NSData *)data forKey:(NSString *)key
 {
     MEOCacheManager *cm = [MEOCacheManager sharedInstance];
     [cm setData:data forKey:key];
 }
 
-+(void)setImage:(UIImage *)image forKey:(NSString *)key
++ (void)setImage:(UIImage *)image
+   validatedDays:(NSTimeInterval)validatedDays
+          forKey:(NSString *)key
 {
-    [self setData:UIImagePNGRepresentation(image) forKey:key];
+    [MEOCacheManager setData:UIImagePNGRepresentation(image)
+               validatedDays:validatedDays
+                      forKey:key];
 }
 
-+(void)setString:(NSString *)string forKey:(NSString *)key;
++ (void)setImage:(UIImage *)image forKey:(NSString *)key
 {
-    [self setData:[MEOCache dataFromString:string] forKey:key];
+    [MEOCacheManager setData:UIImagePNGRepresentation(image)
+                      forKey:key];
 }
 
-+(void)deleteForKey:(NSString *)key{
++ (void)setString:(NSString *)string
+    validatedDays:(NSTimeInterval)validatedDays
+           forKey:(NSString *)key
+{
+    [MEOCacheManager setData:[MEOCache dataFromString:string]
+               validatedDays:validatedDays
+                      forKey:key];
+}
+
++ (void)setString:(NSString *)string forKey:(NSString *)key;
+{
+    [MEOCacheManager setData:[MEOCache dataFromString:string]
+                      forKey:key];
+}
+
++ (void)deleteForKey:(NSString *)key{
     MEOCacheManager *cm = [MEOCacheManager sharedInstance];
     [cm deleteCachedDataWithUrl:key];
 }
 
-+(void)clearMemoryCache{
++ (void)clearMemoryCache{
     MEOCacheManager *cm = [MEOCacheManager sharedInstance];
     [cm clearMemoryCache];
 }
 
-+(void)deleteAllCacheFiles{
++ (void)deleteAllCacheFiles{
     MEOCacheManager *cm = [MEOCacheManager sharedInstance];
     [cm deleteAllCacheFiles];
 }

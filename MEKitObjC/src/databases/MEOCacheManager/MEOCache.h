@@ -16,6 +16,11 @@
 @property (nonatomic, retain) NSDate *createdAt;
 @property (nonatomic, retain) NSDate *updatedAt;
 
+/**
+ *  有効時間（日）
+ */
+@property (nonatomic) NSTimeInterval validatedDays;
+
 -(id)initWithData:(NSData*)data;
 
 -(BOOL)writeToFile:(NSString*)path;
