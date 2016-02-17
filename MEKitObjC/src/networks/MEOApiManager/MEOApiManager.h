@@ -15,7 +15,7 @@ extern NSString* const MEOApiManagerHttpMethodPost;
 extern NSString* const MEOApiManagerHttpMethodPut;
 extern NSString* const MEOApiManagerHttpMethodGet;
 extern NSString* const MEOApiManagerHttpMethodDelete;
-extern NSString* const MEOApiManagerLastModified;
+//extern NSString* const MEOApiManagerLastModified;
 
 typedef enum {
     MEOApiManagerResultStatusNetworkFailed = 0,

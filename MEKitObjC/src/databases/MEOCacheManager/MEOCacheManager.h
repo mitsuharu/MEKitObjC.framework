@@ -30,33 +30,33 @@ typedef void (^MEOCacheManagerCompletion) (NSData *data, NSDate *createdAt, NSDa
  *  有効期限付きでデータをキャッシュに保存する
  *
  *  @param data          保存されるデータ
- *  @param validatedDays 有効期限（日）
+ *  @param expiration 有効期限（日）
  *  @param key           キャッシュキー
  */
 + (void)setData:(NSData *)data
-  validatedDays:(NSTimeInterval)validatedDays
+     expiration:(NSTimeInterval)expiration
          forKey:(NSString *)key;
 
 /**
  *  有効期限付きで画像データをキャッシュに保存する
  *
  *  @param image          保存される画像データ
- *  @param validatedDays 有効期限（日）
+ *  @param expiration 有効期限（日）
  *  @param key           キャッシュキー
  */
 + (void)setImage:(UIImage *)image
-  validatedDays:(NSTimeInterval)validatedDays
+      expiration:(NSTimeInterval)expiration
          forKey:(NSString *)key;
 
 /**
  *  有効期限付きで文字データをキャッシュに保存する
  *
  *  @param string        保存される文字データ
- *  @param validatedDays 有効期限（日）
+ *  @param expiration 有効期限（日）
  *  @param key           キャッシュキー
  */
 + (void)setString:(NSString *)string
-   validatedDays:(NSTimeInterval)validatedDays
+       expiration:(NSTimeInterval)expiration
           forKey:(NSString *)key;
 
 + (void)deleteForKey:(NSString *)key;
@@ -66,7 +66,7 @@ typedef void (^MEOCacheManagerCompletion) (NSData *data, NSDate *createdAt, NSDa
 + (NSString*)stringFromData:(NSData*)data;
 + (UIImage*)imageFromData:(NSData*)data;
 
-+ (void)setValidatedDays:(NSTimeInterval)validatedDays;
++ (void)setExpiration:(NSTimeInterval)expiration;
 
 
 

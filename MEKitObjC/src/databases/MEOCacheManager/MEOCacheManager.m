@@ -40,7 +40,7 @@
     NSFileManager *fileManager_;
     NSString *pathCacheDirectory_;
     
-    NSTimeInterval validatedDays_;
+    NSTimeInterval expiration_;
 }
 
 + (MEOCacheManager*)sharedInstance;
@@ -56,7 +56,7 @@
 - (void)setData:(NSData *)data forKey:(NSString *)key;
 - (void)deleteCachedDataWithUrl:(NSString *)urlString;
 
-- (void)setValidatedDays:(NSTimeInterval)validatedDays;
+- (void)setExpiration:(NSTimeInterval)expiration;
 
 @end
 
@@ -83,7 +83,7 @@
         cache_ = [[NSCache alloc] init];
         cache_.countLimit = 20;
         
-        validatedDays_ = -1.0;
+        expiration_ = -1.0;
         
         //        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory,
         //                                                             NSUserDomainMask,
@@ -112,9 +112,9 @@
     [self clearMemoryCache];
 }
 
-- (void)setValidatedDays:(NSTimeInterval)validatedDays
+- (void)setExpiration:(NSTimeInterval)expiration
 {
-    validatedDays_ = validatedDays;
+    expiration_ = expiration;
 }
 
 - (NSTimeInterval)elapsedDays:(NSDate*)basedDate
@@ -202,13 +202,13 @@
     }
     
     // 有効期限
-    NSTimeInterval validate = validatedDays_;
-    if (cachedData.validatedDays > 0) {
-        validate = cachedData.validatedDays;
+    NSTimeInterval tempExpiration = expiration_;
+    if (cachedData.expiration > 0) {
+        tempExpiration = cachedData.expiration;
     }
-    if (validate > 0 && cachedData.updatedAt) {
+    if (tempExpiration > 0 && cachedData.updatedAt) {
         NSTimeInterval diff = [self elapsedDays:cachedData.updatedAt];
-        if (diff > validate) {
+        if (diff > tempExpiration) {
             cachedData = nil;
             [self deleteCachedDataWithUrl:key];
         }
@@ -218,8 +218,8 @@
 }
 
 - (void)setData:(NSData *)data
- validatedDays:(NSTimeInterval )validatedDays
-        forKey:(NSString *)key
+     expiration:(NSTimeInterval )expiration
+         forKey:(NSString *)key
 {
     if (data && key) {
         MEOCache *tempCache = [self dataForKey:key];
@@ -229,7 +229,7 @@
         }else{
             tempCache = [[MEOCache alloc] initWithData:data];
         }
-        tempCache.validatedDays = validatedDays;
+        tempCache.expiration = expiration;
         [cache_ setObject:tempCache forKey:[key MD5]];
         [tempCache writeToFile:[self pathForUrl:key]];
     }
@@ -237,7 +237,7 @@
 
 - (void)setData:(NSData *)data forKey:(NSString *)key
 {
-    [self setData:data validatedDays:0 forKey:key];
+    [self setData:data expiration:0 forKey:key];
 }
 
 - (void)deleteCachedDataWithUrl:(NSString *)urlString
@@ -251,10 +251,10 @@
 
 #pragma mark - 公開用のメソッド
 
-+ (void)setValidatedDays:(NSTimeInterval)validatedDays
++ (void)setExpiration:(NSTimeInterval)expiration
 {
     MEOCacheManager *cm = [MEOCacheManager sharedInstance];
-    [cm setValidatedDays:validatedDays];
+    [cm setExpiration:expiration];
 }
 
 
@@ -325,11 +325,11 @@
 }
 
 + (void)setData:(NSData *)data
-  validatedDays:(NSTimeInterval)validatedDays
+  expiration:(NSTimeInterval)expiration
          forKey:(NSString *)key
 {
     MEOCacheManager *cm = [MEOCacheManager sharedInstance];
-    [cm setData:data validatedDays:validatedDays forKey:key];
+    [cm setData:data expiration:expiration forKey:key];
 }
 
 + (void)setData:(NSData *)data forKey:(NSString *)key
@@ -339,11 +339,11 @@
 }
 
 + (void)setImage:(UIImage *)image
-   validatedDays:(NSTimeInterval)validatedDays
+   expiration:(NSTimeInterval)expiration
           forKey:(NSString *)key
 {
     [MEOCacheManager setData:UIImagePNGRepresentation(image)
-               validatedDays:validatedDays
+               expiration:expiration
                       forKey:key];
 }
 
@@ -354,11 +354,11 @@
 }
 
 + (void)setString:(NSString *)string
-    validatedDays:(NSTimeInterval)validatedDays
+    expiration:(NSTimeInterval)expiration
            forKey:(NSString *)key
 {
     [MEOCacheManager setData:[MEOCache dataFromString:string]
-               validatedDays:validatedDays
+               expiration:expiration
                       forKey:key];
 }
 

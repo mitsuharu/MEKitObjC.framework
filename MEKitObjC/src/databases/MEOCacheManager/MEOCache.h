@@ -19,7 +19,7 @@
 /**
  *  有効時間（日）
  */
-@property (nonatomic) NSTimeInterval validatedDays;
+@property (nonatomic) NSTimeInterval expiration;
 
 -(id)initWithData:(NSData*)data;
 
