@@ -56,6 +56,33 @@ typedef void (^MEOApiManagerCompletion) (MEOApiManagerResultStatus result,
  */
 +(NSDictionary*)parseJson:(NSData*)jsonData;
 
+/**
+ *  Jsonデータをパースしてオブジェクトで返す
+ *
+ *  @param jsonData
+ *
+ *  @return オブジェクト
+ */
++ (id)parsedJsonObj:(NSData*)jsonData;
+
+/**
+ *  Jsonデータをパースして辞書列配列で返す
+ *
+ *  @param jsonData
+ *
+ *  @return 辞書列配列
+ */
++ (NSDictionary*)parsedJsonDictionary:(NSData*)jsonData;
+
+/**
+ *  Jsonデータをパースして配列で返す
+ *
+ *  @param jsonData
+ *
+ *  @return 配列
+ */
++ (NSArray*)parsedJsonArray:(NSData*)jsonData;
+
 
 /**
  *  UserInfoからlastModifiedを取得する

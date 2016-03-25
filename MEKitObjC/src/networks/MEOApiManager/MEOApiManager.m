@@ -342,19 +342,40 @@ didReceiveChallenge:(NSURLAuthenticationChallenge *)challenge
 
 +(NSDictionary*)parseJson:(NSData*)jsonData
 {
+    return [MEOApiManager parsedJsonDictionary:jsonData];
+}
+
++ (id)parsedJsonObj:(NSData*)jsonData
+{
     id json = nil;
     if (jsonData) {
         json = [NSJSONSerialization JSONObjectWithData:jsonData
                                                options:NSJSONReadingAllowFragments
                                                  error:nil];
     }
+    return json;
+}
+
++ (NSDictionary*)parsedJsonDictionary:(NSData*)jsonData
+{
+    id json = [MEOApiManager parsedJsonObj:jsonData];
     NSDictionary *jsonDict = nil;
     if (json && [json isKindOfClass:[NSDictionary class]]) {
         jsonDict = (NSDictionary*)json;
     }
-    
     return jsonDict;
 }
+
++ (NSArray*)parsedJsonArray:(NSData*)jsonData
+{
+    id json = [MEOApiManager parsedJsonObj:jsonData];
+    NSArray *jsonArr = nil;
+    if (json && [json isKindOfClass:[NSArray class]]) {
+        jsonArr = (NSArray*)json;
+    }
+    return jsonArr;
+}
+
 
 
 +(void)request:(NSString*)urlString
