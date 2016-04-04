@@ -79,9 +79,14 @@
 {
     if (content) {
         content_ = content;
-        titleLabel_.text = content_.title;
-        messageLabel_.text = content_.message;
-        if (content_.iconImage) {
+        
+        if (titleLabel_) {
+            titleLabel_.text = content_.title;
+        }
+        if (messageLabel_) {
+            messageLabel_.text = content_.message;
+        }
+        if (iconImageView_ && content_.iconImage) {
             iconImageView_.image = content_.iconImage;
         }
     }

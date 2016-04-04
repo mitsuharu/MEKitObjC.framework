@@ -58,7 +58,11 @@ static NSMutableArray *notificationContentArray_ = nil;
         @try {
             NSBundle *bundle = [MEOUtilities resourceBundle];
             if (bundle) {
-                nib = [UINib nibWithNibName:@"MEONotificationView" bundle:bundle];
+                if (title && title.length > 0) {
+                    nib = [UINib nibWithNibName:@"MEONotificationView" bundle:bundle];
+                }else{
+                    nib = [UINib nibWithNibName:@"MEONotificationViewWithoutTitle" bundle:bundle];
+                }
             }
         }
         @catch (NSException *exception) {

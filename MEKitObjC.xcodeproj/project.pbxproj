@@ -167,6 +167,7 @@
 		9BB5240F1AEF4DA700A13E69 /* LINEActivityIcon@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 9BB5240D1AEF4DA700A13E69 /* LINEActivityIcon@2x~ipad.png */; };
 		9BB524101AEF4DA700A13E69 /* LINEActivityIcon~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 9BB5240E1AEF4DA700A13E69 /* LINEActivityIcon~ipad.png */; };
 		9BBB543B1B7449FA00DCB9C1 /* MEOCaptureSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BBB543A1B7449FA00DCB9C1 /* MEOCaptureSessionManager.m */; };
+		9BCA20BE1CB204FC006D0B1F /* MEONotificationViewWithoutTitle.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9BCA20BD1CB204FC006D0B1F /* MEONotificationViewWithoutTitle.xib */; };
 		9BD4F5381ACE39E300535693 /* MEOActionSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BD4F5371ACE39E300535693 /* MEOActionSheet.m */; };
 		9BD4F5391ACE39E300535693 /* MEOActionSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BD4F5371ACE39E300535693 /* MEOActionSheet.m */; };
 		9BFB4D491B32930B008833E5 /* UILabel+Enhanced.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BFB4D481B32930B008833E5 /* UILabel+Enhanced.m */; };
@@ -358,6 +359,7 @@
 		9BB5240E1AEF4DA700A13E69 /* LINEActivityIcon~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "LINEActivityIcon~ipad.png"; sourceTree = "<group>"; };
 		9BBB54391B7449FA00DCB9C1 /* MEOCaptureSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEOCaptureSessionManager.h; sourceTree = "<group>"; };
 		9BBB543A1B7449FA00DCB9C1 /* MEOCaptureSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MEOCaptureSessionManager.m; sourceTree = "<group>"; };
+		9BCA20BD1CB204FC006D0B1F /* MEONotificationViewWithoutTitle.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MEONotificationViewWithoutTitle.xib; sourceTree = "<group>"; };
 		9BD4F5361ACE39E300535693 /* MEOActionSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEOActionSheet.h; sourceTree = "<group>"; };
 		9BD4F5371ACE39E300535693 /* MEOActionSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MEOActionSheet.m; sourceTree = "<group>"; };
 		9BFB4D471B32930B008833E5 /* UILabel+Enhanced.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UILabel+Enhanced.h"; sourceTree = "<group>"; };
@@ -823,6 +825,7 @@
 		9B53620D1ADC8F0200336E75 /* MEONotificationView */ = {
 			isa = PBXGroup;
 			children = (
+				9BCA20BD1CB204FC006D0B1F /* MEONotificationViewWithoutTitle.xib */,
 				9B53620E1ADC8F0200336E75 /* MEONotificationView.xib */,
 				9B53620F1ADC8F0200336E75 /* nw_info.png */,
 				9B5362101ADC8F0200336E75 /* nw_info@2x.png */,
@@ -1041,6 +1044,7 @@
 				9B5362251ADC8F0200336E75 /* Localizable.strings in Resources */,
 				9B5362231ADC8F0200336E75 /* nw_info@3x.png in Resources */,
 				9B53621D1ADC8F0200336E75 /* MEONotificationView.xib in Resources */,
+				9BCA20BE1CB204FC006D0B1F /* MEONotificationViewWithoutTitle.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
