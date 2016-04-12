@@ -164,6 +164,7 @@
 		9B9727B71BA9431A004158D6 /* MEOInstagramActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B9727B21BA9431A004158D6 /* MEOInstagramActivity.m */; };
 		9B9727BE1BA946D5004158D6 /* MEOActivityHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B9727BD1BA946D5004158D6 /* MEOActivityHelper.m */; };
 		9B9727BF1BA947F4004158D6 /* MEOInstagramActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B9727B21BA9431A004158D6 /* MEOInstagramActivity.m */; };
+		9BAA32671CBC877900A0C239 /* UIViewController+HeadphoneNotification.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BAA32661CBC877900A0C239 /* UIViewController+HeadphoneNotification.m */; };
 		9BB5240F1AEF4DA700A13E69 /* LINEActivityIcon@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 9BB5240D1AEF4DA700A13E69 /* LINEActivityIcon@2x~ipad.png */; };
 		9BB524101AEF4DA700A13E69 /* LINEActivityIcon~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 9BB5240E1AEF4DA700A13E69 /* LINEActivityIcon~ipad.png */; };
 		9BBB543B1B7449FA00DCB9C1 /* MEOCaptureSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BBB543A1B7449FA00DCB9C1 /* MEOCaptureSessionManager.m */; };
@@ -355,6 +356,8 @@
 		9B9727B21BA9431A004158D6 /* MEOInstagramActivity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MEOInstagramActivity.m; sourceTree = "<group>"; };
 		9B9727BC1BA946D5004158D6 /* MEOActivityHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEOActivityHelper.h; sourceTree = "<group>"; };
 		9B9727BD1BA946D5004158D6 /* MEOActivityHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MEOActivityHelper.m; sourceTree = "<group>"; };
+		9BAA32651CBC876E00A0C239 /* UIViewController+HeadphoneNotification.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+HeadphoneNotification.h"; sourceTree = "<group>"; };
+		9BAA32661CBC877900A0C239 /* UIViewController+HeadphoneNotification.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+HeadphoneNotification.m"; sourceTree = "<group>"; };
 		9BB5240D1AEF4DA700A13E69 /* LINEActivityIcon@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "LINEActivityIcon@2x~ipad.png"; sourceTree = "<group>"; };
 		9BB5240E1AEF4DA700A13E69 /* LINEActivityIcon~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "LINEActivityIcon~ipad.png"; sourceTree = "<group>"; };
 		9BBB54391B7449FA00DCB9C1 /* MEOCaptureSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEOCaptureSessionManager.h; sourceTree = "<group>"; };
@@ -471,6 +474,8 @@
 			children = (
 				9B31554A1ACB764600611592 /* Categories.h */,
 				9B31554B1ACB764600611592 /* Categories.m */,
+				9BAA32651CBC876E00A0C239 /* UIViewController+HeadphoneNotification.h */,
+				9BAA32661CBC877900A0C239 /* UIViewController+HeadphoneNotification.m */,
 				9B31554C1ACB764600611592 /* NSArray+Enhanced.h */,
 				9B31554D1ACB764600611592 /* NSArray+Enhanced.m */,
 				9B31554E1ACB764600611592 /* NSData+AESCrypt.h */,
@@ -1085,6 +1090,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9B3155EA1ACB764600611592 /* UIAlertView+Blocks.m in Sources */,
+				9BAA32671CBC877900A0C239 /* UIViewController+HeadphoneNotification.m in Sources */,
 				9B3155FA1ACB764600611592 /* UITextView+Placeholder.m in Sources */,
 				9B3156271ACB764600611592 /* MEOLocationService.m in Sources */,
 				9B9727BF1BA947F4004158D6 /* MEOInstagramActivity.m in Sources */,
