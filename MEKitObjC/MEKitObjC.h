@@ -54,6 +54,7 @@
 
 #import "MEOUtilities.h"
 #import "MEOKeyChain.h"
+#import "MEOHardwareUtil.h"
 
 #import "MEOCaptureSessionManager.h"
 

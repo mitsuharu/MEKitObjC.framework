@@ -168,6 +168,7 @@
 		9BB5240F1AEF4DA700A13E69 /* LINEActivityIcon@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 9BB5240D1AEF4DA700A13E69 /* LINEActivityIcon@2x~ipad.png */; };
 		9BB524101AEF4DA700A13E69 /* LINEActivityIcon~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 9BB5240E1AEF4DA700A13E69 /* LINEActivityIcon~ipad.png */; };
 		9BBB543B1B7449FA00DCB9C1 /* MEOCaptureSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BBB543A1B7449FA00DCB9C1 /* MEOCaptureSessionManager.m */; };
+		9BC18F071CC9FB9400AE0D14 /* MEOHardwareUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BC18F061CC9FB9400AE0D14 /* MEOHardwareUtil.m */; };
 		9BCA20BE1CB204FC006D0B1F /* MEONotificationViewWithoutTitle.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9BCA20BD1CB204FC006D0B1F /* MEONotificationViewWithoutTitle.xib */; };
 		9BD4F5381ACE39E300535693 /* MEOActionSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BD4F5371ACE39E300535693 /* MEOActionSheet.m */; };
 		9BD4F5391ACE39E300535693 /* MEOActionSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BD4F5371ACE39E300535693 /* MEOActionSheet.m */; };
@@ -362,6 +363,8 @@
 		9BB5240E1AEF4DA700A13E69 /* LINEActivityIcon~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "LINEActivityIcon~ipad.png"; sourceTree = "<group>"; };
 		9BBB54391B7449FA00DCB9C1 /* MEOCaptureSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEOCaptureSessionManager.h; sourceTree = "<group>"; };
 		9BBB543A1B7449FA00DCB9C1 /* MEOCaptureSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MEOCaptureSessionManager.m; sourceTree = "<group>"; };
+		9BC18F051CC9FB9400AE0D14 /* MEOHardwareUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEOHardwareUtil.h; sourceTree = "<group>"; };
+		9BC18F061CC9FB9400AE0D14 /* MEOHardwareUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MEOHardwareUtil.m; sourceTree = "<group>"; };
 		9BCA20BD1CB204FC006D0B1F /* MEONotificationViewWithoutTitle.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MEONotificationViewWithoutTitle.xib; sourceTree = "<group>"; };
 		9BD4F5361ACE39E300535693 /* MEOActionSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEOActionSheet.h; sourceTree = "<group>"; };
 		9BD4F5371ACE39E300535693 /* MEOActionSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MEOActionSheet.m; sourceTree = "<group>"; };
@@ -614,6 +617,7 @@
 		9B3155951ACB764600611592 /* utilities */ = {
 			isa = PBXGroup;
 			children = (
+				9BC18F041CC9FB9400AE0D14 /* MEOHardwareUtil */,
 				9BD4F5351ACE39E300535693 /* MEOActionSheet */,
 				9B802E011ACBE9B5003A596D /* MEOCollectionDataSourceManager */,
 				9B3155961ACB764600611592 /* Activities */,
@@ -895,6 +899,15 @@
 			path = resources;
 			sourceTree = "<group>";
 		};
+		9BC18F041CC9FB9400AE0D14 /* MEOHardwareUtil */ = {
+			isa = PBXGroup;
+			children = (
+				9BC18F051CC9FB9400AE0D14 /* MEOHardwareUtil.h */,
+				9BC18F061CC9FB9400AE0D14 /* MEOHardwareUtil.m */,
+			);
+			path = MEOHardwareUtil;
+			sourceTree = "<group>";
+		};
 		9BD4F5351ACE39E300535693 /* MEOActionSheet */ = {
 			isa = PBXGroup;
 			children = (
@@ -1096,6 +1109,7 @@
 				9B9727BF1BA947F4004158D6 /* MEOInstagramActivity.m in Sources */,
 				9B9727BE1BA946D5004158D6 /* MEOActivityHelper.m in Sources */,
 				9B3155D61ACB764600611592 /* NSArray+Enhanced.m in Sources */,
+				9BC18F071CC9FB9400AE0D14 /* MEOHardwareUtil.m in Sources */,
 				9B465EE01AD5FE3A00274FD3 /* MEOWebViewController.m in Sources */,
 				9B802E061ACBE9B5003A596D /* MEOCollectionDataSource.m in Sources */,
 				9B3155F21ACB764600611592 /* UIResponder+Enhanced.m in Sources */,
