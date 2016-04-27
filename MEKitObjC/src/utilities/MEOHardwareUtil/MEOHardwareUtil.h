@@ -17,20 +17,33 @@
  */
 typedef NS_ENUM(NSInteger, MEOHardwareUtilRemoteControl) {
     MEOHardwareUtilRemoteControlNone = 0,
-    MEOHardwareUtilRemoteControlTogglePlayPause,
+    MEOHardwareUtilRemoteControlToggle,
     MEOHardwareUtilRemoteControlPlay,
     MEOHardwareUtilRemoteControlPause,
-    MEOHardwareUtilRemoteControlPreviousTrack,
-    MEOHardwareUtilRemoteControlNextTrack,
+    MEOHardwareUtilRemoteControlPrevious,
+    MEOHardwareUtilRemoteControlNext,
 };
 
+
+extern NSString *const MEOHardwareUtilKeyHeadphones;
+extern NSString *const MEOHardwareUtilKeyRemoteControl;
+
+/**
+ *  イヤフォンイベントの通知メッセージ
+ */
+extern NSString *const MEOHardwareUtilDidChangedHeadphones;
+
+/**
+ *  リモコンイベントの通知メッセージ
+ */
+extern NSString *const MEOHardwareUtilDidChangeRemoteControl;
 
 
 @protocol MEOHardwareUtilDelegate <NSObject>
 
 @optional
 
-- (void)hardwareUtil:(MEOHardwareUtil*)hardwareUtil didChangedHeadphone:(BOOL)hasHeadphone;
+- (void)hardwareUtil:(MEOHardwareUtil*)hardwareUtil didChangedHeadphones:(BOOL)hasHeadphones;
 
 - (void)hardwareUtil:(MEOHardwareUtil*)hardwareUtil didChangeRemoteControl:(MEOHardwareUtilRemoteControl)ctrl;
 
@@ -42,6 +55,17 @@ typedef NS_ENUM(NSInteger, MEOHardwareUtilRemoteControl) {
 @interface MEOHardwareUtil : NSObject
 
 @property (nonatomic, weak) id<MEOHardwareUtilDelegate> delegate;
+
+/**
+ *  アプリ内通知で送られたuserInfoからヘッドフォン有無を取得する
+ */
++ (BOOL)hasHeadphonesFromUserInfo:(NSDictionary*)userInfo;
+
+/**
+ *  アプリ内通知で送られたuserInfoからイベント種類を取得する
+ */
++ (MEOHardwareUtilRemoteControl)ctrlFromUserInfo:(NSDictionary*)userInfo;
+
 
 /**
  *  端末にヘッドフォンが刺さっているか確認する

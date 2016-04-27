@@ -10,6 +10,12 @@
 #import <AVFoundation/AVFoundation.h>
 #import <MediaPlayer/MediaPlayer.h>
 
+
+NSString *const MEOHardwareUtilKeyHeadphones = @"MEOHardwareUtilKeyHeadphones";
+NSString *const MEOHardwareUtilKeyRemoteControl = @"MEOHardwareUtilKeyRemoteControl";
+NSString *const MEOHardwareUtilDidChangedHeadphones = @"MEOHardwareUtilDidChangedHeadphones";
+NSString *const MEOHardwareUtilDidChangeRemoteControl = @"MEOHardwareUtilDidChangeRemoteControl";
+
 @interface MEOHardwareUtil ()
 
 @property BOOL isNotifyingHeadphone;
@@ -36,6 +42,28 @@
 }
 
 #pragma mark - ヘッドホンに関して
+
++ (BOOL)hasHeadphonesFromUserInfo:(NSDictionary*)userInfo
+{
+    BOOL hasHeadphones = false;
+    if (userInfo && [userInfo.allKeys containsObject:MEOHardwareUtilKeyHeadphones]) {
+        NSNumber *num = [userInfo objectForKey:MEOHardwareUtilKeyHeadphones];
+        if (num) {
+            hasHeadphones = [num boolValue];
+        }
+    }
+    
+    return hasHeadphones;
+}
+
+- (void)postNotificationHeadphones:(BOOL)hasHeadphones
+{
+    NSDictionary *dict = dict = @{MEOHardwareUtilKeyHeadphones:@(hasHeadphones)};
+    NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+    [nc postNotificationName:MEOHardwareUtilDidChangedHeadphones
+                      object:nil
+                    userInfo:dict];
+}
 
 + (BOOL)hasHeadphones
 {
@@ -112,10 +140,11 @@
 - (void)audioSessionRouteChanged:(NSNotification*)notification
 {
     BOOL hasHeadphones = [MEOHardwareUtil hasHeadphones];
+    [self postNotificationHeadphones:hasHeadphones];
     if (self.delegate
-        && [self.delegate respondsToSelector:@selector(hardwareUtil:didChangedHeadphone:)]) {
+        && [self.delegate respondsToSelector:@selector(hardwareUtil:didChangedHeadphones:)]) {
         [self.delegate hardwareUtil:self
-             didChangedHeadphone:hasHeadphones];
+               didChangedHeadphones:hasHeadphones];
     }
 }
 
@@ -123,13 +152,36 @@
 
 #pragma mark - リモコン
 
++ (MEOHardwareUtilRemoteControl)ctrlFromUserInfo:(NSDictionary*)userInfo
+{
+    MEOHardwareUtilRemoteControl ctrl = MEOHardwareUtilRemoteControlNone;
+    
+    if (userInfo && [userInfo.allKeys containsObject:MEOHardwareUtilKeyRemoteControl]) {
+        NSNumber *num = [userInfo objectForKey:MEOHardwareUtilKeyRemoteControl];
+        if (num) {
+            ctrl = [num integerValue];
+        }
+    }
+    
+    return ctrl;
+}
+
+- (void)postNotificationRemoteControl:(MEOHardwareUtilRemoteControl)ctrl
+{
+    NSDictionary *dict = dict = @{MEOHardwareUtilKeyRemoteControl:@(ctrl)};
+    NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+    [nc postNotificationName:MEOHardwareUtilDidChangeRemoteControl
+                      object:nil
+                    userInfo:dict];
+}
+
 /**
  *  イベントが再生停止トグルか再生か停止のときにtrue, それ以外はfalse
  */
 + (BOOL)isTogglePlayPause:(MEOHardwareUtilRemoteControl)ctrl
 {
     BOOL result = false;
-    if (ctrl == MEOHardwareUtilRemoteControlTogglePlayPause
+    if (ctrl == MEOHardwareUtilRemoteControlToggle
         || ctrl == MEOHardwareUtilRemoteControlPlay
         || ctrl == MEOHardwareUtilRemoteControlPause) {
         result = true;
@@ -139,15 +191,19 @@
 
 - (void)rccTogglePlayPause:(MPRemoteCommandEvent*)event
 {
+    [self postNotificationRemoteControl:MEOHardwareUtilRemoteControlToggle];
+    
     if (self.delegate
         && [self.delegate respondsToSelector:@selector(hardwareUtil:didChangeRemoteControl:)]) {
         [self.delegate hardwareUtil:self
-             didChangeRemoteControl:MEOHardwareUtilRemoteControlTogglePlayPause];
+             didChangeRemoteControl:MEOHardwareUtilRemoteControlToggle];
     }
 }
 
 - (void)rccTogglePlay:(MPRemoteCommandEvent*)event
 {
+    [self postNotificationRemoteControl:MEOHardwareUtilRemoteControlPlay];
+    
     if (self.delegate
         && [self.delegate respondsToSelector:@selector(hardwareUtil:didChangeRemoteControl:)]) {
         [self.delegate hardwareUtil:self
@@ -157,6 +213,8 @@
 
 - (void)rccTogglePause:(MPRemoteCommandEvent*)event
 {
+    [self postNotificationRemoteControl:MEOHardwareUtilRemoteControlPause];
+    
     if (self.delegate
         && [self.delegate respondsToSelector:@selector(hardwareUtil:didChangeRemoteControl:)]) {
         [self.delegate hardwareUtil:self
@@ -166,19 +224,23 @@
 
 - (void)rccNextTrack:(MPRemoteCommandEvent*)event
 {
+    [self postNotificationRemoteControl:MEOHardwareUtilRemoteControlNext];
+    
     if (self.delegate
         && [self.delegate respondsToSelector:@selector(hardwareUtil:didChangeRemoteControl:)]) {
         [self.delegate hardwareUtil:self
-             didChangeRemoteControl:MEOHardwareUtilRemoteControlNextTrack];
+             didChangeRemoteControl:MEOHardwareUtilRemoteControlNext];
     }
 }
 
 - (void)rccPrevTrack:(MPRemoteCommandEvent*)event
 {
+    [self postNotificationRemoteControl:MEOHardwareUtilRemoteControlPrevious];
+    
     if (self.delegate
         && [self.delegate respondsToSelector:@selector(hardwareUtil:didChangeRemoteControl:)]) {
         [self.delegate hardwareUtil:self
-             didChangeRemoteControl:MEOHardwareUtilRemoteControlPreviousTrack];
+             didChangeRemoteControl:MEOHardwareUtilRemoteControlPrevious];
     }
 }
 
