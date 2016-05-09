@@ -30,7 +30,7 @@
         data_ = nil;
         uuid_ = [[NSUUID UUID] UUIDString];
         updatedAt_ = createdAt_ = [NSDate date];
-        self.expiration = 0;
+        self.expiresDays = 0;
     }
     return self;
 }
@@ -41,7 +41,7 @@
         data_ = data;
         uuid_ = [[NSUUID UUID] UUIDString];
         updatedAt_ = createdAt_ = [NSDate date];
-        self.expiration = 0;
+        self.expiresDays = 0;
     }
     return self;
 }
@@ -67,8 +67,8 @@
     [encoder encodeObject:uuid_ forKey:@"uuid"];
     [encoder encodeObject:updatedAt_ forKey:@"updatedAt"];
     [encoder encodeObject:createdAt_ forKey:@"createdAt"];
-    [encoder encodeObject:[NSNumber numberWithDouble:self.expiration]
-                   forKey:@"expiration"];
+    [encoder encodeObject:[NSNumber numberWithDouble:self.expiresDays]
+                   forKey:@"expiresDays"];
 }
 
 - (id)initWithCoder:(NSCoder *)decoder
@@ -77,7 +77,7 @@
     uuid_ = [decoder decodeObjectForKey:@"uuid"];
     updatedAt_ = [decoder decodeObjectForKey:@"updatedAt"];
     createdAt_ = [decoder decodeObjectForKey:@"createdAt"];
-    self.expiration = [[decoder decodeObjectForKey:@"expiration"] doubleValue];
+    self.expiresDays = [[decoder decodeObjectForKey:@"expiresDays"] doubleValue];
     return self;
 }
 

@@ -9,6 +9,14 @@
 #import <UIKit/UIKit.h>
 #import <Foundation/Foundation.h>
 
+
+typedef NS_ENUM(NSInteger, MEOCacheManagerExpires) {
+    MEOCacheManagerExpiresNone,
+    MEOCacheManagerExpiresOneDay,
+    MEOCacheManagerExpiresOneWeek,
+    MEOCacheManagerExpiresOneMonth,
+};
+
 typedef void (^MEOCacheManagerCompletion) (NSData *data, NSDate *createdAt, NSDate *updatedAt);
 
 @interface MEOCacheManager : NSObject
@@ -28,36 +36,47 @@ typedef void (^MEOCacheManagerCompletion) (NSData *data, NSDate *createdAt, NSDa
 
 /**
  *  有効期限付きでデータをキャッシュに保存する
- *
- *  @param data          保存されるデータ
- *  @param expiration 有効期限（日）
- *  @param key           キャッシュキー
  */
 + (void)setData:(NSData *)data
-     expiration:(NSTimeInterval)expiration
-         forKey:(NSString *)key;
+         forKey:(NSString *)key
+        expires:(MEOCacheManagerExpires)expires;
+
+/**
+ *  有効期限付きでデータをキャッシュに保存する
+ */
++ (void)setData:(NSData *)data
+         forKey:(NSString *)key
+    expiresDays:(NSTimeInterval)days;
+
 
 /**
  *  有効期限付きで画像データをキャッシュに保存する
- *
- *  @param image          保存される画像データ
- *  @param expiration 有効期限（日）
- *  @param key           キャッシュキー
  */
 + (void)setImage:(UIImage *)image
-      expiration:(NSTimeInterval)expiration
-         forKey:(NSString *)key;
+          forKey:(NSString *)key
+         expires:(MEOCacheManagerExpires)expires;
+
+/**
+ *  有効期限付きで画像データをキャッシュに保存する
+ */
++ (void)setImage:(UIImage *)image
+          forKey:(NSString *)key
+     expiresDays:(NSTimeInterval)days;
 
 /**
  *  有効期限付きで文字データをキャッシュに保存する
- *
- *  @param string        保存される文字データ
- *  @param expiration 有効期限（日）
- *  @param key           キャッシュキー
  */
 + (void)setString:(NSString *)string
-       expiration:(NSTimeInterval)expiration
-          forKey:(NSString *)key;
+           forKey:(NSString *)key
+          expires:(MEOCacheManagerExpires)expires;
+
+/**
+ *  有効期限付きで文字データをキャッシュに保存する
+ */
++ (void)setString:(NSString *)string
+           forKey:(NSString *)key
+      expiresDays:(NSTimeInterval)days;
+
 
 + (void)deleteForKey:(NSString *)key;
 + (void)clearMemoryCache;
@@ -66,7 +85,7 @@ typedef void (^MEOCacheManagerCompletion) (NSData *data, NSDate *createdAt, NSDa
 + (NSString*)stringFromData:(NSData*)data;
 + (UIImage*)imageFromData:(NSData*)data;
 
-+ (void)setExpiration:(NSTimeInterval)expiration;
++ (void)setExpiresDays:(NSTimeInterval)expiresDays;
 
 
 
