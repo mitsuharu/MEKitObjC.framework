@@ -12,7 +12,11 @@
 
 #pragma mark - TableDataSourceManager -
 
-@interface MEOTableDataSourceManager () <NSFetchedResultsControllerDelegate>
+@interface MEOTableDataSourceManager ()
+<
+    NSFetchedResultsControllerDelegate,
+    UIScrollViewDelegate
+>
 {
     NSMutableArray *dataSources_;
     NSString *cellIdentifier_;
@@ -806,6 +810,12 @@ forRowAtIndexPath:(NSIndexPath *)indexPath
 // スクロール中に呼ばれる
 -(void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
+    SEL selector = @selector(tableDataSourceManager:tableView:scrollViewDidScroll:);
+    if (delegate_ && [delegate_ respondsToSelector:selector]) {
+        [delegate_ tableDataSourceManager:self
+                                tableView:tableView_
+                      scrollViewDidScroll:scrollView];
+    }
 }
 
 // ドラッグが終了した時に呼ばれる

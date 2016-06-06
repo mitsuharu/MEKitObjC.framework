@@ -60,6 +60,11 @@
              didScrollStopped:(NSArray*)visibleIndexPaths;
 
 
+- (void)tableDataSourceManager:(MEOTableDataSourceManager*)manager
+                     tableView:(UITableView *)tableView
+           scrollViewDidScroll:(UIScrollView *)scrollView;
+
+
 @end
 
 
