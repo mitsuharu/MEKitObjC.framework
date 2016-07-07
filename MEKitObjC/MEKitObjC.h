@@ -58,6 +58,7 @@
 
 #import "MEOCaptureSessionManager.h"
 
+#import "MEOPickerToolbarView.h"
 
 
 @interface MEKitObjC : NSObject
