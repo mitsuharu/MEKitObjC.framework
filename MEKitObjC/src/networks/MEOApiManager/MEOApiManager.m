@@ -13,6 +13,7 @@ NSString* const MEOApiManagerHttpMethodPost = @"POST";
 NSString* const MEOApiManagerHttpMethodPut = @"PUT";
 NSString* const MEOApiManagerHttpMethodGet = @"GET";
 NSString* const MEOApiManagerHttpMethodDelete = @"DELETE";
+NSString* const MEOApiManagerHttpMethodHEAD = @"HEAD";
 NSString* const MEOApiManagerLastModified = @"MEOApiManagerLastModified";
 
 #pragma mark - MEOApiOption -
@@ -423,6 +424,18 @@ didReceiveChallenge:(NSURLAuthenticationChallenge *)challenge
              completion:completion];
 }
 
++ (void)requestLastModified:(NSString*)urlString
+                     option:(MEOApiOption*)option
+                 completion:(MEOApiManagerCompletion)completion
+{
+    MEOApiManager *apiManager = [[MEOApiManager alloc] init];
+    [apiManager request:urlString
+            headerField:nil
+             httpMethod:MEOApiManagerHttpMethodHEAD
+               httpBody:nil
+                 option:option
+             completion:completion];
+}
 
 #pragma mark 削除メソッドの仮対応
 

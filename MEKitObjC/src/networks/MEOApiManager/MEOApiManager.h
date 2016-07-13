@@ -15,6 +15,7 @@ extern NSString* const MEOApiManagerHttpMethodPost;
 extern NSString* const MEOApiManagerHttpMethodPut;
 extern NSString* const MEOApiManagerHttpMethodGet;
 extern NSString* const MEOApiManagerHttpMethodDelete;
+//extern NSString* const MEOApiManagerHttpMethodHEAD;
 //extern NSString* const MEOApiManagerLastModified;
 
 typedef enum {
@@ -36,8 +37,17 @@ typedef void (^MEOApiManagerCompletion) (MEOApiManagerResultStatus result,
 
 @property (nonatomic, assign) BOOL ignoreCacheData;
 @property (nonatomic, assign) NSURLRequestCachePolicy cachePolicy;
+
+/**
+ *  Basic認証
+ */
 @property (nonatomic, retain) NSString *username;
+
+/**
+ *  Basic認証
+ */
 @property (nonatomic, retain) NSString *password;
+
 @property (nonatomic, retain) NSDictionary *userInfo;
 
 @end
@@ -133,10 +143,29 @@ typedef void (^MEOApiManagerCompletion) (MEOApiManagerResultStatus result,
  *  @param urlString
  *  @param option
  *  @param completion
+ *
+ 更新日時は完了ブロックのuserInfoから取得する．
+ @code
+ NSDate *lastModified = [MEOApiManager lastModified:userInfo];
+ @endcode
  */
 +(void)download:(NSString*)urlString
          option:(MEOApiOption*)option
      completion:(MEOApiManagerCompletion)completion;
+
+
+/**
+ *  対象の更新日時だけを取得する（データはダウンロードは行わない，更新日時取得は常に行っている）
+ *
+ 更新日時は完了ブロックのuserInfoから取得する．
+ @code
+ NSDate *lastModified = [MEOApiManager lastModified:userInfo];
+ @endcode
+ */
++ (void)requestLastModified:(NSString*)urlString
+                     option:(MEOApiOption*)option
+                 completion:(MEOApiManagerCompletion)completion;
+
 
 // 以下，削除します
 
