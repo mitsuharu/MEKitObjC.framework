@@ -29,10 +29,10 @@
 #import "MEOCoreDataManager.h"
 #import "MEOXMLReader.h"
 #import "MEOCacheManager.h"
+#import "MEOCache.h"
 
+#import "MEOImageDownloader.h"
 #import "MEOApiManager.h"
-#import "MEOCachedData.h"
-#import "MEODownloader.h"
 #import "MEOWebViewController.h"
 
 #import "MEOAlertView.h"

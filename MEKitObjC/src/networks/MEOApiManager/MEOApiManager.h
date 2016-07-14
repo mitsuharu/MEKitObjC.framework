@@ -50,6 +50,9 @@ typedef void (^MEOApiManagerCompletion) (MEOApiManagerResultStatus result,
 
 @property (nonatomic, retain) NSDictionary *userInfo;
 
+
+@property (nonatomic, assign) BOOL comparelastModified;
+
 @end
 
 
@@ -167,48 +170,48 @@ typedef void (^MEOApiManagerCompletion) (MEOApiManagerResultStatus result,
                  completion:(MEOApiManagerCompletion)completion;
 
 
-// 以下，削除します
-
-+(void)request:(NSString*)urlString
-   headerField:(NSDictionary*)headerField
-    httpMethod:(NSString*)httpMethod
-      httpBody:(NSString*)httpBody
-      userInfo:(NSDictionary*)userInfo
-    completion:(MEOApiManagerCompletion)completion __attribute__((deprecated("付加情報をoptionクラスで指定に変更する")));
-
-+(void)request:(NSString*)urlString
-   headerField:(NSDictionary*)headerField
-    httpMethod:(NSString*)httpMethod
-  httpBodyData:(NSData*)httpBodyData
-      userInfo:(NSDictionary*)userInfo
-    completion:(MEOApiManagerCompletion)completion __attribute__((deprecated("付加情報をoptionクラスで指定に変更する")));
-
-+(void)request:(NSString*)urlString
-   headerField:(NSDictionary*)headerField
-    httpMethod:(NSString*)httpMethod
-      httpBody:(NSString*)httpBody
-      userInfo:(NSDictionary*)userInfo
-      username:(NSString*)username
-      password:(NSString*)password
-    completion:(MEOApiManagerCompletion)completion __attribute__((deprecated("付加情報をoptionクラスで指定に変更する")));
-
-+(void)request:(NSString*)urlString
-   headerField:(NSDictionary*)headerField
-    httpMethod:(NSString*)httpMethod
-  httpBodyData:(NSData*)httpBodyData
-      userInfo:(NSDictionary*)userInfo
-      username:(NSString*)username
-      password:(NSString*)password
-    completion:(MEOApiManagerCompletion)completion __attribute__((deprecated("付加情報をoptionクラスで指定に変更する")));
-
-+(void)download:(NSString*)urlString
-       userInfo:(NSDictionary*)userInfo
-     completion:(MEOApiManagerCompletion)completion __attribute__((deprecated("付加情報をoptionクラスで指定に変更する")));
-
-+(void)download:(NSString*)urlString
-       userInfo:(NSDictionary*)userInfo
-       username:(NSString*)username
-       password:(NSString*)password
-     completion:(MEOApiManagerCompletion)completion __attribute__((deprecated("付加情報をoptionクラスで指定に変更する")));
+//// 以下，削除します
+//
+//+(void)request:(NSString*)urlString
+//   headerField:(NSDictionary*)headerField
+//    httpMethod:(NSString*)httpMethod
+//      httpBody:(NSString*)httpBody
+//      userInfo:(NSDictionary*)userInfo
+//    completion:(MEOApiManagerCompletion)completion __attribute__((deprecated("付加情報をoptionクラスで指定に変更する")));
+//
+//+(void)request:(NSString*)urlString
+//   headerField:(NSDictionary*)headerField
+//    httpMethod:(NSString*)httpMethod
+//  httpBodyData:(NSData*)httpBodyData
+//      userInfo:(NSDictionary*)userInfo
+//    completion:(MEOApiManagerCompletion)completion __attribute__((deprecated("付加情報をoptionクラスで指定に変更する")));
+//
+//+(void)request:(NSString*)urlString
+//   headerField:(NSDictionary*)headerField
+//    httpMethod:(NSString*)httpMethod
+//      httpBody:(NSString*)httpBody
+//      userInfo:(NSDictionary*)userInfo
+//      username:(NSString*)username
+//      password:(NSString*)password
+//    completion:(MEOApiManagerCompletion)completion __attribute__((deprecated("付加情報をoptionクラスで指定に変更する")));
+//
+//+(void)request:(NSString*)urlString
+//   headerField:(NSDictionary*)headerField
+//    httpMethod:(NSString*)httpMethod
+//  httpBodyData:(NSData*)httpBodyData
+//      userInfo:(NSDictionary*)userInfo
+//      username:(NSString*)username
+//      password:(NSString*)password
+//    completion:(MEOApiManagerCompletion)completion __attribute__((deprecated("付加情報をoptionクラスで指定に変更する")));
+//
+//+(void)download:(NSString*)urlString
+//       userInfo:(NSDictionary*)userInfo
+//     completion:(MEOApiManagerCompletion)completion __attribute__((deprecated("付加情報をoptionクラスで指定に変更する")));
+//
+//+(void)download:(NSString*)urlString
+//       userInfo:(NSDictionary*)userInfo
+//       username:(NSString*)username
+//       password:(NSString*)password
+//     completion:(MEOApiManagerCompletion)completion __attribute__((deprecated("付加情報をoptionクラスで指定に変更する")));
 
 @end

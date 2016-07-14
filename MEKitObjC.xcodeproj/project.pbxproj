@@ -31,6 +31,7 @@
 		9B10BA8D1ADB3E4000B70BA5 /* LINEActivityIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9B10BA851ADB3E4000B70BA5 /* LINEActivityIcon@2x.png */; };
 		9B10BA8E1ADB3E4000B70BA5 /* LINEActivityIcon@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 9B10BA861ADB3E4000B70BA5 /* LINEActivityIcon@2x~ipad.png */; };
 		9B10BA8F1ADB3E4000B70BA5 /* LINEActivityIcon~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 9B10BA871ADB3E4000B70BA5 /* LINEActivityIcon~ipad.png */; };
+		9B23517C1D37887900152D35 /* MEOImageDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B23517B1D37887900152D35 /* MEOImageDownloader.m */; };
 		9B2CC9841D2DF65B003B117B /* MEOPickerToolbarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B2CC9831D2DF65B003B117B /* MEOPickerToolbarView.m */; };
 		9B3155471ACB761700611592 /* info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9B3155461ACB761700611592 /* info.plist */; };
 		9B3155D41ACB764600611592 /* Categories.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B31554B1ACB764600611592 /* Categories.m */; };
@@ -89,12 +90,6 @@
 		9B3156091ACB764600611592 /* MEOCacheManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B3155821ACB764600611592 /* MEOCacheManager.m */; };
 		9B31560A1ACB764600611592 /* MEOXMLReader.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B3155851ACB764600611592 /* MEOXMLReader.m */; };
 		9B31560B1ACB764600611592 /* MEOXMLReader.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B3155851ACB764600611592 /* MEOXMLReader.m */; };
-		9B31560C1ACB764600611592 /* MEOCachedData.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B3155891ACB764600611592 /* MEOCachedData.m */; };
-		9B31560D1ACB764600611592 /* MEOCachedData.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B3155891ACB764600611592 /* MEOCachedData.m */; };
-		9B31560E1ACB764600611592 /* MEODownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B31558B1ACB764600611592 /* MEODownloader.m */; };
-		9B31560F1ACB764600611592 /* MEODownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B31558B1ACB764600611592 /* MEODownloader.m */; };
-		9B3156101ACB764600611592 /* NSString+MD5.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B31558D1ACB764600611592 /* NSString+MD5.m */; };
-		9B3156111ACB764600611592 /* NSString+MD5.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B31558D1ACB764600611592 /* NSString+MD5.m */; };
 		9B3156121ACB764600611592 /* MEOApiManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B3155901ACB764600611592 /* MEOApiManager.m */; };
 		9B3156131ACB764600611592 /* MEOApiManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B3155901ACB764600611592 /* MEOApiManager.m */; };
 		9B3156141ACB764600611592 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9B3155921ACB764600611592 /* Localizable.strings */; };
@@ -226,6 +221,8 @@
 		9B10BA851ADB3E4000B70BA5 /* LINEActivityIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "LINEActivityIcon@2x.png"; sourceTree = "<group>"; };
 		9B10BA861ADB3E4000B70BA5 /* LINEActivityIcon@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "LINEActivityIcon@2x~ipad.png"; sourceTree = "<group>"; };
 		9B10BA871ADB3E4000B70BA5 /* LINEActivityIcon~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "LINEActivityIcon~ipad.png"; sourceTree = "<group>"; };
+		9B23517A1D37887900152D35 /* MEOImageDownloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEOImageDownloader.h; sourceTree = "<group>"; };
+		9B23517B1D37887900152D35 /* MEOImageDownloader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MEOImageDownloader.m; sourceTree = "<group>"; };
 		9B2CC9821D2DF65B003B117B /* MEOPickerToolbarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEOPickerToolbarView.h; sourceTree = "<group>"; };
 		9B2CC9831D2DF65B003B117B /* MEOPickerToolbarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MEOPickerToolbarView.m; sourceTree = "<group>"; };
 		9B3155461ACB761700611592 /* info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = info.plist; sourceTree = "<group>"; };
@@ -285,12 +282,6 @@
 		9B3155821ACB764600611592 /* MEOCacheManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MEOCacheManager.m; sourceTree = "<group>"; };
 		9B3155841ACB764600611592 /* MEOXMLReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEOXMLReader.h; sourceTree = "<group>"; };
 		9B3155851ACB764600611592 /* MEOXMLReader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MEOXMLReader.m; sourceTree = "<group>"; };
-		9B3155881ACB764600611592 /* MEOCachedData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEOCachedData.h; sourceTree = "<group>"; };
-		9B3155891ACB764600611592 /* MEOCachedData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MEOCachedData.m; sourceTree = "<group>"; };
-		9B31558A1ACB764600611592 /* MEODownloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEODownloader.h; sourceTree = "<group>"; };
-		9B31558B1ACB764600611592 /* MEODownloader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MEODownloader.m; sourceTree = "<group>"; };
-		9B31558C1ACB764600611592 /* NSString+MD5.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+MD5.h"; sourceTree = "<group>"; };
-		9B31558D1ACB764600611592 /* NSString+MD5.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+MD5.m"; sourceTree = "<group>"; };
 		9B31558F1ACB764600611592 /* MEOApiManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEOApiManager.h; sourceTree = "<group>"; };
 		9B3155901ACB764600611592 /* MEOApiManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MEOApiManager.m; sourceTree = "<group>"; };
 		9B3155931ACB764600611592 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -462,6 +453,15 @@
 			path = LINEActivity;
 			sourceTree = "<group>";
 		};
+		9B2351791D37887900152D35 /* MEOImageDownloader */ = {
+			isa = PBXGroup;
+			children = (
+				9B23517A1D37887900152D35 /* MEOImageDownloader.h */,
+				9B23517B1D37887900152D35 /* MEOImageDownloader.m */,
+			);
+			path = MEOImageDownloader;
+			sourceTree = "<group>";
+		};
 		9B2CC9811D2DF65B003B117B /* MEOPickerToolbarView */ = {
 			isa = PBXGroup;
 			children = (
@@ -589,24 +589,11 @@
 		9B3155861ACB764600611592 /* networks */ = {
 			isa = PBXGroup;
 			children = (
+				9B2351791D37887900152D35 /* MEOImageDownloader */,
 				9B465EDD1AD5FE2200274FD3 /* MEOWebViewController */,
-				9B3155871ACB764600611592 /* MEDownloader */,
 				9B31558E1ACB764600611592 /* MEOApiManager */,
 			);
 			path = networks;
-			sourceTree = "<group>";
-		};
-		9B3155871ACB764600611592 /* MEDownloader */ = {
-			isa = PBXGroup;
-			children = (
-				9B3155881ACB764600611592 /* MEOCachedData.h */,
-				9B3155891ACB764600611592 /* MEOCachedData.m */,
-				9B31558A1ACB764600611592 /* MEODownloader.h */,
-				9B31558B1ACB764600611592 /* MEODownloader.m */,
-				9B31558C1ACB764600611592 /* NSString+MD5.h */,
-				9B31558D1ACB764600611592 /* NSString+MD5.m */,
-			);
-			path = MEDownloader;
 			sourceTree = "<group>";
 		};
 		9B31558E1ACB764600611592 /* MEOApiManager */ = {
@@ -1130,7 +1117,6 @@
 				9B3155E21ACB764600611592 /* NSObject+Enhanced.m in Sources */,
 				9B3155DE1ACB764600611592 /* NSDictionary+Enhanced.m in Sources */,
 				9B3155D81ACB764600611592 /* NSData+AESCrypt.m in Sources */,
-				9B31560E1ACB764600611592 /* MEODownloader.m in Sources */,
 				9B3156121ACB764600611592 /* MEOApiManager.m in Sources */,
 				9B3156331ACB764600611592 /* MEOSensor.m in Sources */,
 				9B3156371ACB764600611592 /* MyReachability.m in Sources */,
@@ -1152,8 +1138,8 @@
 				9B3155EC1ACB764600611592 /* UIButton+Enhanced.m in Sources */,
 				9B3156351ACB764600611592 /* MEOSystemStatus.m in Sources */,
 				9B3156021ACB764600611592 /* UIViewController+Popover.m in Sources */,
-				9B3156101ACB764600611592 /* NSString+MD5.m in Sources */,
 				9B3155F41ACB764600611592 /* UIScrollView+Enhanced.m in Sources */,
+				9B23517C1D37887900152D35 /* MEOImageDownloader.m in Sources */,
 				9B31561D1ACB764600611592 /* MEOIndicatorView.m in Sources */,
 				9B3155F61ACB764600611592 /* UITabBarController+Extension.m in Sources */,
 				9B3155E41ACB764600611592 /* NSString+AESCrypt.m in Sources */,
@@ -1166,7 +1152,6 @@
 				9B3156001ACB764600611592 /* UIViewController+NavigationDrawer.m in Sources */,
 				9BD4F5381ACE39E300535693 /* MEOActionSheet.m in Sources */,
 				9B6603011ADF399400B68EF8 /* UIViewController+UIPageViewController.m in Sources */,
-				9B31560C1ACB764600611592 /* MEOCachedData.m in Sources */,
 				9B3155EE1ACB764600611592 /* UIColor+Enhanced.m in Sources */,
 				9B3155E01ACB764600611592 /* NSMutableArray+Enhanced.m in Sources */,
 				9B3156291ACB764600611592 /* MEOMemory.m in Sources */,
@@ -1197,7 +1182,6 @@
 				9B3155DD1ACB764600611592 /* NSDate+Enhanced.m in Sources */,
 				9B3155DB1ACB764600611592 /* NSData+Base64.m in Sources */,
 				9B3155E71ACB764600611592 /* NSString+Enhanced.m in Sources */,
-				9B31560F1ACB764600611592 /* MEODownloader.m in Sources */,
 				9B3156031ACB764600611592 /* UIViewController+Popover.m in Sources */,
 				9B31563A1ACB764600611592 /* MEOTableViewCell.m in Sources */,
 				9B3156261ACB764600611592 /* MEOKeyChain.m in Sources */,
@@ -1227,7 +1211,6 @@
 				9B3156241ACB764600611592 /* MEOAuthorization.m in Sources */,
 				9B3156341ACB764600611592 /* MEOSensor.m in Sources */,
 				9B802E071ACBE9B5003A596D /* MEOCollectionDataSource.m in Sources */,
-				9B3156111ACB764600611592 /* NSString+MD5.m in Sources */,
 				9B31563C1ACB764600611592 /* MEOUtilities.m in Sources */,
 				9B3155F71ACB764600611592 /* UITabBarController+Extension.m in Sources */,
 				9B3155F11ACB764600611592 /* UIImage+Enhanced.m in Sources */,
@@ -1238,7 +1221,6 @@
 				9B3156051ACB764600611592 /* MEOCoreDataManager.m in Sources */,
 				9B3156201ACB764600611592 /* MEOAlertView.m in Sources */,
 				9B31562C1ACB764600611592 /* MEONotificationView.m in Sources */,
-				9B31560D1ACB764600611592 /* MEOCachedData.m in Sources */,
 				9B3155FD1ACB764600611592 /* UIView+Enhanced.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

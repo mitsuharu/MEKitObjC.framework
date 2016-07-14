@@ -28,6 +28,7 @@ NSString* const MEOApiManagerLastModified = @"MEOApiManagerLastModified";
         _username = nil;
         _password = nil;
         _userInfo = nil;
+        _comparelastModified = false;
     }
     return self;
 }
@@ -245,12 +246,15 @@ NSString* const MEOApiManagerLastModified = @"MEOApiManagerLastModified";
             
             NSDate *lastModified = [self lastModified:response];
             if (lastModified) {
+                if (self.option == nil) {
+                    self.option = [[MEOApiOption alloc] init];
+                }
                 if (self.option.userInfo == nil) {
                     self.option.userInfo = [[NSDictionary alloc] init];
                 }
-                NSMutableDictionary *dict = (NSMutableDictionary*)self.option.userInfo;
+                NSMutableDictionary *dict = [self.option.userInfo mutableCopy];
                 [dict setValue:lastModified forKey:MEOApiManagerLastModified];
-                self.option.userInfo = (NSDictionary*)dict;
+                self.option.userInfo = [dict copy];
             }
             
             NSInteger statusCode = [self httpStatusCode:response];

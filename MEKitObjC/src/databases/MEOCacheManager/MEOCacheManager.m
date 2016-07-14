@@ -257,41 +257,28 @@
     [cm setExpiresDays:expiresDays];
 }
 
-
-+ (NSData*)dataForKey:(NSString *)key
++ (MEOCache*)cacheForKey:(NSString *)key
 {
-    return [MEOCacheManager dataForKey:key
-                            completion:nil];
+    MEOCacheManager *cm = [MEOCacheManager sharedInstance];
+    return [cm dataForKey:key];
 }
 
-+ (NSData*)dataForKey:(NSString *)key completion:(MEOCacheManagerCompletion)completion
++ (NSData*)dataForKey:(NSString *)key
 {
     MEOCacheManager *cm = [MEOCacheManager sharedInstance];
     MEOCache *cache = [cm dataForKey:key];
     
     NSData *data = nil;
-    NSDate *createdAt = nil;
-    NSDate *updatedAt = nil;
     if (cache) {
         data = cache.data;
-        createdAt = cache.createdAt;
-        updatedAt = cache.updatedAt;
     }
     
-    if (completion) {
-        completion(data, createdAt, updatedAt);
-    }
     return data;
 }
 
 + (UIImage*)imageForKey:(NSString *)key
 {
-    return [MEOCacheManager imageForKey:key completion:nil];
-}
-
-+ (UIImage*)imageForKey:(NSString *)key completion:(MEOCacheManagerCompletion)completion
-{
-    NSData *data = [MEOCacheManager dataForKey:key completion:completion];
+    NSData *data = [MEOCacheManager dataForKey:key];
     UIImage *image = nil;
     if (data) {
         image = [UIImage imageWithData:data];
@@ -301,12 +288,7 @@
 
 + (NSString*)stringForKey:(NSString *)key
 {
-    return [MEOCacheManager stringForKey:key completion:nil];
-}
-
-+ (NSString*)stringForKey:(NSString *)key completion:(MEOCacheManagerCompletion)completion
-{
-    NSData *data = [MEOCacheManager dataForKey:key completion:completion];
+    NSData *data = [MEOCacheManager dataForKey:key];
     NSString *string = nil;
     if (data) {
         string = [MEOCache stringFromData:data];
