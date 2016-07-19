@@ -15,19 +15,22 @@
 @implementation MEOImageDownloader
 
 + (void)imageUrl:(NSString*)imageUrl
-      completion:(MEOImageDownloaderCompletion)completion
+           cache:(MEOImageDownloaderCompletion)cache
+        download:(MEOImageDownloaderCompletion)download;
 {
     MEOApiOption *option = [[MEOApiOption alloc] init];
     option.comparelastModified = true;
     [MEOImageDownloader imageUrl:imageUrl
                           option:option
-                      completion:completion];
+                           cache:cache
+                        download:download];
 }
 
 
 + (void)imageUrl:(NSString*)imageUrl
           option:(MEOApiOption*)option
-      completion:(MEOImageDownloaderCompletion)completion
+           cache:(MEOImageDownloaderCompletion)cache
+        download:(MEOImageDownloaderCompletion)download
 {
     BOOL comparelastModified = false;
     if (option) {
@@ -35,15 +38,15 @@
     }
     
     if (imageUrl && imageUrl.length > 0) {
-        MEOCache *cache = [MEOCacheManager cacheForKey:imageUrl];
-        UIImage *cachedImage = cache.image;
+        MEOCache *meoCache = [MEOCacheManager cacheForKey:imageUrl];
+        UIImage *cachedImage = meoCache.image;
+
+        if (cache) {
+            cache(cachedImage);
+        }
         
         if (cachedImage) {
-            
             if (comparelastModified == false) {
-                if (completion) {
-                    completion(cachedImage, true);
-                }
             }else{
                 [MEOApiManager requestLastModified:imageUrl
                                             option:option
@@ -54,9 +57,9 @@
                                                      NSError *error)
                  {
                      NSDate *lastModified = [MEOApiManager lastModified:userInfo];
-                     if (cache.updatedAt
+                     if (meoCache.updatedAt
                          && lastModified
-                         && [cache.updatedAt compare:lastModified] == NSOrderedAscending) {
+                         && [meoCache.updatedAt compare:lastModified] == NSOrderedAscending) {
  
                          // 古いので更新する
                          [MEOApiManager download:imageUrl
@@ -74,21 +77,17 @@
                                       [MEOCacheManager setImage:image forKey:imageUrl];
                                   }
                               }
-                              if (completion) {
-                                  completion(image, false);
+                              if (download) {
+                                  download(image);
                               }
                           }];
                      }else{
-                         if (completion) {
-                             completion(cachedImage, true);
-                         }
                      }
                  }];
             }
-            
         }else {
             [MEOApiManager download:imageUrl
-                             option:nil
+                             option:option
                          completion:^(MEOApiManagerResultStatus result,
                                       NSData *data,
                                       NSDictionary *userInfo,
@@ -102,14 +101,17 @@
                          [MEOCacheManager setImage:image forKey:imageUrl];
                      }
                  }
-                 if (completion) {
-                     completion(image, false);
+                 if (download) {
+                     download(image);
                  }
              }];
         }
     }else{
-        if (completion) {
-            completion(nil, false);
+        if (cache) {
+            cache(nil);
+        }
+        if (download) {
+            download(nil);
         }
     }
 }

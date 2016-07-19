@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @class MEOApiOption;
-typedef void (^MEOImageDownloaderCompletion)(UIImage *image, BOOL isCached);
+typedef void (^MEOImageDownloaderCompletion)(UIImage *image);
 
 /**
  *  MEOApiManagerとMEOCacheManagerで連携して画像をダウンロードする
@@ -17,11 +17,13 @@ typedef void (^MEOImageDownloaderCompletion)(UIImage *image, BOOL isCached);
 @interface MEOImageDownloader : NSObject
 
 + (void)imageUrl:(NSString*)imageUrl
-      completion:(MEOImageDownloaderCompletion)completion;
+           cache:(MEOImageDownloaderCompletion)cache
+        download:(MEOImageDownloaderCompletion)download;
 
 + (void)imageUrl:(NSString*)imageUrl
           option:(MEOApiOption*)option
-      completion:(MEOImageDownloaderCompletion)completion;
+           cache:(MEOImageDownloaderCompletion)cache
+        download:(MEOImageDownloaderCompletion)download;
 
 
 @end
