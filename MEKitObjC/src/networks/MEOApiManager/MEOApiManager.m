@@ -14,6 +14,7 @@ NSString* const MEOApiManagerHttpMethodPut = @"PUT";
 NSString* const MEOApiManagerHttpMethodGet = @"GET";
 NSString* const MEOApiManagerHttpMethodDelete = @"DELETE";
 NSString* const MEOApiManagerHttpMethodHEAD = @"HEAD";
+NSString* const MEOApiManagerHttpMethodPatch = @"PATCH";
 NSString* const MEOApiManagerLastModified = @"MEOApiManagerLastModified";
 
 #pragma mark - MEOApiOption -
@@ -411,6 +412,30 @@ didReceiveChallenge:(NSURLAuthenticationChallenge *)challenge
             headerField:headerField
              httpMethod:httpMethod
            httpBodyData:httpBodyData
+                 option:option
+             completion:completion];
+}
+
+
++(void)request:(NSString*)urlString
+   headerField:(NSDictionary*)headerField
+    httpMethod:(NSString*)httpMethod
+httpBodyJsonDict:(NSDictionary*)JsonDict
+        option:(MEOApiOption*)option
+    completion:(MEOApiManagerCompletion)completion
+{
+    NSData *jsonData = nil;
+    if (JsonDict) {
+        jsonData = [NSJSONSerialization dataWithJSONObject:JsonDict
+                                                   options:0
+                                                     error:nil];
+    }
+    
+    MEOApiManager *apiManager = [[MEOApiManager alloc] init];
+    [apiManager request:urlString
+            headerField:headerField
+             httpMethod:httpMethod
+           httpBodyData:jsonData
                  option:option
              completion:completion];
 }

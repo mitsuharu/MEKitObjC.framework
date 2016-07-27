@@ -40,6 +40,8 @@
 +(UIView*)instantiateWithNib;
 +(UIView*)instantiateWithNib:(NSString*)nibName;
 
++ (NSArray*)viewsFromInstantiateWithNib;
++ (NSArray*)viewsFromInstantiateWithNib:(NSString*)nibName;
 
 /**
  @brief 反転する

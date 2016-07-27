@@ -129,6 +129,21 @@
     return view;
 }
 
++ (NSArray*)viewsFromInstantiateWithNib
+{
+    return [UIView viewsFromInstantiateWithNib:NSStringFromClass([self class])];
+}
+
++ (NSArray*)viewsFromInstantiateWithNib:(NSString*)nibName
+{
+    UINib *nib = [UINib nibWithNibName:nibName
+                                bundle:[NSBundle mainBundle]];
+    NSArray *views = nil;
+    if (nib) {
+        views = [nib instantiateWithOwner:nil options:nil];
+    }
+    return views;
+}
 
 -(void)turnWithTimeInterval:(NSTimeInterval)timeInterval
                 turningView:(void (^)(UIView *view))turningView

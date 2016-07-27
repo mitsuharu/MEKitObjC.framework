@@ -15,6 +15,7 @@ extern NSString* const MEOApiManagerHttpMethodPost;
 extern NSString* const MEOApiManagerHttpMethodPut;
 extern NSString* const MEOApiManagerHttpMethodGet;
 extern NSString* const MEOApiManagerHttpMethodDelete;
+extern NSString* const MEOApiManagerHttpMethodPatch;
 //extern NSString* const MEOApiManagerHttpMethodHEAD;
 //extern NSString* const MEOApiManagerLastModified;
 
@@ -137,6 +138,23 @@ typedef void (^MEOApiManagerCompletion) (MEOApiManagerResultStatus result,
    headerField:(NSDictionary*)headerField
     httpMethod:(NSString*)httpMethod
   httpBodyData:(NSData*)httpBodyData
+        option:(MEOApiOption*)option
+    completion:(MEOApiManagerCompletion)completion;
+
+/**
+ *  httpリクエストを行う（bodyはJson連想配列）
+ *
+ *  @param urlString
+ *  @param headerField
+ *  @param httpMethod
+ *  @param JsonDict
+ *  @param option
+ *  @param completion
+ */
++(void)request:(NSString*)urlString
+   headerField:(NSDictionary*)headerField
+    httpMethod:(NSString*)httpMethod
+httpBodyJsonDict:(NSDictionary*)JsonDict
         option:(MEOApiOption*)option
     completion:(MEOApiManagerCompletion)completion;
 
