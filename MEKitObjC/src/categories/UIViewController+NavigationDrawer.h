@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
+typedef void (^MEONavigationDrawerCompletion)(BOOL finished);
+
 @interface UIViewController (NavigationDrawer)
 
 /**
@@ -31,6 +33,10 @@
 -(void)presentNavigationDrawer:(UIViewController*)viewController
                       animated:(BOOL)animated;
 
+-(void)presentNavigationDrawer:(UIViewController*)viewController
+                      animated:(BOOL)animated
+                    completion:(MEONavigationDrawerCompletion)completion;
+
 /**
  @brief NavigationDrawer風にviewControllerを表示する
  @param viewController NavigationDrawerで表示するビューコントローラー
@@ -45,7 +51,8 @@
                       animated:(BOOL)animated
                     widthScale:(CGFloat)widthScale
                       fromLeft:(BOOL)fromLeft
-              alongCurrentView:(BOOL)currentView;
+              alongCurrentView:(BOOL)currentView
+                    completion:(MEONavigationDrawerCompletion)completion;
 
 /**
  @brief NavigationDrawer表示を取り除く
@@ -54,7 +61,7 @@
  @endcode
  */
 -(void)dismissNavigationDrawerAnimated:(BOOL)animated
-                            completion:(void (^)(BOOL finished))completion;
+                            completion:(MEONavigationDrawerCompletion)completion;
 
 
 #pragma mark - 以下削除する

@@ -282,12 +282,22 @@ typedef void (^TapCompletion)(void);
 
 -(void)presentNavigationDrawer:(UIViewController*)viewController
                       animated:(BOOL)animated
+                    completion:(MEONavigationDrawerCompletion)completion
 {
     [self presentNavigationDrawer:viewController
                          animated:animated
                        widthScale:[viewController widthScale]
                          fromLeft:true
-                 alongCurrentView:false];
+                 alongCurrentView:false
+                       completion:completion];
+}
+
+-(void)presentNavigationDrawer:(UIViewController*)viewController
+                      animated:(BOOL)animated
+{
+    [self presentNavigationDrawer:viewController
+                         animated:animated
+                       completion:nil];
 }
 
 
@@ -296,12 +306,19 @@ typedef void (^TapCompletion)(void);
                     widthScale:(CGFloat)widthScale
                        fromLeft:(BOOL)fromLeft
               alongCurrentView:(BOOL)currentView
+                    completion:(MEONavigationDrawerCompletion)completion
 {
     if (viewController == nil) {
+        if (completion) {
+            completion(false);
+        }
         return;
     }
     
     if ([viewController isDrawing]) {
+        if (completion) {
+            completion(false);
+        }
         return;
     }
     [viewController setIsDrawing:YES];
@@ -366,11 +383,15 @@ typedef void (^TapCompletion)(void);
                          closureView.alpha = 0.5;
                          
                      } completion:^(BOOL finished) {
+                         
+                         if (completion) {
+                             completion(finished);
+                         }
                      }];
 }
 
 -(void)dismissNavigationDrawerAnimated:(BOOL)animated
-                            completion:(void (^)(BOOL finished))completion
+                            completion:(MEONavigationDrawerCompletion)completion
 {
     if ( [self isDrawing] ) {
         
@@ -412,6 +433,10 @@ typedef void (^TapCompletion)(void);
                                  completion(finished);
                              }
                          }];
+    }else{
+        if (completion) {
+            completion(false);
+        }
     }
 
 }
