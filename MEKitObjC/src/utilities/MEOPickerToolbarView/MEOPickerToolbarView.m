@@ -247,8 +247,8 @@
     [self removeAnimated:true];
     
     if (self.delegate
-        && [self.delegate respondsToSelector:@selector(pickerToolbarViewDidCancel:)]) {
-        [self.delegate pickerToolbarViewDidCancel:self];
+        && [self.delegate respondsToSelector:@selector(meoPickerToolbarViewDidCancel:)]) {
+        [self.delegate meoPickerToolbarViewDidCancel:self];
     }
     
 }
@@ -258,8 +258,8 @@
     [self removeAnimated:true];
 
     if (self.delegate
-        && [self.delegate respondsToSelector:@selector(pickerToolbarViewDidDone:)]) {
-        [self.delegate pickerToolbarViewDidDone:self];
+        && [self.delegate respondsToSelector:@selector(meoPickerToolbarViewDidDone:)]) {
+        [self.delegate meoPickerToolbarViewDidDone:self];
     }
     
 }
@@ -294,20 +294,95 @@ numberOfRowsInComponent:(NSInteger)component
 - (CGFloat)pickerView:(UIPickerView *)pickerView
 rowHeightForComponent:(NSInteger)component
 {
-    //    CGSize size = [pickerView rowSizeForComponent:component];
-    return 50;
-}
-
-- (NSString *)pickerView:(UIPickerView *)pickerView
-             titleForRow:(NSInteger)row forComponent:(NSInteger)component
-{
-    NSString *title = nil;
+//    CGSize size = [pickerView rowSizeForComponent:component];
+    CGFloat height = 44;
     
-    if (row < self.dataSource.count) {
-        title = [self.dataSource objectAtIndex:row];
+    SEL selector = @selector(meoPickerToolbarView:pickerView:rowHeightForComponent:);
+    
+    if (0 < self.dataSource.count) {
+        id obj = self.dataSource.firstObject;
+        if ([obj isKindOfClass:[UIView class]]) {
+            UIView *v = (UIView*)obj;
+            height = CGRectGetHeight(v.frame);
+        }
     }
     
-    return title;
+    if (self.delegate && [self.delegate respondsToSelector:selector]) {
+        CGFloat temp = [self.delegate meoPickerToolbarView:self
+                                                pickerView:pickerView
+                                     rowHeightForComponent:component];
+        if (temp > 0) {
+            height = temp;
+        }
+    }
+    
+    return height;
+}
+
+//- (NSString *)pickerView:(UIPickerView *)pickerView
+//             titleForRow:(NSInteger)row
+//            forComponent:(NSInteger)component
+//{
+//    NSString *title = nil;
+//    
+//    if (row < self.dataSource.count) {
+//        id obj = [self.dataSource objectAtIndex:row];
+//        if ([obj isKindOfClass:[NSString class]]) {
+//            title = (NSString*)obj;
+//        }
+//    }
+//    
+//    return title;
+//}
+
+- (UIView*)pickerView:(UIPickerView *)pickerView
+           viewForRow:(NSInteger)row
+         forComponent:(NSInteger)component
+          reusingView:(UIView *)view
+{
+    NSInteger tag = component * 10000 + row + 100;
+    CGSize size = [pickerView rowSizeForComponent:component];
+    CGRect rect = CGRectMake(0, 0, size.width, size.height);
+    
+    UIImage *image = nil;
+    NSString *text = nil;
+    if (row < self.dataSource.count) {
+        id obj = [self.dataSource objectAtIndex:row];
+        if ([obj isKindOfClass:[NSString class]]) {
+            text = (NSString*)obj;
+        }else if ([obj isKindOfClass:[UIImage class]]){
+            image = (UIImage*)obj;
+        }
+    }
+    
+    if (view == nil) {
+        view = [[UIView alloc] initWithFrame:rect];
+        if (image) {
+            UIImageView *iv = [[UIImageView alloc] initWithFrame:rect];
+            iv.image = image;
+            iv.contentMode = UIViewContentModeCenter;
+            iv.backgroundColor = [UIColor clearColor];
+            iv.tag = tag;
+            [view addSubview:iv];
+        }else if (text){
+            UILabel *label = [[UILabel alloc] initWithFrame:rect];
+            label.backgroundColor = [UIColor clearColor];
+            label.textAlignment = NSTextAlignmentCenter;
+            label.text = text;
+            label.tag = tag;
+            [view addSubview:label];
+        }
+    }else{
+        if (image) {
+            UIImageView *iv = (UIImageView *)[view viewWithTag:tag];
+            iv.image = image;
+        }else if (text){
+            UILabel *label = (UILabel *)[view viewWithTag:tag];
+            label.text = text;
+        }
+    }
+    
+    return view;
 }
 
 

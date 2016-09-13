@@ -844,6 +844,19 @@ forRowAtIndexPath:(NSIndexPath *)indexPath
 
 #pragma mark - Table view delegate
 
+-(void)tableView:(UITableView *)tableView
+ willDisplayCell:(UITableViewCell *)cell
+forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+     SEL selector = @selector(tableDataSourceManager:tableView:willDisplayCell:forRowAtIndexPath:);
+    if (delegate_ && [delegate_ respondsToSelector:selector]) {
+        [delegate_ tableDataSourceManager:self
+                                tableView:tableView
+                          willDisplayCell:cell
+                        forRowAtIndexPath:indexPath];
+    }
+}
+
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];

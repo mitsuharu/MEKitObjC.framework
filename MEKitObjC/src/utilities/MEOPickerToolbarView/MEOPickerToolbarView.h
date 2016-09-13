@@ -12,8 +12,15 @@
 @protocol MEOPickerToolbarViewDelegate <NSObject>
 
 @optional
--(void)pickerToolbarViewDidCancel:(MEOPickerToolbarView*)pickerToolbarView;
--(void)pickerToolbarViewDidDone:(MEOPickerToolbarView*)pickerToolbarView;
+
+
+- (CGFloat)meoPickerToolbarView:(MEOPickerToolbarView*)pickerToolbarView
+                     pickerView:(UIPickerView *)pickerView
+          rowHeightForComponent:(NSInteger)component;
+
+
+-(void)meoPickerToolbarViewDidCancel:(MEOPickerToolbarView*)pickerToolbarView;
+-(void)meoPickerToolbarViewDidDone:(MEOPickerToolbarView*)pickerToolbarView;
 
 @end
 

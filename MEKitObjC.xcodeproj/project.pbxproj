@@ -99,12 +99,8 @@
 		9B3156201ACB764600611592 /* MEOAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B3155A51ACB764600611592 /* MEOAlertView.m */; };
 		9B3156211ACB764600611592 /* MEOAppManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B3155A81ACB764600611592 /* MEOAppManager.m */; };
 		9B3156221ACB764600611592 /* MEOAppManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B3155A81ACB764600611592 /* MEOAppManager.m */; };
-		9B3156231ACB764600611592 /* MEOAuthorization.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B3155AB1ACB764600611592 /* MEOAuthorization.m */; };
-		9B3156241ACB764600611592 /* MEOAuthorization.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B3155AB1ACB764600611592 /* MEOAuthorization.m */; };
 		9B3156251ACB764600611592 /* MEOKeyChain.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B3155AE1ACB764600611592 /* MEOKeyChain.m */; };
 		9B3156261ACB764600611592 /* MEOKeyChain.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B3155AE1ACB764600611592 /* MEOKeyChain.m */; };
-		9B3156271ACB764600611592 /* MEOLocationService.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B3155B11ACB764600611592 /* MEOLocationService.m */; };
-		9B3156281ACB764600611592 /* MEOLocationService.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B3155B11ACB764600611592 /* MEOLocationService.m */; };
 		9B3156291ACB764600611592 /* MEOMemory.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B3155B41ACB764600611592 /* MEOMemory.m */; };
 		9B31562A1ACB764600611592 /* MEOMemory.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B3155B41ACB764600611592 /* MEOMemory.m */; };
 		9B31562B1ACB764600611592 /* MEONotificationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B3155B81ACB764600611592 /* MEONotificationView.m */; };
@@ -131,8 +127,6 @@
 		9B3156401ACB764600611592 /* MEOTableDataSourceManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B3155D31ACB764600611592 /* MEOTableDataSourceManager.m */; };
 		9B340C811AF1C8D200D18E71 /* NSError+Enhanced.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B340C801AF1C8D200D18E71 /* NSError+Enhanced.m */; };
 		9B340C821AF1C8D200D18E71 /* NSError+Enhanced.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B340C801AF1C8D200D18E71 /* NSError+Enhanced.m */; };
-		9B465EE01AD5FE3A00274FD3 /* MEOWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B465EDF1AD5FE3A00274FD3 /* MEOWebViewController.m */; };
-		9B465EE11AD5FE3A00274FD3 /* MEOWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B465EDF1AD5FE3A00274FD3 /* MEOWebViewController.m */; };
 		9B5362161ADC8F0200336E75 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9B5362091ADC8F0200336E75 /* Info.plist */; };
 		9B5362181ADC8F0200336E75 /* LINEActivityIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 9B53620B1ADC8F0200336E75 /* LINEActivityIcon.png */; };
 		9B5362191ADC8F0200336E75 /* LINEActivityIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 9B53620B1ADC8F0200336E75 /* LINEActivityIcon.png */; };
@@ -163,7 +157,6 @@
 		9BAA32671CBC877900A0C239 /* UIViewController+HeadphoneNotification.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BAA32661CBC877900A0C239 /* UIViewController+HeadphoneNotification.m */; };
 		9BB5240F1AEF4DA700A13E69 /* LINEActivityIcon@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 9BB5240D1AEF4DA700A13E69 /* LINEActivityIcon@2x~ipad.png */; };
 		9BB524101AEF4DA700A13E69 /* LINEActivityIcon~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 9BB5240E1AEF4DA700A13E69 /* LINEActivityIcon~ipad.png */; };
-		9BBB543B1B7449FA00DCB9C1 /* MEOCaptureSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BBB543A1B7449FA00DCB9C1 /* MEOCaptureSessionManager.m */; };
 		9BC18F071CC9FB9400AE0D14 /* MEOHardwareUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BC18F061CC9FB9400AE0D14 /* MEOHardwareUtil.m */; };
 		9BCA20BE1CB204FC006D0B1F /* MEONotificationViewWithoutTitle.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9BCA20BD1CB204FC006D0B1F /* MEONotificationViewWithoutTitle.xib */; };
 		9BD4F5381ACE39E300535693 /* MEOActionSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BD4F5371ACE39E300535693 /* MEOActionSheet.m */; };
@@ -292,12 +285,8 @@
 		9B3155A51ACB764600611592 /* MEOAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MEOAlertView.m; sourceTree = "<group>"; };
 		9B3155A71ACB764600611592 /* MEOAppManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEOAppManager.h; sourceTree = "<group>"; };
 		9B3155A81ACB764600611592 /* MEOAppManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MEOAppManager.m; sourceTree = "<group>"; };
-		9B3155AA1ACB764600611592 /* MEOAuthorization.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEOAuthorization.h; sourceTree = "<group>"; };
-		9B3155AB1ACB764600611592 /* MEOAuthorization.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MEOAuthorization.m; sourceTree = "<group>"; };
 		9B3155AD1ACB764600611592 /* MEOKeyChain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEOKeyChain.h; sourceTree = "<group>"; };
 		9B3155AE1ACB764600611592 /* MEOKeyChain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MEOKeyChain.m; sourceTree = "<group>"; };
-		9B3155B01ACB764600611592 /* MEOLocationService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEOLocationService.h; sourceTree = "<group>"; };
-		9B3155B11ACB764600611592 /* MEOLocationService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MEOLocationService.m; sourceTree = "<group>"; };
 		9B3155B31ACB764600611592 /* MEOMemory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEOMemory.h; sourceTree = "<group>"; };
 		9B3155B41ACB764600611592 /* MEOMemory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MEOMemory.m; sourceTree = "<group>"; };
 		9B3155B71ACB764600611592 /* MEONotificationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEONotificationView.h; sourceTree = "<group>"; };
@@ -324,8 +313,6 @@
 		9B3155D31ACB764600611592 /* MEOTableDataSourceManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MEOTableDataSourceManager.m; sourceTree = "<group>"; };
 		9B340C7F1AF1C8D200D18E71 /* NSError+Enhanced.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSError+Enhanced.h"; sourceTree = "<group>"; };
 		9B340C801AF1C8D200D18E71 /* NSError+Enhanced.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSError+Enhanced.m"; sourceTree = "<group>"; };
-		9B465EDE1AD5FE3A00274FD3 /* MEOWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEOWebViewController.h; sourceTree = "<group>"; };
-		9B465EDF1AD5FE3A00274FD3 /* MEOWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MEOWebViewController.m; sourceTree = "<group>"; };
 		9B5362091ADC8F0200336E75 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9B53620B1ADC8F0200336E75 /* LINEActivityIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LINEActivityIcon.png; sourceTree = "<group>"; };
 		9B53620C1ADC8F0200336E75 /* LINEActivityIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "LINEActivityIcon@2x.png"; sourceTree = "<group>"; };
@@ -355,8 +342,6 @@
 		9BAA32661CBC877900A0C239 /* UIViewController+HeadphoneNotification.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+HeadphoneNotification.m"; sourceTree = "<group>"; };
 		9BB5240D1AEF4DA700A13E69 /* LINEActivityIcon@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "LINEActivityIcon@2x~ipad.png"; sourceTree = "<group>"; };
 		9BB5240E1AEF4DA700A13E69 /* LINEActivityIcon~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "LINEActivityIcon~ipad.png"; sourceTree = "<group>"; };
-		9BBB54391B7449FA00DCB9C1 /* MEOCaptureSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEOCaptureSessionManager.h; sourceTree = "<group>"; };
-		9BBB543A1B7449FA00DCB9C1 /* MEOCaptureSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MEOCaptureSessionManager.m; sourceTree = "<group>"; };
 		9BC18F051CC9FB9400AE0D14 /* MEOHardwareUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEOHardwareUtil.h; sourceTree = "<group>"; };
 		9BC18F061CC9FB9400AE0D14 /* MEOHardwareUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MEOHardwareUtil.m; sourceTree = "<group>"; };
 		9BCA20BD1CB204FC006D0B1F /* MEONotificationViewWithoutTitle.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MEONotificationViewWithoutTitle.xib; sourceTree = "<group>"; };
@@ -474,7 +459,6 @@
 		9B3155481ACB764600611592 /* src */ = {
 			isa = PBXGroup;
 			children = (
-				9BBB54371B7449FA00DCB9C1 /* media */,
 				9B3155491ACB764600611592 /* categories */,
 				9B31557A1ACB764600611592 /* databases */,
 				9B3155861ACB764600611592 /* networks */,
@@ -590,7 +574,6 @@
 			isa = PBXGroup;
 			children = (
 				9B2351791D37887900152D35 /* MEOImageDownloader */,
-				9B465EDD1AD5FE2200274FD3 /* MEOWebViewController */,
 				9B31558E1ACB764600611592 /* MEOApiManager */,
 			);
 			path = networks;
@@ -624,9 +607,7 @@
 				9B3155A01ACB764600611592 /* IndicatorView */,
 				9B3155A31ACB764600611592 /* MEOAlertView */,
 				9B3155A61ACB764600611592 /* MEOAppManager */,
-				9B3155A91ACB764600611592 /* MEOAuthorization */,
 				9B3155AC1ACB764600611592 /* MEOKeyChain */,
-				9B3155AF1ACB764600611592 /* MEOLocationService */,
 				9B3155B21ACB764600611592 /* MEOMemory */,
 				9B3155B51ACB764600611592 /* MEONotificationWindow */,
 				9B3155C01ACB764600611592 /* MEOSensor */,
@@ -676,15 +657,6 @@
 			path = MEOAppManager;
 			sourceTree = "<group>";
 		};
-		9B3155A91ACB764600611592 /* MEOAuthorization */ = {
-			isa = PBXGroup;
-			children = (
-				9B3155AA1ACB764600611592 /* MEOAuthorization.h */,
-				9B3155AB1ACB764600611592 /* MEOAuthorization.m */,
-			);
-			path = MEOAuthorization;
-			sourceTree = "<group>";
-		};
 		9B3155AC1ACB764600611592 /* MEOKeyChain */ = {
 			isa = PBXGroup;
 			children = (
@@ -692,15 +664,6 @@
 				9B3155AE1ACB764600611592 /* MEOKeyChain.m */,
 			);
 			path = MEOKeyChain;
-			sourceTree = "<group>";
-		};
-		9B3155AF1ACB764600611592 /* MEOLocationService */ = {
-			isa = PBXGroup;
-			children = (
-				9B3155B01ACB764600611592 /* MEOLocationService.h */,
-				9B3155B11ACB764600611592 /* MEOLocationService.m */,
-			);
-			path = MEOLocationService;
 			sourceTree = "<group>";
 		};
 		9B3155B21ACB764600611592 /* MEOMemory */ = {
@@ -800,15 +763,6 @@
 			path = TableDataSourceManager;
 			sourceTree = "<group>";
 		};
-		9B465EDD1AD5FE2200274FD3 /* MEOWebViewController */ = {
-			isa = PBXGroup;
-			children = (
-				9B465EDE1AD5FE3A00274FD3 /* MEOWebViewController.h */,
-				9B465EDF1AD5FE3A00274FD3 /* MEOWebViewController.m */,
-			);
-			path = MEOWebViewController;
-			sourceTree = "<group>";
-		};
 		9B5362081ADC8F0200336E75 /* MEKitObjCResources */ = {
 			isa = PBXGroup;
 			children = (
@@ -873,23 +827,6 @@
 				9B9727B21BA9431A004158D6 /* MEOInstagramActivity.m */,
 			);
 			path = MEOInstagramActivity;
-			sourceTree = "<group>";
-		};
-		9BBB54371B7449FA00DCB9C1 /* media */ = {
-			isa = PBXGroup;
-			children = (
-				9BBB54381B7449FA00DCB9C1 /* MEOCaptureSessionManager */,
-			);
-			path = media;
-			sourceTree = "<group>";
-		};
-		9BBB54381B7449FA00DCB9C1 /* MEOCaptureSessionManager */ = {
-			isa = PBXGroup;
-			children = (
-				9BBB54391B7449FA00DCB9C1 /* MEOCaptureSessionManager.h */,
-				9BBB543A1B7449FA00DCB9C1 /* MEOCaptureSessionManager.m */,
-			);
-			path = MEOCaptureSessionManager;
 			sourceTree = "<group>";
 		};
 		9BBF190C1B02F64200515F4B /* resources */ = {
@@ -1105,12 +1042,10 @@
 				9B3155EA1ACB764600611592 /* UIAlertView+Blocks.m in Sources */,
 				9BAA32671CBC877900A0C239 /* UIViewController+HeadphoneNotification.m in Sources */,
 				9B3155FA1ACB764600611592 /* UITextView+Placeholder.m in Sources */,
-				9B3156271ACB764600611592 /* MEOLocationService.m in Sources */,
 				9B9727BF1BA947F4004158D6 /* MEOInstagramActivity.m in Sources */,
 				9B9727BE1BA946D5004158D6 /* MEOActivityHelper.m in Sources */,
 				9B3155D61ACB764600611592 /* NSArray+Enhanced.m in Sources */,
 				9BC18F071CC9FB9400AE0D14 /* MEOHardwareUtil.m in Sources */,
-				9B465EE01AD5FE3A00274FD3 /* MEOWebViewController.m in Sources */,
 				9B802E061ACBE9B5003A596D /* MEOCollectionDataSource.m in Sources */,
 				9B3155F21ACB764600611592 /* UIResponder+Enhanced.m in Sources */,
 				9B3156081ACB764600611592 /* MEOCacheManager.m in Sources */,
@@ -1145,7 +1080,6 @@
 				9B3155E41ACB764600611592 /* NSString+AESCrypt.m in Sources */,
 				9B0404521ACAAD960071090C /* MEKitObjC.m in Sources */,
 				9B31562B1ACB764600611592 /* MEONotificationView.m in Sources */,
-				9BBB543B1B7449FA00DCB9C1 /* MEOCaptureSessionManager.m in Sources */,
 				9B340C811AF1C8D200D18E71 /* NSError+Enhanced.m in Sources */,
 				9B3155D41ACB764600611592 /* Categories.m in Sources */,
 				9B802E081ACBE9B5003A596D /* MEOCollectionDataSourceManager.m in Sources */,
@@ -1156,7 +1090,6 @@
 				9B3155E01ACB764600611592 /* NSMutableArray+Enhanced.m in Sources */,
 				9B3156291ACB764600611592 /* MEOMemory.m in Sources */,
 				9B3155FE1ACB764600611592 /* UIViewController+Enhanced.m in Sources */,
-				9B3156231ACB764600611592 /* MEOAuthorization.m in Sources */,
 				9B31563B1ACB764600611592 /* MEOUtilities.m in Sources */,
 				9B3156041ACB764600611592 /* MEOCoreDataManager.m in Sources */,
 				9B3155F01ACB764600611592 /* UIImage+Enhanced.m in Sources */,
@@ -1200,7 +1133,6 @@
 				9B3156091ACB764600611592 /* MEOCacheManager.m in Sources */,
 				9B9727B71BA9431A004158D6 /* MEOInstagramActivity.m in Sources */,
 				9BD4F5391ACE39E300535693 /* MEOActionSheet.m in Sources */,
-				9B465EE11AD5FE3A00274FD3 /* MEOWebViewController.m in Sources */,
 				9B31560B1ACB764600611592 /* MEOXMLReader.m in Sources */,
 				9B3156011ACB764600611592 /* UIViewController+NavigationDrawer.m in Sources */,
 				9B3156381ACB764600611592 /* MyReachability.m in Sources */,
@@ -1208,14 +1140,12 @@
 				9B3155EB1ACB764600611592 /* UIAlertView+Blocks.m in Sources */,
 				9B3155E11ACB764600611592 /* NSMutableArray+Enhanced.m in Sources */,
 				9B31563E1ACB764600611592 /* MEOTableDataSource.m in Sources */,
-				9B3156241ACB764600611592 /* MEOAuthorization.m in Sources */,
 				9B3156341ACB764600611592 /* MEOSensor.m in Sources */,
 				9B802E071ACBE9B5003A596D /* MEOCollectionDataSource.m in Sources */,
 				9B31563C1ACB764600611592 /* MEOUtilities.m in Sources */,
 				9B3155F71ACB764600611592 /* UITabBarController+Extension.m in Sources */,
 				9B3155F11ACB764600611592 /* UIImage+Enhanced.m in Sources */,
 				9B802E091ACBE9B5003A596D /* MEOCollectionDataSourceManager.m in Sources */,
-				9B3156281ACB764600611592 /* MEOLocationService.m in Sources */,
 				9B3155E31ACB764600611592 /* NSObject+Enhanced.m in Sources */,
 				9B10BA8B1ADB3E4000B70BA5 /* MEOLINEActivity.m in Sources */,
 				9B3156051ACB764600611592 /* MEOCoreDataManager.m in Sources */,

@@ -65,6 +65,13 @@
            scrollViewDidScroll:(UIScrollView *)scrollView;
 
 
+
+-(void)tableDataSourceManager:(MEOTableDataSourceManager*)manager
+                    tableView:(UITableView *)tableView
+              willDisplayCell:(UITableViewCell *)cell
+            forRowAtIndexPath:(NSIndexPath *)indexPath;
+
+
 @end
 
 

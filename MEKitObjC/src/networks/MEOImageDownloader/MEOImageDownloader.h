@@ -16,6 +16,8 @@ typedef void (^MEOImageDownloaderCompletion)(UIImage *image);
  */
 @interface MEOImageDownloader : NSObject
 
++ (void)setSimultaneousDownloadCount:(NSInteger)count;
+
 + (void)imageUrl:(NSString*)imageUrl
            cache:(MEOImageDownloaderCompletion)cache
         download:(MEOImageDownloaderCompletion)download;

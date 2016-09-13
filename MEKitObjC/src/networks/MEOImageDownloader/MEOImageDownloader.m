@@ -12,7 +12,15 @@
 #import "MEOCacheManager.h"
 #import "MEOCache.h"
 
+NSInteger simultaneousDownloadCount = 0;
+NSInteger downloadCount = 0;
+
 @implementation MEOImageDownloader
+
++ (void)setSimultaneousDownloadCount:(NSInteger)count
+{
+    simultaneousDownloadCount = count;
+}
 
 + (void)imageUrl:(NSString*)imageUrl
            cache:(MEOImageDownloaderCompletion)cache
@@ -45,6 +53,40 @@
             cache(cachedImage);
         }
         
+        // 画像ダウンロード（共通のためブロック化）
+        void (^downloadImage)(void) = ^void (void) {
+            
+            if (simultaneousDownloadCount > 0
+                && downloadCount > simultaneousDownloadCount) {
+                // 同時ダウンロード数の上限を超えてるのでダウンロードしない
+                if (download) {
+                    download(nil);
+                }
+            }else{
+                downloadCount += 1;
+                [MEOApiManager download:imageUrl
+                                 option:option
+                             completion:^(MEOApiManagerResultStatus result,
+                                          NSData *data,
+                                          NSDictionary *userInfo,
+                                          NSInteger httpStatus,
+                                          NSError *error)
+                 {
+                     downloadCount -= 1;
+                     UIImage *image = nil;
+                     if (error == nil) {
+                         image = [[UIImage alloc] initWithData:data];
+                         if (image) {
+                             [MEOCacheManager setImage:image forKey:imageUrl];
+                         }
+                     }
+                     if (download) {
+                         download(image);
+                     }
+                 }];
+            }
+        };
+        
         if (cachedImage) {
             if (comparelastModified == false) {
             }else{
@@ -62,49 +104,54 @@
                          && [meoCache.updatedAt compare:lastModified] == NSOrderedAscending) {
  
                          // 古いので更新する
-                         [MEOApiManager download:imageUrl
-                                          option:option
-                                      completion:^(MEOApiManagerResultStatus result,
-                                                   NSData *data,
-                                                   NSDictionary *userInfo,
-                                                   NSInteger httpStatus,
-                                                   NSError *error)
-                          {
-                              UIImage *image = nil;
-                              if (error == nil) {
-                                  UIImage *image = [[UIImage alloc] initWithData:data];
-                                  if (image) {
-                                      [MEOCacheManager setImage:image forKey:imageUrl];
-                                  }
-                              }
-                              if (download) {
-                                  download(image);
-                              }
-                          }];
+                         downloadImage();
+//                         [MEOApiManager download:imageUrl
+//                                          option:option
+//                                      completion:^(MEOApiManagerResultStatus result,
+//                                                   NSData *data,
+//                                                   NSDictionary *userInfo,
+//                                                   NSInteger httpStatus,
+//                                                   NSError *error)
+//                          {
+//                              UIImage *image = nil;
+//                              if (error == nil) {
+//                                   image = [[UIImage alloc] initWithData:data];
+//                                  if (image) {
+//                                      [MEOCacheManager setImage:image forKey:imageUrl];
+//                                  }
+//                              }
+//                              if (download) {
+//                                  download(image);
+//                              }
+//                          }];
                      }else{
                      }
                  }];
             }
         }else {
-            [MEOApiManager download:imageUrl
-                             option:option
-                         completion:^(MEOApiManagerResultStatus result,
-                                      NSData *data,
-                                      NSDictionary *userInfo,
-                                      NSInteger httpStatus,
-                                      NSError *error)
-             {
-                 UIImage *image = nil;
-                 if (error == nil) {
-                     image = [[UIImage alloc] initWithData:data];
-                     if (image) {
-                         [MEOCacheManager setImage:image forKey:imageUrl];
-                     }
-                 }
-                 if (download) {
-                     download(image);
-                 }
-             }];
+            
+            downloadImage();
+            
+//            [MEOApiManager download:imageUrl
+//                             option:option
+//                         completion:^(MEOApiManagerResultStatus result,
+//                                      NSData *data,
+//                                      NSDictionary *userInfo,
+//                                      NSInteger httpStatus,
+//                                      NSError *error)
+//             {
+//                 UIImage *image = nil;
+//                 if (error == nil) {
+//                     image = [[UIImage alloc] initWithData:data];
+//                     if (image) {
+//                         [MEOCacheManager setImage:image forKey:imageUrl];
+//                     }
+//                 }
+//                 if (download) {
+//                     download(image);
+//                 }
+//             }];
+            
         }
     }else{
         if (cache) {
