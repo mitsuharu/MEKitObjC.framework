@@ -27,5 +27,15 @@ typedef void (^MEOImageDownloaderCompletion)(UIImage *image);
            cache:(MEOImageDownloaderCompletion)cache
         download:(MEOImageDownloaderCompletion)download;
 
+- (BOOL)cancel;
+
+- (void)imageUrl:(NSString*)imageUrl
+           cache:(MEOImageDownloaderCompletion)cache
+        download:(MEOImageDownloaderCompletion)download;
+
+- (void)imageUrl:(NSString*)imageUrl
+          option:(MEOApiOption*)option
+           cache:(MEOImageDownloaderCompletion)cache
+        download:(MEOImageDownloaderCompletion)download;
 
 @end

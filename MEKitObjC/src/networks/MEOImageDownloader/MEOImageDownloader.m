@@ -15,6 +15,12 @@
 NSInteger simultaneousDownloadCount = 0;
 NSInteger downloadCount = 0;
 
+@interface MEOImageDownloader ()
+
+@property (nonatomic, retain) MEOApiManager *apiManager;
+
+@end
+
 @implementation MEOImageDownloader
 
 + (void)setSimultaneousDownloadCount:(NSInteger)count
@@ -23,19 +29,40 @@ NSInteger downloadCount = 0;
 }
 
 + (void)imageUrl:(NSString*)imageUrl
+          option:(MEOApiOption*)option
+           cache:(MEOImageDownloaderCompletion)cache
+        download:(MEOImageDownloaderCompletion)download
+{
+    MEOImageDownloader *downloader = [[MEOImageDownloader alloc] init];
+    [downloader imageUrl:imageUrl
+                  option:option
+                   cache:cache
+                download:download];
+}
+
++ (void)imageUrl:(NSString*)imageUrl
            cache:(MEOImageDownloaderCompletion)cache
         download:(MEOImageDownloaderCompletion)download;
 {
-    MEOApiOption *option = [[MEOApiOption alloc] init];
-    option.comparelastModified = true;
-    [MEOImageDownloader imageUrl:imageUrl
-                          option:option
-                           cache:cache
-                        download:download];
+    MEOImageDownloader *downloader = [[MEOImageDownloader alloc] init];
+    [downloader imageUrl:imageUrl
+                   cache:cache
+                download:download];
 }
 
 
-+ (void)imageUrl:(NSString*)imageUrl
+- (BOOL)cancel
+{
+    if (self.apiManager) {
+        if ([self.apiManager cancel]) {
+            downloadCount -= 1;
+            return true;
+        }
+    }
+    return false;
+}
+
+- (void)imageUrl:(NSString*)imageUrl
           option:(MEOApiOption*)option
            cache:(MEOImageDownloaderCompletion)cache
         download:(MEOImageDownloaderCompletion)download
@@ -64,7 +91,8 @@ NSInteger downloadCount = 0;
                 }
             }else{
                 downloadCount += 1;
-                [MEOApiManager download:imageUrl
+                self.apiManager = [[MEOApiManager alloc] init];
+                [self.apiManager download:imageUrl
                                  option:option
                              completion:^(MEOApiManagerResultStatus result,
                                           NSData *data,
@@ -105,53 +133,12 @@ NSInteger downloadCount = 0;
  
                          // 古いので更新する
                          downloadImage();
-//                         [MEOApiManager download:imageUrl
-//                                          option:option
-//                                      completion:^(MEOApiManagerResultStatus result,
-//                                                   NSData *data,
-//                                                   NSDictionary *userInfo,
-//                                                   NSInteger httpStatus,
-//                                                   NSError *error)
-//                          {
-//                              UIImage *image = nil;
-//                              if (error == nil) {
-//                                   image = [[UIImage alloc] initWithData:data];
-//                                  if (image) {
-//                                      [MEOCacheManager setImage:image forKey:imageUrl];
-//                                  }
-//                              }
-//                              if (download) {
-//                                  download(image);
-//                              }
-//                          }];
                      }else{
                      }
                  }];
             }
         }else {
-            
             downloadImage();
-            
-//            [MEOApiManager download:imageUrl
-//                             option:option
-//                         completion:^(MEOApiManagerResultStatus result,
-//                                      NSData *data,
-//                                      NSDictionary *userInfo,
-//                                      NSInteger httpStatus,
-//                                      NSError *error)
-//             {
-//                 UIImage *image = nil;
-//                 if (error == nil) {
-//                     image = [[UIImage alloc] initWithData:data];
-//                     if (image) {
-//                         [MEOCacheManager setImage:image forKey:imageUrl];
-//                     }
-//                 }
-//                 if (download) {
-//                     download(image);
-//                 }
-//             }];
-            
         }
     }else{
         if (cache) {
@@ -162,5 +149,19 @@ NSInteger downloadCount = 0;
         }
     }
 }
+
+- (void)imageUrl:(NSString*)imageUrl
+           cache:(MEOImageDownloaderCompletion)cache
+        download:(MEOImageDownloaderCompletion)download;
+{
+    MEOApiOption *option = [[MEOApiOption alloc] init];
+    option.comparelastModified = true;
+    [MEOImageDownloader imageUrl:imageUrl
+                          option:option
+                           cache:cache
+                        download:download];
+}
+
+
 
 @end

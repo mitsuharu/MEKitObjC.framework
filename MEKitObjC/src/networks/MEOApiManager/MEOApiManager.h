@@ -61,6 +61,39 @@ typedef void (^MEOApiManagerCompletion) (MEOApiManagerResultStatus result,
 
 @interface MEOApiManager : NSObject
 
+
+- (BOOL)cancel;
+
+- (void)request:(NSString*)urlString
+    headerField:(NSDictionary*)headerField
+     httpMethod:(NSString*)httpMethod
+   httpBodyData:(NSData*)httpBodyData
+         option:(MEOApiOption*)option
+     completion:(MEOApiManagerCompletion)completion;
+
+- (void)request:(NSString*)urlString
+    headerField:(NSDictionary*)headerField
+     httpMethod:(NSString*)httpMethod
+httpBodyJsonDict:(NSDictionary*)JsonDict
+         option:(MEOApiOption*)option
+     completion:(MEOApiManagerCompletion)completion;
+
+- (void)request:(NSString*)urlString
+    headerField:(NSDictionary*)headerField
+     httpMethod:(NSString*)httpMethod
+       httpBody:(NSString*)httpBody
+         option:(MEOApiOption*)option
+     completion:(MEOApiManagerCompletion)completion;
+
+- (void)download:(NSString*)urlString
+          option:(MEOApiOption*)option
+      completion:(MEOApiManagerCompletion)completion;
+
+- (void)requestLastModified:(NSString*)urlString
+                     option:(MEOApiOption*)option
+                 completion:(MEOApiManagerCompletion)completion;
+
+
 /**
  *  Jsonデータをパースして辞書列配列で返す
  *

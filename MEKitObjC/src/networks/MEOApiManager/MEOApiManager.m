@@ -54,6 +54,7 @@ NSString* const MEOApiManagerLastModified = @"MEOApiManagerLastModified";
 
 @interface MEOApiManager () < NSURLSessionDelegate >
 
+@property (nonatomic, retain) NSURLSessionTask *task;
 @property (nonatomic, retain) MEOApiOption *option;
 -(void)showsNetworkActivityIndicator:(BOOL)visible;
 
@@ -70,6 +71,7 @@ NSString* const MEOApiManagerLastModified = @"MEOApiManagerLastModified";
 
 -(void)dealloc
 {
+    [self cancel];
     [self showsNetworkActivityIndicator:false];
 }
 
@@ -141,21 +143,39 @@ NSString* const MEOApiManagerLastModified = @"MEOApiManagerLastModified";
     return error;
 }
 
+-(NSDictionary*)parseJson:(NSData*)jsonData
+{
+    id json = nil;
+    if (jsonData) {
+        json = [NSJSONSerialization JSONObjectWithData:jsonData
+                                               options:NSJSONReadingAllowFragments
+                                                 error:nil];
+    }
+    NSDictionary *jsonDict = nil;
+    if (json && [json isKindOfClass:[NSDictionary class]]) {
+        jsonDict = (NSDictionary*)json;
+    }
+    return jsonDict;
+}
+
+
 #pragma mark HTTPリクエスト
 
--(void)request:(NSString*)urlString
-   headerField:(NSDictionary*)headerField
-    httpMethod:(NSString*)httpMethod
-      httpBody:(NSString*)httpBody
-        option:(MEOApiOption*)option
-    completion:(MEOApiManagerCompletion)completion
+- (void)suspend
 {
-    [self request:urlString
-      headerField:headerField
-       httpMethod:httpMethod
-     httpBodyData:[httpBody dataUsingEncoding:NSUTF8StringEncoding]
-           option:option
-       completion:completion];
+    if (self.task && self.task.state == NSURLSessionTaskStateRunning) {
+        [self.task suspend];
+    }
+}
+
+- (BOOL)cancel
+{
+    if (self.task && self.task.state == NSURLSessionTaskStateRunning) {
+        [self.task cancel];
+        self.task = nil;
+        return true;
+    }
+    return false;
 }
 
 - (void)request:(NSString*)urlString
@@ -195,14 +215,14 @@ NSString* const MEOApiManagerLastModified = @"MEOApiManagerLastModified";
     NSURLSessionConfiguration *config = nil;
     if (self.option.ignoreCacheData) {
         /*
-         iOS8 - NSURLSessionConfigurationについてメモ - Qiita 
+         iOS8 - NSURLSessionConfigurationについてメモ - Qiita
          <http://qiita.com/nomadmonad/items/c7f69dc9f8c7c1c77cb2>
          */
         config = [NSURLSessionConfiguration ephemeralSessionConfiguration];
     }else{
         config = [NSURLSessionConfiguration defaultSessionConfiguration];
     }
-
+    
     if (self.option.ignoreCacheData) {
         config.requestCachePolicy = self.option.cachePolicy;
         config.URLCache = nil;
@@ -211,8 +231,8 @@ NSString* const MEOApiManagerLastModified = @"MEOApiManagerLastModified";
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
     
     if (headerField && headerField.allKeys.count > 0) {
-//        [request addValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-//        [request addValue:@"application/json" forHTTPHeaderField:@"Accept"];
+        //        [request addValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+        //        [request addValue:@"application/json" forHTTPHeaderField:@"Accept"];
         for (NSString *key in headerField.allKeys) {
             [request addValue:[headerField objectForKey:key] forHTTPHeaderField:key];
         }
@@ -229,58 +249,127 @@ NSString* const MEOApiManagerLastModified = @"MEOApiManagerLastModified";
     NSURLSession *session = [NSURLSession sessionWithConfiguration:config
                                                           delegate:self
                                                      delegateQueue:nil];
-    NSURLSessionTask *task = [session dataTaskWithRequest:request
-                                        completionHandler:^(NSData *data, NSURLResponse *response, NSError *error)
-    {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            
-            [self showsNetworkActivityIndicator:false];
-            
-            if (self.option.ignoreCacheData) {
-                NSURLCache *uc = [NSURLCache sharedURLCache];
-                [uc removeCachedResponseForRequest:request];
-                NSURLSessionDataTask *dtask = (NSURLSessionDataTask *)task;
-                if (dtask) {
-                    [uc removeCachedResponseForDataTask:dtask];                    
-                }
-            }
-            
-            NSDate *lastModified = [self lastModified:response];
-            if (lastModified) {
-                if (self.option == nil) {
-                    self.option = [[MEOApiOption alloc] init];
-                }
-                if (self.option.userInfo == nil) {
-                    self.option.userInfo = [[NSDictionary alloc] init];
-                }
-                NSMutableDictionary *dict = [self.option.userInfo mutableCopy];
-                [dict setValue:lastModified forKey:MEOApiManagerLastModified];
-                self.option.userInfo = [dict copy];
-            }
-            
-            NSInteger statusCode = [self httpStatusCode:response];
-            MEOApiManagerResultStatus resultStatus = MEOApiManagerResultStatusResponseFailed;
-            if ( 0 <= (statusCode-200) && (statusCode-200) < 100) {
-                resultStatus = MEOApiManagerResultStatusResponseSucsess;
-            }
-            
-            if (error) {
-                if ([error.domain isEqualToString:@"NSURLErrorDomain"]) {
-                    if (error.code == kCFURLErrorNotConnectedToInternet) {
-                        resultStatus = MEOApiManagerResultStatusNetworkFailed;
-                    }
-                }
-            }
-            
-            if (completion) {
-                completion(resultStatus, data, self.option.userInfo, statusCode, error);
-            }
-            
-            [session invalidateAndCancel];
-        });
-    }];
-    [task resume];
+    
+    if (self.task) {
+        if (self.task.state == NSURLSessionTaskStateRunning) {
+            [self.task cancel];
+        }
+        self.task = nil;
+    }
+    
+    self.task = [session dataTaskWithRequest:request
+                           completionHandler:^(NSData *data, NSURLResponse *response, NSError *error)
+                 {
+                     dispatch_async(dispatch_get_main_queue(), ^{
+                         
+                         [self showsNetworkActivityIndicator:false];
+                         
+                         if (self.option.ignoreCacheData) {
+                             NSURLCache *uc = [NSURLCache sharedURLCache];
+                             [uc removeCachedResponseForRequest:request];
+                             NSURLSessionDataTask *dtask = (NSURLSessionDataTask *)(self.task);
+                             if (dtask) {
+                                 [uc removeCachedResponseForDataTask:dtask];
+                             }
+                         }
+                         
+                         NSDate *lastModified = [self lastModified:response];
+                         if (lastModified) {
+                             if (self.option == nil) {
+                                 self.option = [[MEOApiOption alloc] init];
+                             }
+                             if (self.option.userInfo == nil) {
+                                 self.option.userInfo = [[NSDictionary alloc] init];
+                             }
+                             NSMutableDictionary *dict = [self.option.userInfo mutableCopy];
+                             [dict setValue:lastModified forKey:MEOApiManagerLastModified];
+                             self.option.userInfo = [dict copy];
+                         }
+                         
+                         NSInteger statusCode = [self httpStatusCode:response];
+                         MEOApiManagerResultStatus resultStatus = MEOApiManagerResultStatusResponseFailed;
+                         if ( 0 <= (statusCode-200) && (statusCode-200) < 100) {
+                             resultStatus = MEOApiManagerResultStatusResponseSucsess;
+                         }
+                         
+                         if (error) {
+                             if ([error.domain isEqualToString:@"NSURLErrorDomain"]) {
+                                 if (error.code == kCFURLErrorNotConnectedToInternet) {
+                                     resultStatus = MEOApiManagerResultStatusNetworkFailed;
+                                 }
+                             }
+                         }
+                         
+                         if (completion) {
+                             completion(resultStatus, data, self.option.userInfo, statusCode, error);
+                         }
+                         
+                         [session invalidateAndCancel];
+                     });
+                 }];
+    [self.task resume];
     [self showsNetworkActivityIndicator:true];
+}
+
+- (void)request:(NSString*)urlString
+    headerField:(NSDictionary*)headerField
+     httpMethod:(NSString*)httpMethod
+httpBodyJsonDict:(NSDictionary*)JsonDict
+         option:(MEOApiOption*)option
+     completion:(MEOApiManagerCompletion)completion
+{
+    NSData *jsonData = nil;
+    if (JsonDict) {
+        jsonData = [NSJSONSerialization dataWithJSONObject:JsonDict
+                                                   options:0
+                                                     error:nil];
+    }
+    
+    [self request:urlString
+            headerField:headerField
+             httpMethod:httpMethod
+           httpBodyData:jsonData
+                 option:option
+             completion:completion];
+}
+
+-(void)request:(NSString*)urlString
+   headerField:(NSDictionary*)headerField
+    httpMethod:(NSString*)httpMethod
+      httpBody:(NSString*)httpBody
+        option:(MEOApiOption*)option
+    completion:(MEOApiManagerCompletion)completion
+{
+    [self request:urlString
+      headerField:headerField
+       httpMethod:httpMethod
+     httpBodyData:[httpBody dataUsingEncoding:NSUTF8StringEncoding]
+           option:option
+       completion:completion];
+}
+
+- (void)download:(NSString*)urlString
+          option:(MEOApiOption*)option
+      completion:(MEOApiManagerCompletion)completion
+{
+    [self request:urlString
+            headerField:nil
+             httpMethod:MEOApiManagerHttpMethodGet
+               httpBody:nil
+                 option:option
+             completion:completion];
+}
+
+- (void)requestLastModified:(NSString*)urlString
+                     option:(MEOApiOption*)option
+                 completion:(MEOApiManagerCompletion)completion
+{
+    [self request:urlString
+            headerField:nil
+             httpMethod:MEOApiManagerHttpMethodHEAD
+               httpBody:nil
+                 option:option
+             completion:completion];
 }
 
 #pragma mark NSURLSessionDelegate
@@ -318,20 +407,13 @@ didReceiveChallenge:(NSURLAuthenticationChallenge *)challenge
 }
 
 
--(NSDictionary*)parseJson:(NSData*)jsonData
+- (void)URLSession:(NSURLSession *)session
+              task:(NSURLSessionTask *)task
+didCompleteWithError:(NSError *)error
 {
-    id json = nil;
-    if (jsonData) {
-        json = [NSJSONSerialization JSONObjectWithData:jsonData
-                                               options:NSJSONReadingAllowFragments
-                                                 error:nil];
-    }
-    NSDictionary *jsonDict = nil;
-    if (json && [json isKindOfClass:[NSDictionary class]]) {
-        jsonDict = (NSDictionary*)json;
-    }
-    return jsonDict;
+    
 }
+
 
 #pragma mark 公開されるクラスメソッド
 
@@ -466,7 +548,7 @@ httpBodyJsonDict:(NSDictionary*)JsonDict
              completion:completion];
 }
 
-#pragma mark 削除メソッドの仮対応
+#pragma mark - 削除メソッドの仮対応
 
 
 +(void)request:(NSString*)urlString
