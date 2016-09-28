@@ -205,6 +205,29 @@
     return dictionary;
 }
 
+- (CGSize)meoSizeWithSystemFontSize:(CGFloat)fontSize constrainedToSize:(CGSize)size
+{
+    return [self meoSizeWithFont:[UIFont systemFontOfSize:fontSize]
+               constrainedToSize:size];
+}
+
+- (CGSize)meoSizeWithFont:(UIFont *)font constrainedToSize:(CGSize)size
+{
+    CGSize size2 = CGSizeMake(size.width, 0);
+    NSDictionary *attributeDict = @{NSFontAttributeName:font};
+    NSStringDrawingOptions options = NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingTruncatesLastVisibleLine;
+
+    for (NSString *str in [self parsedByLines]) {
+        CGRect rect = [str boundingRectWithSize:CGSizeMake(size.width, CGFLOAT_MAX)
+                                        options:options
+                                     attributes:attributeDict
+                                        context:nil];
+        size2.height += CGRectGetHeight(rect);
+    }
+    size2.height = ceilf(size2.height);
+    
+    return size2;
+}
 
 -(NSArray*)parsedByLines
 {

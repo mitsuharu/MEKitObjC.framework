@@ -28,7 +28,10 @@
 
 
 
--(BOOL)isVisible;
+/**
+ *  UIViewControllerが表示されているか判定
+ */
+- (BOOL)meo_isVisible;
 
 
 @end

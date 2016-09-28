@@ -33,17 +33,56 @@
 // 数値を三桁のコンマ区切りの文字列に変換する
 +(NSString*)priceString:(NSInteger)price;
 
+/**
+ *  改行ごとに文字列を分解する
+ */
 -(NSArray*)parsedByLines;
+
+/**
+ *  文字列の描画サイズを計算する
+ *
+ *  @param font フォント
+ *  @param size （例）CGSizeMake(width, CGFLOAT_MAX)
+ *
+ *  @return 描画サイズ
+ */
+- (CGSize)meoSizeWithFont:(UIFont *)font constrainedToSize:(CGSize)size;
+
+/**
+ *  文字列の描画サイズを計算する
+ *
+ *  @param fontSize フォントサイズ
+ *  @param size     （例）CGSizeMake(width, CGFLOAT_MAX)
+ *
+ *  @return 描画サイズ
+ */
+- (CGSize)meoSizeWithSystemFontSize:(CGFloat)fontSize constrainedToSize:(CGSize)size;
+
 
 // 数字だけを取りだす
 -(NSString*)extractedIntegerString;
 
 -(NSArray*)detectedUrls;
 
--(CGRect)drawnRectWithSize:(CGSize)size font:(UIFont*)font;
--(CGRect)rectWithDrawnSize:(CGSize)size font:(UIFont*)font;
--(CGSize)sizeWithDrawnSize:(CGSize)size font:(UIFont*)font;
--(CGSize)sizeWithFontAboveiOS7:(UIFont *)font;
+/**
+ *  文字列の描画サイズを計算する
+ */
+-(CGRect)drawnRectWithSize:(CGSize)size font:(UIFont*)font __attribute__((deprecated("use meoSizeWithFont:constrainedToSize:")));
+
+/**
+ *  文字列の描画サイズを計算する
+ */
+-(CGRect)rectWithDrawnSize:(CGSize)size font:(UIFont*)font __attribute__((deprecated("use meoSizeWithFont:constrainedToSize:")));
+
+/**
+ *  文字列の描画サイズを計算する
+ */
+-(CGSize)sizeWithDrawnSize:(CGSize)size font:(UIFont*)font __attribute__((deprecated("use meoSizeWithFont:constrainedToSize:")));
+
+/**
+ *  文字列の描画サイズを計算する
+ */
+-(CGSize)sizeWithFontAboveiOS7:(UIFont *)font __attribute__((deprecated("use meoSizeWithFont:constrainedToSize:")));
 
 // 半角カタカナに変換
 - (NSString *)halfKana;

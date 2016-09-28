@@ -61,9 +61,21 @@
 }
 
 
--(BOOL)isVisible
+-(BOOL)meo_isVisible
 {
-    return (self.isViewLoaded && self.view.window);
+    // see http://stackoverflow.com/questions/2777438/how-to-tell-if-uiviewcontrollers-view-is-visible
+    
+    if (self.navigationController) {
+        return (self.navigationController.visibleViewController == self
+                && self.presentedViewController == nil);
+    }else if (self.tabBarController){
+        return (self.tabBarController.selectedViewController == self
+                && self.presentedViewController == nil);
+    }else{
+        return (self.isViewLoaded
+                && self.view.window
+                && self.presentedViewController == nil);
+    }
 }
 
 @end
