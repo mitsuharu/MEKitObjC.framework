@@ -205,7 +205,7 @@
     enableTapEvents_ = enableTapEvents;
     
     isVisible_ = YES;
-    UIWindow *window = [[[UIApplication sharedApplication] windows] firstObject];
+    UIWindow *window = [[[UIApplication sharedApplication] keyWindow];
     
     if (!enableTapEvents) {
         blankView_ = [[UIView alloc] initWithFrame:window.frame];

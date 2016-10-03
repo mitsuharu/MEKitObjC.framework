@@ -31,7 +31,7 @@ static BOOL isPopping = NO;
                            animated:(BOOL)animated
                          completion:(void (^)(BOOL finished))completion
 {    
-    UIWindow *window = [[[UIApplication sharedApplication] windows] objectAtIndex:0];
+    UIWindow *window = [[[UIApplication sharedApplication] keyWindow];
     CGFloat scaleX = 0.8;
     CGFloat scaleY = 0.8;    
     CGSize size = CGSizeMake(floorf(window.frame.size.width*scaleX),
@@ -56,7 +56,7 @@ static BOOL isPopping = NO;
     }
     isPopping = YES;
     
-    UIWindow *window = [[[UIApplication sharedApplication] windows] firstObject];
+    UIWindow *window = [[[UIApplication sharedApplication] keyWindow];
         
     UIView *blankView = [[UIView alloc] initWithFrame:window.frame];
     [blankView setAlpha:ALPHA_BLANLVIEW];
@@ -221,7 +221,7 @@ static BOOL isPopping = NO;
         return;
     }
     
-    UIWindow *window = [[[UIApplication sharedApplication] windows] firstObject];
+    UIWindow *window = [[[UIApplication sharedApplication] keyWindow];
     
     
     UIView *blankView = [[UIView alloc] initWithFrame:window.frame];
