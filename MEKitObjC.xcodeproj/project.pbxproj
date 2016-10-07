@@ -119,8 +119,6 @@
 		9B3156381ACB764600611592 /* MyReachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B3155C81ACB764600611592 /* MyReachability.m */; };
 		9B3156391ACB764600611592 /* MEOTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B3155CB1ACB764600611592 /* MEOTableViewCell.m */; };
 		9B31563A1ACB764600611592 /* MEOTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B3155CB1ACB764600611592 /* MEOTableViewCell.m */; };
-		9B31563B1ACB764600611592 /* MEOUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B3155CE1ACB764600611592 /* MEOUtilities.m */; };
-		9B31563C1ACB764600611592 /* MEOUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B3155CE1ACB764600611592 /* MEOUtilities.m */; };
 		9B31563D1ACB764600611592 /* MEOTableDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B3155D11ACB764600611592 /* MEOTableDataSource.m */; };
 		9B31563E1ACB764600611592 /* MEOTableDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B3155D11ACB764600611592 /* MEOTableDataSource.m */; };
 		9B31563F1ACB764600611592 /* MEOTableDataSourceManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B3155D31ACB764600611592 /* MEOTableDataSourceManager.m */; };
@@ -161,6 +159,8 @@
 		9BCA20BE1CB204FC006D0B1F /* MEONotificationViewWithoutTitle.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9BCA20BD1CB204FC006D0B1F /* MEONotificationViewWithoutTitle.xib */; };
 		9BD4F5381ACE39E300535693 /* MEOActionSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BD4F5371ACE39E300535693 /* MEOActionSheet.m */; };
 		9BD4F5391ACE39E300535693 /* MEOActionSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BD4F5371ACE39E300535693 /* MEOActionSheet.m */; };
+		9BE0B21F1DA7838A008FAB0B /* MEOUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BE0B21E1DA7838A008FAB0B /* MEOUtilities.m */; };
+		9BE0B2231DA783D2008FAB0B /* MEOToast.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BE0B2221DA783D2008FAB0B /* MEOToast.m */; };
 		9BFB4D491B32930B008833E5 /* UILabel+Enhanced.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BFB4D481B32930B008833E5 /* UILabel+Enhanced.m */; };
 /* End PBXBuildFile section */
 
@@ -305,8 +305,6 @@
 		9B3155C81ACB764600611592 /* MyReachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyReachability.m; sourceTree = "<group>"; };
 		9B3155CA1ACB764600611592 /* MEOTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEOTableViewCell.h; sourceTree = "<group>"; };
 		9B3155CB1ACB764600611592 /* MEOTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MEOTableViewCell.m; sourceTree = "<group>"; };
-		9B3155CD1ACB764600611592 /* MEOUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEOUtilities.h; sourceTree = "<group>"; };
-		9B3155CE1ACB764600611592 /* MEOUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MEOUtilities.m; sourceTree = "<group>"; };
 		9B3155D01ACB764600611592 /* MEOTableDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEOTableDataSource.h; sourceTree = "<group>"; };
 		9B3155D11ACB764600611592 /* MEOTableDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MEOTableDataSource.m; sourceTree = "<group>"; };
 		9B3155D21ACB764600611592 /* MEOTableDataSourceManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEOTableDataSourceManager.h; sourceTree = "<group>"; };
@@ -347,6 +345,10 @@
 		9BCA20BD1CB204FC006D0B1F /* MEONotificationViewWithoutTitle.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MEONotificationViewWithoutTitle.xib; sourceTree = "<group>"; };
 		9BD4F5361ACE39E300535693 /* MEOActionSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEOActionSheet.h; sourceTree = "<group>"; };
 		9BD4F5371ACE39E300535693 /* MEOActionSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MEOActionSheet.m; sourceTree = "<group>"; };
+		9BE0B21D1DA7838A008FAB0B /* MEOUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEOUtilities.h; sourceTree = "<group>"; };
+		9BE0B21E1DA7838A008FAB0B /* MEOUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MEOUtilities.m; sourceTree = "<group>"; };
+		9BE0B2211DA783D2008FAB0B /* MEOToast.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEOToast.h; sourceTree = "<group>"; };
+		9BE0B2221DA783D2008FAB0B /* MEOToast.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MEOToast.m; sourceTree = "<group>"; };
 		9BFB4D471B32930B008833E5 /* UILabel+Enhanced.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UILabel+Enhanced.h"; sourceTree = "<group>"; };
 		9BFB4D481B32930B008833E5 /* UILabel+Enhanced.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UILabel+Enhanced.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -599,6 +601,8 @@
 		9B3155951ACB764600611592 /* utilities */ = {
 			isa = PBXGroup;
 			children = (
+				9BE0B2201DA783D2008FAB0B /* MEOToast */,
+				9BE0B21C1DA7838A008FAB0B /* MEOUtilities */,
 				9B2CC9811D2DF65B003B117B /* MEOPickerToolbarView */,
 				9BC18F041CC9FB9400AE0D14 /* MEOHardwareUtil */,
 				9BD4F5351ACE39E300535693 /* MEOActionSheet */,
@@ -613,7 +617,6 @@
 				9B3155C01ACB764600611592 /* MEOSensor */,
 				9B3155C31ACB764600611592 /* MEOSystemStatus */,
 				9B3155C91ACB764600611592 /* MEOTableViewCell */,
-				9B3155CC1ACB764600611592 /* MEOUtilities */,
 				9B3155CF1ACB764600611592 /* TableDataSourceManager */,
 			);
 			path = utilities;
@@ -743,15 +746,6 @@
 			path = MEOTableViewCell;
 			sourceTree = "<group>";
 		};
-		9B3155CC1ACB764600611592 /* MEOUtilities */ = {
-			isa = PBXGroup;
-			children = (
-				9B3155CD1ACB764600611592 /* MEOUtilities.h */,
-				9B3155CE1ACB764600611592 /* MEOUtilities.m */,
-			);
-			path = MEOUtilities;
-			sourceTree = "<group>";
-		};
 		9B3155CF1ACB764600611592 /* TableDataSourceManager */ = {
 			isa = PBXGroup;
 			children = (
@@ -852,6 +846,24 @@
 				9BD4F5371ACE39E300535693 /* MEOActionSheet.m */,
 			);
 			path = MEOActionSheet;
+			sourceTree = "<group>";
+		};
+		9BE0B21C1DA7838A008FAB0B /* MEOUtilities */ = {
+			isa = PBXGroup;
+			children = (
+				9BE0B21D1DA7838A008FAB0B /* MEOUtilities.h */,
+				9BE0B21E1DA7838A008FAB0B /* MEOUtilities.m */,
+			);
+			path = MEOUtilities;
+			sourceTree = "<group>";
+		};
+		9BE0B2201DA783D2008FAB0B /* MEOToast */ = {
+			isa = PBXGroup;
+			children = (
+				9BE0B2211DA783D2008FAB0B /* MEOToast.h */,
+				9BE0B2221DA783D2008FAB0B /* MEOToast.m */,
+			);
+			path = MEOToast;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1053,6 +1065,7 @@
 				9B3155DE1ACB764600611592 /* NSDictionary+Enhanced.m in Sources */,
 				9B3155D81ACB764600611592 /* NSData+AESCrypt.m in Sources */,
 				9B3156121ACB764600611592 /* MEOApiManager.m in Sources */,
+				9BE0B21F1DA7838A008FAB0B /* MEOUtilities.m in Sources */,
 				9B3156331ACB764600611592 /* MEOSensor.m in Sources */,
 				9B3156371ACB764600611592 /* MyReachability.m in Sources */,
 				9B3155E61ACB764600611592 /* NSString+Enhanced.m in Sources */,
@@ -1071,6 +1084,7 @@
 				9B3155E81ACB764600611592 /* UIActionSheet+Blocks.m in Sources */,
 				9B31563D1ACB764600611592 /* MEOTableDataSource.m in Sources */,
 				9B3155EC1ACB764600611592 /* UIButton+Enhanced.m in Sources */,
+				9BE0B2231DA783D2008FAB0B /* MEOToast.m in Sources */,
 				9B3156351ACB764600611592 /* MEOSystemStatus.m in Sources */,
 				9B3156021ACB764600611592 /* UIViewController+Popover.m in Sources */,
 				9B3155F41ACB764600611592 /* UIScrollView+Enhanced.m in Sources */,
@@ -1090,7 +1104,6 @@
 				9B3155E01ACB764600611592 /* NSMutableArray+Enhanced.m in Sources */,
 				9B3156291ACB764600611592 /* MEOMemory.m in Sources */,
 				9B3155FE1ACB764600611592 /* UIViewController+Enhanced.m in Sources */,
-				9B31563B1ACB764600611592 /* MEOUtilities.m in Sources */,
 				9B3156041ACB764600611592 /* MEOCoreDataManager.m in Sources */,
 				9B3155F01ACB764600611592 /* UIImage+Enhanced.m in Sources */,
 				9B31560A1ACB764600611592 /* MEOXMLReader.m in Sources */,
@@ -1142,7 +1155,6 @@
 				9B31563E1ACB764600611592 /* MEOTableDataSource.m in Sources */,
 				9B3156341ACB764600611592 /* MEOSensor.m in Sources */,
 				9B802E071ACBE9B5003A596D /* MEOCollectionDataSource.m in Sources */,
-				9B31563C1ACB764600611592 /* MEOUtilities.m in Sources */,
 				9B3155F71ACB764600611592 /* UITabBarController+Extension.m in Sources */,
 				9B3155F11ACB764600611592 /* UIImage+Enhanced.m in Sources */,
 				9B802E091ACBE9B5003A596D /* MEOCollectionDataSourceManager.m in Sources */,

@@ -142,7 +142,7 @@ NSString *const kKeyboardAccessoryLeftButtonCompletion = @"kKeyboardAccessoryLef
 {
     void (^block)(void) = ^(void) {
         UITextField *tempTextField = [UITextField new];
-        [[[[UIApplication sharedApplication] keyWindow] addSubview:tempTextField];
+        [[[UIApplication sharedApplication] keyWindow] addSubview:tempTextField];
         [tempTextField becomeFirstResponder];
         [tempTextField resignFirstResponder];
         [tempTextField removeFromSuperview];
