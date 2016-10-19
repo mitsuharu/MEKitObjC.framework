@@ -43,6 +43,9 @@
     NSTimeInterval expiresDays_;
 }
 
+
+@property (nonatomic, assign) MEOCacheManagerImageFormat imageFormat;
+
 + (MEOCacheManager*)sharedInstance;
 
 - (NSString *)pathForUrl:(NSString *)urlString;
@@ -75,6 +78,9 @@
 - (id)init
 {
     if (self = [super init]) {
+        
+        self.imageFormat = MEOCacheManagerImageFormatPNG;
+        
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(didReceiveMemoryWarning:)
                                                      name:UIApplicationDidReceiveMemoryWarningNotification
@@ -156,6 +162,53 @@
         }
     }
 }
+
+- (void)deleteExpiredCacheFiles:(MEOCacheManagerExpires)exprire
+{
+    for (int i = 0; i < 16; i++) {
+        for (int j = 0; j < 16; j++) {
+            NSString *subDir =
+            [NSString stringWithFormat:@"%@/%x%x", pathCacheDirectory_, i, j];
+            
+            BOOL isDir = NO;
+            BOOL existsSubDir = [fileManager_ fileExistsAtPath:subDir isDirectory:&isDir];
+            if (existsSubDir || isDir) {
+                NSError *error = nil;
+                NSArray *paths = [fileManager_ contentsOfDirectoryAtPath:subDir
+                                                                   error:&error];
+                for (NSString *path in paths) {
+                    
+                    NSString *fp = [NSString stringWithFormat:@"%@/%@", subDir, path];
+                    MEOCache *cache = [MEOCache cacheWithFile:fp];
+         
+                    if (cache) {
+                        // 有効期限
+                        NSTimeInterval tempExpiresDays = -1;
+                        if (cache.expiresDays > 0) {
+                            tempExpiresDays = cache.expiresDays;
+                        }
+                        if ([MEOCacheManager daysFormExpires:exprire] > 0) {
+                            tempExpiresDays = [MEOCacheManager daysFormExpires:exprire];
+                        }
+                        
+                        if (tempExpiresDays > 0 && cache.updatedAt) {
+                            NSTimeInterval diff = [self elapsedDays:cache.updatedAt];
+                            if (diff > tempExpiresDays) {
+                                NSError *err = nil;
+                                [fileManager_ removeItemAtPath:fp
+                                                         error:&err];
+                                if (err) {
+                                    NSLog(@"err %@", err);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
 
 - (void)clearMemoryCache
 {
@@ -249,7 +302,21 @@
 }
 
 
+
+
 #pragma mark - 公開用のメソッド
+
++ (MEOCacheManagerImageFormat)imageFotmart
+{
+    MEOCacheManager *cm = [MEOCacheManager sharedInstance];
+    return cm.imageFormat;
+}
+
++ (void)setImageFotmart:(MEOCacheManagerImageFormat)imageFormart
+{
+    MEOCacheManager *cm = [MEOCacheManager sharedInstance];
+    cm.imageFormat = imageFormart;
+}
 
 + (void)setExpiresDays:(NSTimeInterval)expiresDays
 {
@@ -345,12 +412,21 @@
     [cm setData:data forKey:key];
 }
 
++ (NSData*)dataByImage:(UIImage*)image
+{
+    NSData *data = UIImagePNGRepresentation(image);;
+    MEOCacheManagerImageFormat imageFormat = [MEOCacheManager imageFotmart];
+    if (imageFormat == MEOCacheManagerImageFormatJPEG) {
+        data = UIImageJPEGRepresentation(image, 0.8);
+    }
+    return data;
+}
 
 + (void)setImage:(UIImage *)image
           forKey:(NSString *)key
          expires:(MEOCacheManagerExpires)expires
 {
-    [MEOCacheManager setData:UIImagePNGRepresentation(image)
+    [MEOCacheManager setData:[MEOCacheManager dataByImage:image]
                       forKey:key
                  expiresDays:[MEOCacheManager daysFormExpires:expires]];
 }
@@ -359,14 +435,14 @@
           forKey:(NSString *)key
      expiresDays:(NSTimeInterval)days
 {
-    [MEOCacheManager setData:UIImagePNGRepresentation(image)
+    [MEOCacheManager setData:[MEOCacheManager dataByImage:image]
                       forKey:key
                  expiresDays:days];
 }
 
 + (void)setImage:(UIImage *)image forKey:(NSString *)key
 {
-    [MEOCacheManager setData:UIImagePNGRepresentation(image)
+    [MEOCacheManager setData:[MEOCacheManager dataByImage:image]
                       forKey:key];
 }
 
@@ -413,6 +489,11 @@
     [cm deleteAllCacheFiles];
 }
 
++ (void)deleteExpiredCacheFiles:(MEOCacheManagerExpires)exprire
+{
+    MEOCacheManager *cm = [MEOCacheManager sharedInstance];
+    [cm deleteExpiredCacheFiles:exprire];
+}
 
 @end
 

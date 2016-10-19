@@ -11,6 +11,11 @@
 
 @class MEOCache;
 
+typedef NS_ENUM(NSInteger, MEOCacheManagerImageFormat) {
+    MEOCacheManagerImageFormatPNG,
+    MEOCacheManagerImageFormatJPEG,
+};
+
 typedef NS_ENUM(NSInteger, MEOCacheManagerExpires) {
     MEOCacheManagerExpiresNone,
     MEOCacheManagerExpiresOneDay,
@@ -82,6 +87,8 @@ typedef NS_ENUM(NSInteger, MEOCacheManagerExpires) {
 
 + (void)setExpiresDays:(NSTimeInterval)expiresDays;
 
++ (void)setImageFotmart:(MEOCacheManagerImageFormat)imageFormart;
 
++ (void)deleteExpiredCacheFiles:(MEOCacheManagerExpires)exprire;
 
 @end
