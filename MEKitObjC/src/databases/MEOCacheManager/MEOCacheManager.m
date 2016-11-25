@@ -34,6 +34,21 @@
 
 @end
 
+@implementation MEOCacheManagerOption
+
+- (instancetype)init
+{
+    if (self = [super init]) {
+        self.imageFormat = [MEOCacheManager imageFotmart];
+        self.expires = MEOCacheManagerExpiresNone;
+    }
+    return self;
+}
+
+@end
+
+
+
 @interface MEOCacheManager ()
 {
     NSCache *cache_;
@@ -390,6 +405,19 @@
 }
 
 + (void)setData:(NSData *)data
+           forKey:(NSString *)key
+           option:(MEOCacheManagerOption*)option
+{
+    MEOCacheManagerExpires expires = MEOCacheManagerExpiresNone;
+    if (option) {
+        expires = option.expires;
+    }
+    MEOCacheManager *cm = [MEOCacheManager sharedInstance];
+    [cm setData:data forKey:key expiresDays:[MEOCacheManager daysFormExpires:expires]];
+}
+
+
++ (void)setData:(NSData *)data
          forKey:(NSString *)key
         expires:(MEOCacheManagerExpires)expires
 {
@@ -412,6 +440,15 @@
     [cm setData:data forKey:key];
 }
 
++ (NSData*)dataByImage:(UIImage*)image imageFormat:(MEOCacheManagerImageFormat)imageFormat
+{
+    NSData *data = UIImagePNGRepresentation(image);
+    if (imageFormat == MEOCacheManagerImageFormatJPEG) {
+        data = UIImageJPEGRepresentation(image, 0.8);
+    }
+    return data;
+}
+
 + (NSData*)dataByImage:(UIImage*)image
 {
     NSData *data = UIImagePNGRepresentation(image);;
@@ -421,6 +458,22 @@
     }
     return data;
 }
+
++ (void)setImage:(UIImage *)image
+          forKey:(NSString *)key
+          option:(MEOCacheManagerOption*)option
+{
+    MEOCacheManagerImageFormat imageFormat = [MEOCacheManager imageFotmart];
+    MEOCacheManagerExpires expires = MEOCacheManagerExpiresNone;
+    if (option) {
+        imageFormat = option.imageFormat;
+        expires = option.expires;
+    }
+    [MEOCacheManager setData:[MEOCacheManager dataByImage:image imageFormat:imageFormat]
+                      forKey:key
+                 expiresDays:[MEOCacheManager daysFormExpires:expires]];
+}
+
 
 + (void)setImage:(UIImage *)image
           forKey:(NSString *)key
@@ -444,6 +497,19 @@
 {
     [MEOCacheManager setData:[MEOCacheManager dataByImage:image]
                       forKey:key];
+}
+
++ (void)setString:(NSString *)string
+          forKey:(NSString *)key
+          option:(MEOCacheManagerOption*)option
+{
+    MEOCacheManagerExpires expires = MEOCacheManagerExpiresNone;
+    if (option) {
+        expires = option.expires;
+    }
+    [MEOCacheManager setData:[MEOCache dataFromString:string]
+                      forKey:key
+                 expiresDays:[MEOCacheManager daysFormExpires:expires]];
 }
 
 + (void)setString:(NSString *)string

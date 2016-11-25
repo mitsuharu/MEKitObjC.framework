@@ -8,7 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
+extern NSString *const MEOApiOptionKey;
+extern NSString *const MEOCacheManagerOptionKey;
+
 @class MEOApiOption;
+@class MEOCacheManagerOption;
 typedef void (^MEOImageDownloaderCompletion)(UIImage *image);
 
 /**
@@ -22,8 +26,16 @@ typedef void (^MEOImageDownloaderCompletion)(UIImage *image);
            cache:(MEOImageDownloaderCompletion)cache
         download:(MEOImageDownloaderCompletion)download;
 
+/**
+ * MEOApiManagerとMEOCacheManagerで連携して画像をダウンロードする
+ *
+ *  @param imageUrl 画像URL
+ *  @param option   例：@{MEOCacheManagerOptionKey:cacheManagerOption}
+ *  @param cache    キャッシュデータ
+ *  @param download ダウンロードデータ
+ */
 + (void)imageUrl:(NSString*)imageUrl
-          option:(MEOApiOption*)option
+          option:(NSDictionary*)option
            cache:(MEOImageDownloaderCompletion)cache
         download:(MEOImageDownloaderCompletion)download;
 
@@ -34,7 +46,7 @@ typedef void (^MEOImageDownloaderCompletion)(UIImage *image);
         download:(MEOImageDownloaderCompletion)download;
 
 - (void)imageUrl:(NSString*)imageUrl
-          option:(MEOApiOption*)option
+          option:(NSDictionary*)option
            cache:(MEOImageDownloaderCompletion)cache
         download:(MEOImageDownloaderCompletion)download;
 

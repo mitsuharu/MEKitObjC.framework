@@ -23,6 +23,13 @@ typedef NS_ENUM(NSInteger, MEOCacheManagerExpires) {
     MEOCacheManagerExpiresOneMonth,
 };
 
+
+@interface MEOCacheManagerOption : NSObject
+@property (nonatomic, assign) MEOCacheManagerImageFormat imageFormat;
+@property (nonatomic, assign) MEOCacheManagerExpires expires;
+@end
+
+
 @interface MEOCacheManager : NSObject
 
 + (MEOCache*)cacheForKey:(NSString *)key;
@@ -47,7 +54,6 @@ typedef NS_ENUM(NSInteger, MEOCacheManagerExpires) {
 + (void)setData:(NSData *)data
          forKey:(NSString *)key
     expiresDays:(NSTimeInterval)days;
-
 
 /**
  *  有効期限付きで画像データをキャッシュに保存する
@@ -87,8 +93,22 @@ typedef NS_ENUM(NSInteger, MEOCacheManagerExpires) {
 
 + (void)setExpiresDays:(NSTimeInterval)expiresDays;
 
++ (MEOCacheManagerImageFormat)imageFotmart;
 + (void)setImageFotmart:(MEOCacheManagerImageFormat)imageFormart;
 
 + (void)deleteExpiredCacheFiles:(MEOCacheManagerExpires)exprire;
+
+// MEOCacheManagerOptionを追加
++ (void)setData:(NSData *)data
+         forKey:(NSString *)key
+         option:(MEOCacheManagerOption*)option;
+
++ (void)setImage:(UIImage *)image
+          forKey:(NSString *)key
+          option:(MEOCacheManagerOption*)option;
+
++ (void)setString:(NSString *)string
+           forKey:(NSString *)key
+           option:(MEOCacheManagerOption*)option;
 
 @end

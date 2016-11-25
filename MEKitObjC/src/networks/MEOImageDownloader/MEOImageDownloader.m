@@ -15,6 +15,9 @@
 NSInteger simultaneousDownloadCount = 0;
 NSInteger downloadCount = 0;
 
+NSString *const MEOApiOptionKey = @"MEOApiOptionKey";
+NSString *const MEOCacheManagerOptionKey = @"MEOCacheManagerOptionKey";
+
 @interface MEOImageDownloader ()
 
 @property (nonatomic, retain) MEOApiManager *apiManager;
@@ -29,7 +32,7 @@ NSInteger downloadCount = 0;
 }
 
 + (void)imageUrl:(NSString*)imageUrl
-          option:(MEOApiOption*)option
+          option:(NSDictionary*)option
            cache:(MEOImageDownloaderCompletion)cache
         download:(MEOImageDownloaderCompletion)download
 {
@@ -63,13 +66,30 @@ NSInteger downloadCount = 0;
 }
 
 - (void)imageUrl:(NSString*)imageUrl
-          option:(MEOApiOption*)option
+          option:(NSDictionary*)option
            cache:(MEOImageDownloaderCompletion)cache
         download:(MEOImageDownloaderCompletion)download
 {
-    BOOL comparelastModified = false;
+    MEOApiOption *apiOption = nil;
+    MEOCacheManagerOption *cacheManagerOption = nil;
     if (option) {
-        comparelastModified = option.comparelastModified;
+        if ([option.allKeys containsObject:MEOApiOptionKey]) {
+            id obj = option[MEOApiOptionKey];
+            if (obj && [obj isKindOfClass:[MEOApiOption class]]) {
+                apiOption = (MEOApiOption*)obj;
+            }
+        }
+        if ([option.allKeys containsObject:MEOCacheManagerOptionKey]) {
+            id obj = option[MEOCacheManagerOptionKey];
+            if (obj && [obj isKindOfClass:[MEOCacheManagerOption class]]) {
+                cacheManagerOption = (MEOCacheManagerOption*)obj;
+            }
+        }
+    }
+    
+    BOOL comparelastModified = false;
+    if (apiOption) {
+        comparelastModified = apiOption.comparelastModified;
     }
     
     if (imageUrl && imageUrl.length > 0) {
@@ -93,7 +113,7 @@ NSInteger downloadCount = 0;
                 downloadCount += 1;
                 self.apiManager = [[MEOApiManager alloc] init];
                 [self.apiManager download:imageUrl
-                                 option:option
+                                 option:apiOption
                              completion:^(MEOApiManagerResultStatus result,
                                           NSData *data,
                                           NSDictionary *userInfo,
@@ -105,7 +125,9 @@ NSInteger downloadCount = 0;
                      if (error == nil) {
                          image = [[UIImage alloc] initWithData:data];
                          if (image) {
-                             [MEOCacheManager setImage:image forKey:imageUrl];
+                             [MEOCacheManager setImage:image
+                                                forKey:imageUrl
+                                                option:cacheManagerOption];
                          }
                      }
                      if (download) {
@@ -119,7 +141,7 @@ NSInteger downloadCount = 0;
             if (comparelastModified == false) {
             }else{
                 [MEOApiManager requestLastModified:imageUrl
-                                            option:option
+                                            option:apiOption
                                         completion:^(MEOApiManagerResultStatus result,
                                                      NSData *data,
                                                      NSDictionary *userInfo,
@@ -157,7 +179,7 @@ NSInteger downloadCount = 0;
     MEOApiOption *option = [[MEOApiOption alloc] init];
     option.comparelastModified = true;
     [MEOImageDownloader imageUrl:imageUrl
-                          option:option
+                          option:@{MEOApiOptionKey:option}
                            cache:cache
                         download:download];
 }
