@@ -30,8 +30,12 @@
 
 +(UIViewController*)instantiateWithStoryboard
 {
-    return [UIViewController instantiateWithStoryboard:NSStringFromClass([self class])
-                                            identifier:NSStringFromClass([self class])];
+    NSString *className = NSStringFromClass([self class]);
+    NSArray *array = [className componentsSeparatedByString:@"."];
+    NSString *str = array.lastObject;
+
+    return [UIViewController instantiateWithStoryboard:str
+                                            identifier:str];
 }
 
 +(UIViewController*)instantiateWithStoryboard:(NSString*)storyboard
