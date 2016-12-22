@@ -11,6 +11,9 @@
 #define POPOVER_ANIMATION_DURATION 0.25
 #define POPOVER_ANIMATION_DURATION_CLOSE 0.3
 
+typedef void (^MEOPopoverDidTapOutside)();
+
+
 @interface UIViewController (Popover)
 
 /**
@@ -64,6 +67,11 @@
 -(void)dismissPopoverViewControllerAnimated:(BOOL)animated
                                  completion:(void (^)(BOOL finished))completion;
 
+
+/**
+ ポップオーバー画面の背景をタップしたときのイベントを設定する
+ */
+- (void)setPopoverDidTapOutside:(MEOPopoverDidTapOutside)block;
 
 @end
 

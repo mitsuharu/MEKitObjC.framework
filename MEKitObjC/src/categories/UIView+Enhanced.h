@@ -21,9 +21,6 @@
 
 @end
 
-
-
-
 @interface UIView (Enhanced)
 
 /**

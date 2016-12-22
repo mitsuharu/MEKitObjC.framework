@@ -115,7 +115,10 @@
 
 +(UIView*)instantiateWithNib
 {
-    return [UIView instantiateWithNib:NSStringFromClass([self class])];
+    NSString *str = NSStringFromClass([self class]);
+    NSArray *arr = [str componentsSeparatedByString:@"."];
+    
+    return [UIView instantiateWithNib:arr.lastObject];
 }
 
 +(UIView*)instantiateWithNib:(NSString*)nibName
@@ -131,7 +134,9 @@
 
 + (NSArray*)viewsFromInstantiateWithNib
 {
-    return [UIView viewsFromInstantiateWithNib:NSStringFromClass([self class])];
+    NSString *str = NSStringFromClass([self class]);
+    NSArray *arr = [str componentsSeparatedByString:@"."];
+    return [UIView viewsFromInstantiateWithNib:arr.lastObject];
 }
 
 + (NSArray*)viewsFromInstantiateWithNib:(NSString*)nibName

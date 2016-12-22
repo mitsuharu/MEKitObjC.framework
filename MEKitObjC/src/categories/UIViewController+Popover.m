@@ -12,6 +12,7 @@
 #import "NSObject+Enhanced.h"
 
 #define KEY_VIEWCONTROLLER_POPOVER_BLANKVIEW @"KEY_VIEWCONTROLLER_POPOVER_BLANKVIEW"
+#define KEY_VIEWCONTROLLER_POPOVER_BLOCK @"KEY_VIEWCONTROLLER_POPOVER_BLOCK"
 
 #define ALPHA_BLANLVIEW 0.5
 
@@ -24,6 +25,35 @@ static BOOL isPopping = NO;
 #pragma mark - UIViewController (Popover)
 
 @implementation UIViewController (Popover)
+
+
+// 追加分
+- (void)setPopoverDidTapOutside:(MEOPopoverDidTapOutside)block
+{
+    MEOPopoverDidTapOutside temp = nil;
+    if (block) {
+        temp = [block copy];
+    }
+    objc_setAssociatedObject(self,
+                             KEY_VIEWCONTROLLER_POPOVER_BLOCK,
+                             temp,
+                             OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+
+}
+
+
+- (void)handleGestureRecognizer:(UITapGestureRecognizer*)gr
+{
+    if (gr.state == UIGestureRecognizerStateEnded) {
+        MEOPopoverDidTapOutside block = objc_getAssociatedObject(self,
+                                                                 KEY_VIEWCONTROLLER_POPOVER_BLOCK);
+        if (block) {
+            block();
+        }
+    }
+}
+
+
 
 #pragma mark UIViewControllerのポップオーバー表示
 
@@ -61,6 +91,12 @@ static BOOL isPopping = NO;
     UIView *blankView = [[UIView alloc] initWithFrame:window.frame];
     [blankView setAlpha:ALPHA_BLANLVIEW];
     [blankView setBackgroundColor:[UIColor blackColor]];
+    
+    UITapGestureRecognizer *gr = [[UITapGestureRecognizer alloc] initWithTarget:self
+                                                                         action:@selector(handleGestureRecognizer:)];
+    [blankView addGestureRecognizer:gr];
+    
+    
     [window addSubview:blankView];
     
     objc_setAssociatedObject(viewController,
@@ -186,6 +222,11 @@ static BOOL isPopping = NO;
                              }
                          }];
     }else{
+        
+        for (UIGestureRecognizer *gr in blankView.gestureRecognizers.reverseObjectEnumerator) {
+            [blankView removeGestureRecognizer:gr];
+        }
+        
         [blankView removeFromSuperview];
         objc_removeAssociatedObjects(blankView);
         [self.view removeFromSuperview];
@@ -227,6 +268,9 @@ static BOOL isPopping = NO;
     UIView *blankView = [[UIView alloc] initWithFrame:window.frame];
     blankView.alpha = kPopoeverSupportViewAlhpa;
     blankView.backgroundColor = [UIColor blackColor];
+    UITapGestureRecognizer *gr = [[UITapGestureRecognizer alloc] initWithTarget:self
+                                                                         action:@selector(handleGestureRecognizer:)];
+    [blankView addGestureRecognizer:gr];
     [window addSubview:blankView];
     
     objc_setAssociatedObject(view,
@@ -251,8 +295,8 @@ static BOOL isPopping = NO;
     view.center = CGPointMake(window.frame.size.width/2,
                               window.frame.size.height/2);
     
-    view.layer.cornerRadius = 5;
-    view.clipsToBounds = true;
+//    view.layer.cornerRadius = 5;
+//    view.clipsToBounds = true;
     
     //    // 影付け
     //    view.layer.shadowOpacity = 0.2;
@@ -321,6 +365,7 @@ static BOOL isPopping = NO;
 
 
 @implementation UIView (Popover)
+
 
 -(void)removeFromPopoverAnimated:(BOOL)animated
                       completion:(void (^)(BOOL finished))completion
