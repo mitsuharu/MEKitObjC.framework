@@ -213,7 +213,7 @@
 
 - (CGSize)meoSizeWithFont:(UIFont *)font constrainedToSize:(CGSize)size
 {
-    CGSize size2 = CGSizeMake(size.width, 0);
+    CGSize size2 = CGSizeMake(0, 0);
     NSDictionary *attributeDict = @{NSFontAttributeName:font};
     NSStringDrawingOptions options = NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingTruncatesLastVisibleLine;
 
@@ -222,6 +222,9 @@
                                         options:options
                                      attributes:attributeDict
                                         context:nil];
+        if (size2.width < ceilf(rect.size.width)){
+            size2.width = ceilf(rect.size.width);
+        }
         size2.height += CGRectGetHeight(rect);
     }
     size2.height = ceilf(size2.height);
