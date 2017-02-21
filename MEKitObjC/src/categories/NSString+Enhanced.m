@@ -234,25 +234,22 @@
 
 -(NSArray*)parsedByLines
 {
-    return [self componentsSeparatedByCharactersInSet:[NSCharacterSet newlineCharacterSet]];
-
+    NSMutableArray *mlines = [NSMutableArray array];
+    [self enumerateLinesUsingBlock:^(NSString *line, BOOL *stop) {
+        [mlines addObject:line];
+    }];
     
-//    NSMutableArray *array = [[NSMutableArray alloc] initWithCapacity:1];
-//    
-//    NSInteger length = [self length];
-//    NSRange range = NSMakeRange(0, length);
-//    
-//    while(range.length > 0) {
-//        NSRange subrange = [self lineRangeForRange:NSMakeRange(range.location, 0)];
-//        NSString* string = [self substringWithRange:subrange];
-//        
-//        [array addObject:string];
-//        
-//        range.location = NSMaxRange(subrange);
-//        range.length -= subrange.length;
-//    }
-//    
-//    return (NSArray*)array;
+    NSArray *temp = [self componentsSeparatedByCharactersInSet:[NSCharacterSet newlineCharacterSet]];
+    if (temp.count > 1 && [temp.lastObject isEqualToString:@""]){
+        [mlines addObject:temp.lastObject];
+    }
+    
+    NSArray *lines = [mlines copy];
+    mlines = nil;
+    
+    return lines;
+    
+//    return [self componentsSeparatedByCharactersInSet:[NSCharacterSet newlineCharacterSet]];
 }
 
 
