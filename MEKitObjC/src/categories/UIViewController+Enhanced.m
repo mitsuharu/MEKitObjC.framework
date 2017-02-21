@@ -85,13 +85,40 @@
 @end
 
 
+@implementation MEOKeyboard
+
+- (instancetype)initWithNotification:(NSNotification*)notification
+{
+    if (self = [super init]){
+        if (notification) {
+            self.frame = CGRectZero;
+            self.duration = 0.0;
+            self.curve = UIViewAnimationCurveLinear;
+            self.opt = UIViewAnimationOptionCurveLinear;
+            
+            if (notification.userInfo && [notification.userInfo objectForKey:UIKeyboardFrameEndUserInfoKey]) {
+                self.frame = [[notification.userInfo objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
+            }
+            if (notification.userInfo && [notification.userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey]) {
+                self.duration = [[notification.userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey] doubleValue];
+            }
+            if (notification.userInfo && [notification.userInfo objectForKey:UIKeyboardAnimationCurveUserInfoKey]) {
+                self.curve = [[notification.userInfo objectForKey:UIKeyboardAnimationCurveUserInfoKey] integerValue];
+                self.opt = (self.curve << 16);
+            }
+        }
+    }
+    return self;
+}
+
+@end
 
 @implementation UIViewController (Keyboard)
 
 -(void)addKeyboardNotification
 {
     NSNotificationCenter *notification = [NSNotificationCenter defaultCenter];
-    
+ 
     if (self && [self respondsToSelector:@selector(meoKeyboardWillShow:)]) {
         [notification addObserver:self
                          selector:@selector(meoKeyboardWillShow:)
@@ -104,21 +131,18 @@
                              name:UIKeyboardDidShowNotification
                            object:nil];
     }
-    
     if (self && [self respondsToSelector:@selector(meoKeyboardWillHide:)]) {
         [notification addObserver:self
                          selector:@selector(meoKeyboardWillHide:)
                              name:UIKeyboardWillHideNotification
                            object:nil];
     }
-    
     if (self && [self respondsToSelector:@selector(meoKeyboardDidHide:)]) {
         [notification addObserver:self
                          selector:@selector(meoKeyboardDidHide:)
                              name:UIKeyboardDidHideNotification
                            object:nil];
     }
-    
 }
 
 -(void)removeKeyboardNotification

@@ -38,6 +38,14 @@
 
 #pragma mark - Keyboard
 
+@interface MEOKeyboard : NSObject
+@property (nonatomic, assign) CGRect frame;
+@property (nonatomic, assign) NSTimeInterval duration;
+@property (nonatomic, assign) UIViewAnimationCurve curve;
+@property (nonatomic, assign) UIViewAnimationOptions opt;
+- (instancetype)initWithNotification:(NSNotification*)notification;
+@end
+
 @protocol MEOKeyboardNotification <NSObject>
 
 @required
