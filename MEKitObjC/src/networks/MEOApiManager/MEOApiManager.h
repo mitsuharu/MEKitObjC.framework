@@ -36,6 +36,12 @@ typedef void (^MEOApiManagerCompletion) (MEOApiManagerResultStatus result,
 
 @interface MEOApiOption : NSObject
 
+/**
+ 通信中のネットワークインジケーターを表示する場合はtrue, そうで無い場合はfalse（初期値false）
+ */
+@property (nonatomic, assign) BOOL hideNetworkActivityIndicator;
+
+
 @property (nonatomic, assign) BOOL ignoreCacheData;
 @property (nonatomic, assign) NSURLRequestCachePolicy cachePolicy;
 

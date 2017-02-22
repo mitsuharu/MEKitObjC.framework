@@ -30,6 +30,7 @@ NSString* const MEOApiManagerLastModified = @"MEOApiManagerLastModified";
         _password = nil;
         _userInfo = nil;
         _comparelastModified = false;
+        self.hideNetworkActivityIndicator = false;
     }
     return self;
 }
@@ -93,7 +94,11 @@ NSString* const MEOApiManagerLastModified = @"MEOApiManagerLastModified";
 -(void)showsNetworkActivityIndicator:(BOOL)visible
 {
     UIApplication *app = [UIApplication sharedApplication];
-    [app setNetworkActivityIndicatorVisible:visible];
+    if (self.option.hideNetworkActivityIndicator == true){
+        [app setNetworkActivityIndicatorVisible:false];
+    }else{
+        [app setNetworkActivityIndicatorVisible:visible];
+    }
 }
 
 -(NSInteger)httpStatusCode:(NSURLResponse*)response

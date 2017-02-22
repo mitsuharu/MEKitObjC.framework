@@ -112,6 +112,7 @@ NSString *const MEOCacheManagerOptionKey = @"MEOCacheManagerOptionKey";
             }else{
                 downloadCount += 1;
                 self.apiManager = [[MEOApiManager alloc] init];
+                apiOption.hideNetworkActivityIndicator = false;
                 [self.apiManager download:imageUrl
                                  option:apiOption
                              completion:^(MEOApiManagerResultStatus result,
@@ -140,6 +141,8 @@ NSString *const MEOCacheManagerOptionKey = @"MEOCacheManagerOptionKey";
         if (cachedImage) {
             if (comparelastModified == false) {
             }else{
+                
+                apiOption.hideNetworkActivityIndicator = true;
                 [MEOApiManager requestLastModified:imageUrl
                                             option:apiOption
                                         completion:^(MEOApiManagerResultStatus result,
