@@ -34,8 +34,8 @@
 -(void)setBackgroundImage:(UIImage*)backgroundImage;
 
 
-+(UIView*)instantiateWithNib;
-+(UIView*)instantiateWithNib:(NSString*)nibName;
++(instancetype)instantiateWithNib;
++(instancetype)instantiateWithNib:(NSString*)nibName;
 
 + (NSArray*)viewsFromInstantiateWithNib;
 + (NSArray*)viewsFromInstantiateWithNib:(NSString*)nibName;

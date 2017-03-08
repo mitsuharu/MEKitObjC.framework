@@ -28,7 +28,7 @@
     return vc;
 }
 
-+(UIViewController*)instantiateWithStoryboard
++(instancetype)instantiateWithStoryboard
 {
     NSString *className = NSStringFromClass([self class]);
     NSArray *array = [className componentsSeparatedByString:@"."];
@@ -38,18 +38,18 @@
                                             identifier:str];
 }
 
-+(UIViewController*)instantiateWithStoryboard:(NSString*)storyboard
++(instancetype)instantiateWithStoryboard:(NSString*)storyboard
 {
     return [UIViewController instantiateWithStoryboard:storyboard
                                             identifier:storyboard];
 }
 
-+(UIViewController*)instantiateWithStoryboard:(NSString*)storyboard
++(instancetype)instantiateWithStoryboard:(NSString*)storyboard
                                    identifier:(NSString*)identifier
 {
     UIStoryboard *sb = [UIStoryboard storyboardWithName:storyboard
                                                  bundle:[NSBundle mainBundle]];
-    UIViewController *vc = nil;
+    id vc = nil;
     if (sb) {
         @try {
             vc = [sb instantiateViewControllerWithIdentifier:identifier];
@@ -60,9 +60,9 @@
         @finally {
         }
     }
-    
-    return vc;;
+    return vc;
 }
+
 
 
 -(BOOL)meo_isVisible

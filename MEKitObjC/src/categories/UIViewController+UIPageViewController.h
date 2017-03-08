@@ -11,7 +11,7 @@
 /**
  UIPageViewController向けの補助クラスのプロトコル
  */
-@protocol MEOPageViewControllerProtocol <NSObject>
+@protocol MEOPageViewControllerProtocol < NSObject >
 
 @required
 
@@ -39,6 +39,9 @@
     UIPageViewControllerDataSource
 >
 
+- (UIPageViewController*)meo_pageViewController;
+- (UIScrollView*)meo_scollViewOfPageViewController;
+
 -(NSInteger)currentPageViewIndex;
 -(void)setCurrentPageViewIndex:(NSInteger)currentPageViewIndex;
 
@@ -62,5 +65,12 @@
 -(void)showViewControllerAtPageViewIndex:(NSInteger)index
                                 animeted:(BOOL)animeted
                               completion:(void (^)(BOOL finished))completion;
+
+/**
+ バウンドを無効にする場合はPageViewControllerのscrollViewに対して，
+ scrollViewDidScrollおよびscrollViewWillEndDraggingにて以下のメソッドを呼ぶ
+ ただし，showViewControllerAtPageViewIndex時は無効にすること
+ */
+- (void)disableBounceForScrollViewDidScroll:(UIScrollView *)scrollView;
 
 @end

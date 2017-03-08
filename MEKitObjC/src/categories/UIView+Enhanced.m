@@ -113,7 +113,7 @@
 
 
 
-+(UIView*)instantiateWithNib
++(instancetype)instantiateWithNib
 {
     NSString *str = NSStringFromClass([self class]);
     NSArray *arr = [str componentsSeparatedByString:@"."];
@@ -121,11 +121,11 @@
     return [UIView instantiateWithNib:arr.lastObject];
 }
 
-+(UIView*)instantiateWithNib:(NSString*)nibName
++(instancetype)instantiateWithNib:(NSString*)nibName
 {
     UINib *nib = [UINib nibWithNibName:nibName
                                 bundle:[NSBundle mainBundle]];
-    UIView *view = nil;
+    id view = nil;
     if (nib) {
         view = (UIView*)[[nib instantiateWithOwner:nil options:nil] objectAtIndex:0];
     }

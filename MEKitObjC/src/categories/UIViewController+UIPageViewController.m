@@ -18,11 +18,45 @@ NSString *const keyMaxPageViewIndex = @"keyMaxPageViewIndex";
 
 UIPageViewController *gPageViewController;
 
+#pragma mark - for UIScrollViewDelegate
+
+- (void)disableBounceForScrollViewDidScroll:(UIScrollView *)scrollView
+{
+    NSInteger curIndex = [self currentPageViewIndex];
+    NSInteger maxIndex =  [self maxPageViewIndex];
+    NSInteger minIndex =  [self minPageViewIndex];
+    
+    if (curIndex == minIndex && scrollView.contentOffset.x < scrollView.bounds.size.width) {
+        scrollView.contentOffset = CGPointMake(scrollView.bounds.size.width, 0);
+    } else if (curIndex == maxIndex - 1 && scrollView.contentOffset.x > scrollView.bounds.size.width) {
+        scrollView.contentOffset = CGPointMake(scrollView.bounds.size.width, 0);
+    }
+}
+
 #pragma mark - io
 
 -(UIPageViewController*)pageViewController
 {
     return gPageViewController;
+}
+
+-(UIPageViewController*)meo_pageViewController
+{
+    return gPageViewController;
+}
+
+-(UIScrollView*)meo_scollViewOfPageViewController
+{
+    UIScrollView *sv = nil;
+    if (gPageViewController){
+        for (UIView *view in gPageViewController.view.subviews) {
+            if ([view isKindOfClass:[UIScrollView class]]){
+                sv = (UIScrollView*)view;
+                break;
+            }
+        }        
+    }
+    return sv;
 }
 
 -(NSInteger)currentPageViewIndex
@@ -144,7 +178,6 @@ UIPageViewController *gPageViewController;
                      completion:^(BOOL finished) {
                                      }];
         
-        
         for (UIGestureRecognizer* gestureRecognizer in gPageViewController.gestureRecognizers) {
             if ([gestureRecognizer isKindOfClass:[UITapGestureRecognizer class]]) {
                 gestureRecognizer.enabled = NO;
@@ -217,10 +250,14 @@ UIPageViewController *gPageViewController;
     currentPageViewIndex = index;
     [self setCurrentPageViewIndex:index];
     
+    __block UIPageViewController *tempPvc = pvc;
+    
+    tempPvc.view.userInteractionEnabled = false;
     [pvc setViewControllers:@[viewController]
                   direction:direction
                    animated:animeted
                  completion:^(BOOL finished){
+                     tempPvc.view.userInteractionEnabled = true;
                      if (block) {
                          block(finished);
                      }
@@ -284,7 +321,7 @@ UIPageViewController *gPageViewController;
         index = [(id<MEOPageViewControllerProtocol>)self meoPageViewController:[self pageViewController]
                                                  pageViewIndexOfViewController:viewController];
     }
-    NSInteger index2 = index+1;
+    NSInteger index2 = index + 1;
 
     UIViewController *vc = nil;
     if ([self minPageViewIndex] <= index2 && index2 < [self maxPageViewIndex]) {

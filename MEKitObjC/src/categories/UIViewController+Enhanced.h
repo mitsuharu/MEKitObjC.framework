@@ -19,13 +19,12 @@
 /**
  @brief "className"というStoryboardから"className"というidentifierのUIViewControllerを生成する
  */
-+(UIViewController*)instantiateWithStoryboard;
++(instancetype)instantiateWithStoryboard;
 
-+(UIViewController*)instantiateWithStoryboard:(NSString*)storyboard;
++(instancetype)instantiateWithStoryboard:(NSString*)storyboard;
 
-+(UIViewController*)instantiateWithStoryboard:(NSString*)storyboard
-                                   identifier:(NSString*)identifier;
-
++(instancetype)instantiateWithStoryboard:(NSString*)storyboard
+                              identifier:(NSString*)identifier;
 
 
 /**
