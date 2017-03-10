@@ -218,14 +218,25 @@
     NSStringDrawingOptions options = NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingTruncatesLastVisibleLine;
 
     for (NSString *str in [self parsedByLines]) {
-        CGRect rect = [str boundingRectWithSize:CGSizeMake(size.width, CGFLOAT_MAX)
-                                        options:options
-                                     attributes:attributeDict
-                                        context:nil];
-        if (size2.width < ceilf(rect.size.width)){
-            size2.width = ceilf(rect.size.width);
+        
+        CGFloat tempHeight = 0;
+        if (str.length == 0){
+            CGRect rect = [@"a" boundingRectWithSize:CGSizeMake(size.width, CGFLOAT_MAX)
+                                            options:options
+                                         attributes:attributeDict
+                                            context:nil];
+            tempHeight = CGRectGetHeight(rect);
+        }else{
+            CGRect rect = [str boundingRectWithSize:CGSizeMake(size.width, CGFLOAT_MAX)
+                                            options:options
+                                         attributes:attributeDict
+                                            context:nil];
+            if (size2.width < ceilf(rect.size.width)){
+                size2.width = ceilf(rect.size.width);
+            }
+            tempHeight = CGRectGetHeight(rect);
         }
-        size2.height += CGRectGetHeight(rect);
+        size2.height += tempHeight;
     }
     size2.height = ceilf(size2.height);
     
