@@ -20,7 +20,7 @@
 
 + (UIEdgeInsets)padding
 {
-    return UIEdgeInsetsMake(5, 5, 5, 5);
+    return UIEdgeInsetsMake(5, 10, 5, 10);
 }
 
 - (void)dealloc
@@ -187,8 +187,8 @@
     self.label.backgroundColor = [UIColor colorWithRed:139.0/255.0 green:139.0/255.0 blue:139.0/255.0 alpha:1.0];
     self.label.clipsToBounds = true;
     self.label.layer.cornerRadius = height/2.0;
-    self.label.layer.borderColor = [[UIColor whiteColor] CGColor];
-    self.label.layer.borderWidth = 1;
+//    self.label.layer.borderColor = [[UIColor whiteColor] CGColor];
+//    self.label.layer.borderWidth = 1;
     
     UIWindow *window = [[UIApplication sharedApplication] keyWindow];
     [window addSubview:self.label];
