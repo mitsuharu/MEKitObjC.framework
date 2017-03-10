@@ -7,7 +7,7 @@
 
 #import "MEOToast.h"
 #import <QuartzCore/QuartzCore.h>
-
+#import "NSString+Enhanced.h"
 
 @interface MEOToastLabel : UILabel
 
@@ -165,9 +165,7 @@
 
     NSDictionary *attributeDict = @{NSFontAttributeName:font};
     NSStringDrawingOptions options = NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingTruncatesLastVisibleLine;
-    
-    NSArray *textArray = [text componentsSeparatedByCharactersInSet:[NSCharacterSet newlineCharacterSet]];
-    for (NSString *str in textArray) {
+    for (NSString *str in [text parsedByLines]) {
         CGRect rect = [str boundingRectWithSize:CGSizeMake(width - (padding.left + padding.right),
                                                            CGFLOAT_MAX)
                                         options:options
@@ -186,10 +184,10 @@
     self.label.textAlignment = NSTextAlignmentCenter;
     self.label.baselineAdjustment = UIBaselineAdjustmentAlignCenters;
     self.label.textColor = [UIColor whiteColor];
-    self.label.backgroundColor = [UIColor darkGrayColor];
+    self.label.backgroundColor = [UIColor colorWithRed:139.0/255.0 green:139.0/255.0 blue:139.0/255.0 alpha:1.0];
     self.label.clipsToBounds = true;
-    self.label.layer.cornerRadius = 5;
-    self.label.layer.borderColor = [[UIColor lightGrayColor] CGColor];
+    self.label.layer.cornerRadius = height/2.0;
+    self.label.layer.borderColor = [[UIColor whiteColor] CGColor];
     self.label.layer.borderWidth = 1;
     
     UIWindow *window = [[UIApplication sharedApplication] keyWindow];
