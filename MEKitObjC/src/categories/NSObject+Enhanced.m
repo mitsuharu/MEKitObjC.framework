@@ -96,7 +96,7 @@ NSString *const kKeyboardAccessoryLeftButtonCompletion = @"kKeyboardAccessoryLef
 
 @implementation NSObject (Singleton)
 
-+(id)singleton
++(instancetype)singleton
 {
     static id obj = nil;
     static dispatch_once_t onceToken;
@@ -106,7 +106,7 @@ NSString *const kKeyboardAccessoryLeftButtonCompletion = @"kKeyboardAccessoryLef
     return obj;
 }
 
-+(id)share
++(instancetype)share
 {
     static id singleton = nil;
     static dispatch_once_t onceToken;

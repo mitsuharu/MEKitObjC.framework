@@ -35,8 +35,8 @@ typedef void (^MEOBlockWithError)(NSError *error);
 #pragma mark - NSObject (Singleton)
 
 @interface NSObject (Singleton)
-+(id)singleton;
-+(id)share;
++(instancetype)singleton;
++(instancetype)share;
 @end
 
 #pragma mark - NSObject (keyboardAccessory)
