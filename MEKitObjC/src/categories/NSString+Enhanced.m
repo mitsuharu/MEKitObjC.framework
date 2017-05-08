@@ -13,6 +13,26 @@
 #import <time.h>
 #import <xlocale.h>
 
+@implementation NSString (localized)
+
+NSString *meo_localizedString(NSString *key)
+{
+    return NSLocalizedStringFromTable(key, nil, nil);
+}
+
++ (NSString*)meo_localized:(NSString*)key
+{
+    return [NSString meo_localized:key tableName:nil];
+}
+
++ (NSString*)meo_localized:(NSString*)key tableName:(NSString *)tableName;
+{
+    return NSLocalizedStringFromTable(key, tableName, nil);
+}
+
+@end
+
+
 @implementation NSString (NSDate)
 
 - (NSDate*)dateUsingStrptimeWithFormatAtJST:(NSString*)format

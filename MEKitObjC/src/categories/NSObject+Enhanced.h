@@ -30,6 +30,28 @@ typedef void (^MEOBlockWithError)(NSError *error);
 -(void)performBlockInBackground:(MEOBlock)block;
 -(void)performBlockOnMainThread:(MEOBlock)block;
 -(void)performBlock:(MEOBlock)block afterDelay:(NSTimeInterval)delay;
+
+/**
+ 非同期で複数の処理を行い，全て完了したら同期処理を行う
+ 
+ @param asyncs 前処理（非同期）
+ @param completion 完了処理（同期）
+ 
+ @code
+ [self dispatchAsyncs:@[^{
+ // 事前処理0
+ },^{
+ // 事前処理1
+ }]
+ completion:^{
+ // 完了処理
+ }];
+ @endcode
+ 
+ */
+- (void)dispatchAsyncs:(NSArray<MEOBlock>*)asyncs
+            completion:(MEOBlock)completion;
+
 @end
 
 #pragma mark - NSObject (Singleton)

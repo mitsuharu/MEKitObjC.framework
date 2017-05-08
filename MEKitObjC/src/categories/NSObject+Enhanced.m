@@ -90,6 +90,48 @@ NSString *const kKeyboardAccessoryLeftButtonCompletion = @"kKeyboardAccessoryLef
                         waitUntilDone:[NSThread isMainThread]];
 }
 
+- (void)dispatchAsyncs:(NSArray<MEOBlock>*)asyncs
+            completion:(MEOBlock)completion
+{
+    if (asyncs && asyncs.count > 0 && completion) {
+        dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+        dispatch_group_t group = dispatch_group_create();
+        
+        for (MEOBlock block in asyncs) {
+            dispatch_group_async(group, queue, ^{ block(); });
+        }
+        
+        dispatch_group_notify(group, dispatch_get_main_queue(), ^{
+            completion();
+        });
+    }
+}
+
+//- (void)dispatchCompletion:(MEOBlock)sync
+//                    asyncs:(MEOBlock)async, ...
+//{
+//    NSMutableArray *asyncs = [[NSMutableArray alloc] initWithCapacity:1];
+//    va_list args;
+//    va_start(args, async);
+//    for (MEOBlock arg = async; arg != nil; arg = va_arg(args, MEOBlock)) {
+//        [asyncs addObject:arg];
+//    }
+//    va_end(args);
+//    
+//    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+//    dispatch_group_t group = dispatch_group_create();
+//    
+//    for (MEOBlock block in asyncs) {
+//        dispatch_group_async(group, queue, ^{ block(); });
+//        
+//    }
+//    
+//    dispatch_group_notify(group, dispatch_get_main_queue(), ^{
+//        sync();
+//    });
+//}
+
+
 @end
 
 #pragma mark - NSObject (Singleton)

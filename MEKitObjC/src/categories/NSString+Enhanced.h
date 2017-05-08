@@ -9,6 +9,32 @@
 #import <UIKit/UIKit.h>
 #import <Foundation/Foundation.h>
 
+@interface NSString (localized)
+
+/**
+ ローカライズ文字列を取得する
+ @param key ローカライズのキー
+ @return keyに対応したローカライズされた文字列．もし無ければkeyが返る
+ */
+NSString *meo_localizedString(NSString *key);
+
+/**
+ ローカライズテーブル``Localizable.strings``からローカライズ文字列を取得する
+ @param key ローカライズのキー
+ @return keyに対応したローカライズされた文字列．もし無ければkeyが返る
+ */
++ (NSString*)meo_localized:(NSString*)key;
+
+/**
+ ローカライズ文字列を取得する
+ @param key ローカライズのキー
+ @param tableName ローカライズのテーブル名(例：Localizable)
+ @return keyに対応したローカライズされた文字列．もし無ければkeyが返る
+ */
++ (NSString*)meo_localized:(NSString*)key tableName:(NSString *)tableName;
+
+@end
+
 @interface NSString (NSDate)
 
 - (NSDate*)dateUsingStrptimeWithFormatAtJST:(NSString*)format;

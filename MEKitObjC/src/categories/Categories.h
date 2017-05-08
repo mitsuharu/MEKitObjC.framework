@@ -36,6 +36,7 @@
 #import "NSError+Enhanced.h"
 #import "UILabel+Enhanced.h"
 #import "UIViewController+HeadphoneNotification.h"
+#import "NSDateFormatter+Enhanced.h"
 
 @interface Categories : NSObject
 
