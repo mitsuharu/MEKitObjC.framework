@@ -141,4 +141,12 @@ typedef void (^MEONotificationBlock)(NSNotification *notification);
 
 @end
 
+#pragma mark - NSObject (MemoryAddress)
+
+/**
+ インスタンスのメモリアドレスを取得する
+ */
+@interface NSObject (MemoryAddress)
+- (NSString*)meo_memoryAddress;
+@end
 

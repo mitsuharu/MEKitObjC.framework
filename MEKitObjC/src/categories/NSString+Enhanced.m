@@ -392,6 +392,16 @@ NSString *meo_localizedString(NSString *key)
             ];
 }
 
+- (double)hexToDouble
+{
+    NSScanner *scan = [NSScanner scannerWithString:self];
+    
+    double d = 0.0;
+    [scan scanHexDouble:&d];
+    
+    return d;
+}
+
 @end
 
 

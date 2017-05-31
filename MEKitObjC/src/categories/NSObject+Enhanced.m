@@ -480,3 +480,15 @@ NSString *const kNotificationKey = @"kNotificationKey";
 
 @end
 
+#pragma mark - NSObject (MemoryAddress)
+
+@implementation NSObject (MemoryAddress)
+
+- (NSString*)meo_memoryAddress
+{
+    NSString *pointer = [NSString stringWithFormat:@"%p", self];
+    return pointer;
+}
+
+@end
+

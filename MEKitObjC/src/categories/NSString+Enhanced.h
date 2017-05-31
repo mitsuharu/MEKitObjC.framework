@@ -118,6 +118,9 @@ NSString *meo_localizedString(NSString *key);
 
 -(NSString*)md5;
 
+
+- (double)hexToDouble;
+
 @end
 
 @interface NSString (SHA256)
