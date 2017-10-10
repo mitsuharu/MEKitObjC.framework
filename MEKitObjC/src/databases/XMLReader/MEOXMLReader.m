@@ -7,7 +7,7 @@
 
 #import "MEOXMLReader.h"
 
-NSString *const kXMLReaderTextNodeKey = @"text";
+NSString *const meoXMLReaderTextNodeKey = @"text";
 
 @interface MEOXMLReader () <NSXMLParserDelegate>
 {
@@ -215,7 +215,7 @@ didStartElement:(NSString *)elementName
     // Set the text property
     if ([textInProgress_ length] > 0)
     {
-        [dictInProgress setObject:[self trim:textInProgress_] forKey:kXMLReaderTextNodeKey];
+        [dictInProgress setObject:[self trim:textInProgress_] forKey:meoXMLReaderTextNodeKey];
 
         // Reset the text
         textInProgress_ = nil;

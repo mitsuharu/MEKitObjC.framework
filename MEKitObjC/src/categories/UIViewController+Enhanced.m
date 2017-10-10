@@ -52,10 +52,17 @@
     id vc = nil;
     if (sb) {
         @try {
-            vc = [sb instantiateViewControllerWithIdentifier:identifier];
+            
+            if (identifier && identifier.length > 0) {
+                vc = [sb instantiateViewControllerWithIdentifier:identifier];
+            }else{
+                vc = [sb instantiateInitialViewController];
+            }
+            
         }
         @catch (NSException *exception) {
             NSLog(@"%s, exception %@", __func__, exception);
+            vc = [sb instantiateInitialViewController];
         }
         @finally {
         }
