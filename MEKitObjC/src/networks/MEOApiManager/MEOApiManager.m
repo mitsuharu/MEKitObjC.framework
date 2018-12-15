@@ -93,12 +93,14 @@ NSString* const MEOApiManagerLastModified = @"MEOApiManagerLastModified";
 
 -(void)showsNetworkActivityIndicator:(BOOL)visible
 {
-    UIApplication *app = [UIApplication sharedApplication];
-    if (self.option.hideNetworkActivityIndicator == true){
-        [app setNetworkActivityIndicatorVisible:false];
-    }else{
-        [app setNetworkActivityIndicatorVisible:visible];
-    }
+    dispatch_async(dispatch_get_main_queue(), ^{
+        UIApplication *app = [UIApplication sharedApplication];
+        if (self.option.hideNetworkActivityIndicator == true){
+            [app setNetworkActivityIndicatorVisible:false];
+        }else{
+            [app setNetworkActivityIndicatorVisible:visible];
+        }
+    });
 }
 
 -(NSInteger)httpStatusCode:(NSURLResponse*)response
