@@ -72,8 +72,11 @@ NSString* const MEOApiManagerLastModified = @"MEOApiManagerLastModified";
 
 -(void)dealloc
 {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        UIApplication *app = [UIApplication sharedApplication];
+        [app setNetworkActivityIndicatorVisible:false];
+    });
     [self cancel];
-    [self showsNetworkActivityIndicator:false];
 }
 
 #pragma mark 補助メソッド
