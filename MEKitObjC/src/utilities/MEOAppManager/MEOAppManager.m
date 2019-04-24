@@ -144,17 +144,17 @@
         NSString *prm0 = [NSString stringWithFormat:@"q=%@&zoom=14", [target encodeUrlString]];
         NSString *prm1 = xCallbackPrm;
         NSString *scheme = [NSString stringWithFormat:@"%@?%@&%@", gcScheme, prm0, prm1];
-        result = [app openURL:[NSURL URLWithString:scheme]];
+        result = [MEOAppManager openApp:scheme];
     }else if ([app canOpenURL:[NSURL URLWithString:gmScheme]])
     {
         NSString *prm0 = [NSString stringWithFormat:@"q=%@&zoom=14", [target encodeUrlString]];
         NSString *scheme = [NSString stringWithFormat:@"%@?%@", gmScheme, prm0];
-        result = [app openURL:[NSURL URLWithString:scheme]];
+        result = [MEOAppManager openApp:scheme];
     }else if ([app canOpenURL:[NSURL URLWithString:amScheme]])
     {
         NSString *prm0 = [NSString stringWithFormat:@"q=%@", [target encodeUrlString]];
         NSString *scheme = [NSString stringWithFormat:@"%@?%@", amScheme, prm0];
-        result = [app openURL:[NSURL URLWithString:scheme]];
+        result = [MEOAppManager openApp:scheme];
     }
     
     return result;

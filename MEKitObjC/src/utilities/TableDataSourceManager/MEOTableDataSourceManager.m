@@ -371,17 +371,9 @@
         formatter.locale = [NSLocale systemLocale];
         
         formatter.dateFormat = @"yyyy/MM/dd HH:mm:ss";
-        
-        if (NSFoundationVersionNumber > NSFoundationVersionNumber_iOS_7_1 ){
-            // iOS8以上
-            if ([formatter.calendar.calendarIdentifier isEqualToString:NSCalendarIdentifierJapanese]) {                formatter.dateFormat = @"GGyy年MM月dd日 HH時mm分ss秒";
-            }
-        }else{
-            if ([formatter.calendar.calendarIdentifier isEqualToString:NSJapaneseCalendar]) {
-                formatter.dateFormat = @"GGyy年MM月dd日 HH時mm分ss秒";
-            }
+        if ([formatter.calendar.calendarIdentifier isEqualToString:NSCalendarIdentifierJapanese]) {
+            formatter.dateFormat = @"GGyy年MM月dd日 HH時mm分ss秒";
         }
-
         
         dateStr = [formatter stringFromDate:date];
     }

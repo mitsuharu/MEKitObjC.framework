@@ -54,10 +54,6 @@
 		9B3155E51ACB764600611592 /* NSString+AESCrypt.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B31555B1ACB764600611592 /* NSString+AESCrypt.m */; };
 		9B3155E61ACB764600611592 /* NSString+Enhanced.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B31555D1ACB764600611592 /* NSString+Enhanced.m */; };
 		9B3155E71ACB764600611592 /* NSString+Enhanced.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B31555D1ACB764600611592 /* NSString+Enhanced.m */; };
-		9B3155E81ACB764600611592 /* UIActionSheet+Blocks.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B31555F1ACB764600611592 /* UIActionSheet+Blocks.m */; };
-		9B3155E91ACB764600611592 /* UIActionSheet+Blocks.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B31555F1ACB764600611592 /* UIActionSheet+Blocks.m */; };
-		9B3155EA1ACB764600611592 /* UIAlertView+Blocks.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B3155611ACB764600611592 /* UIAlertView+Blocks.m */; };
-		9B3155EB1ACB764600611592 /* UIAlertView+Blocks.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B3155611ACB764600611592 /* UIAlertView+Blocks.m */; };
 		9B3155EC1ACB764600611592 /* UIButton+Enhanced.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B3155631ACB764600611592 /* UIButton+Enhanced.m */; };
 		9B3155ED1ACB764600611592 /* UIButton+Enhanced.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B3155631ACB764600611592 /* UIButton+Enhanced.m */; };
 		9B3155EE1ACB764600611592 /* UIColor+Enhanced.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B3155651ACB764600611592 /* UIColor+Enhanced.m */; };
@@ -240,10 +236,6 @@
 		9B31555B1ACB764600611592 /* NSString+AESCrypt.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+AESCrypt.m"; sourceTree = "<group>"; };
 		9B31555C1ACB764600611592 /* NSString+Enhanced.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Enhanced.h"; sourceTree = "<group>"; };
 		9B31555D1ACB764600611592 /* NSString+Enhanced.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Enhanced.m"; sourceTree = "<group>"; };
-		9B31555E1ACB764600611592 /* UIActionSheet+Blocks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIActionSheet+Blocks.h"; sourceTree = "<group>"; };
-		9B31555F1ACB764600611592 /* UIActionSheet+Blocks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIActionSheet+Blocks.m"; sourceTree = "<group>"; };
-		9B3155601ACB764600611592 /* UIAlertView+Blocks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIAlertView+Blocks.h"; sourceTree = "<group>"; };
-		9B3155611ACB764600611592 /* UIAlertView+Blocks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIAlertView+Blocks.m"; sourceTree = "<group>"; };
 		9B3155621ACB764600611592 /* UIButton+Enhanced.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIButton+Enhanced.h"; sourceTree = "<group>"; };
 		9B3155631ACB764600611592 /* UIButton+Enhanced.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIButton+Enhanced.m"; sourceTree = "<group>"; };
 		9B3155641ACB764600611592 /* UIColor+Enhanced.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+Enhanced.h"; sourceTree = "<group>"; };
@@ -498,10 +490,6 @@
 				9B31555B1ACB764600611592 /* NSString+AESCrypt.m */,
 				9B31555C1ACB764600611592 /* NSString+Enhanced.h */,
 				9B31555D1ACB764600611592 /* NSString+Enhanced.m */,
-				9B31555E1ACB764600611592 /* UIActionSheet+Blocks.h */,
-				9B31555F1ACB764600611592 /* UIActionSheet+Blocks.m */,
-				9B3155601ACB764600611592 /* UIAlertView+Blocks.h */,
-				9B3155611ACB764600611592 /* UIAlertView+Blocks.m */,
 				9B3155621ACB764600611592 /* UIButton+Enhanced.h */,
 				9B3155631ACB764600611592 /* UIButton+Enhanced.m */,
 				9B3155641ACB764600611592 /* UIColor+Enhanced.h */,
@@ -1057,7 +1045,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9B3155EA1ACB764600611592 /* UIAlertView+Blocks.m in Sources */,
 				9BAA32671CBC877900A0C239 /* UIViewController+HeadphoneNotification.m in Sources */,
 				9B3155FA1ACB764600611592 /* UITextView+Placeholder.m in Sources */,
 				9B9727BF1BA947F4004158D6 /* MEOInstagramActivity.m in Sources */,
@@ -1087,7 +1074,6 @@
 				9B3156311ACB764600611592 /* MEONotificationWindow.m in Sources */,
 				9B3155DC1ACB764600611592 /* NSDate+Enhanced.m in Sources */,
 				9B3155DA1ACB764600611592 /* NSData+Base64.m in Sources */,
-				9B3155E81ACB764600611592 /* UIActionSheet+Blocks.m in Sources */,
 				9B31563D1ACB764600611592 /* MEOTableDataSource.m in Sources */,
 				9B3155EC1ACB764600611592 /* UIButton+Enhanced.m in Sources */,
 				9BE0B2231DA783D2008FAB0B /* MEOToast.m in Sources */,
@@ -1149,7 +1135,6 @@
 				9B3156401ACB764600611592 /* MEOTableDataSourceManager.m in Sources */,
 				9B3155FF1ACB764600611592 /* UIViewController+Enhanced.m in Sources */,
 				9B3155DF1ACB764600611592 /* NSDictionary+Enhanced.m in Sources */,
-				9B3155E91ACB764600611592 /* UIActionSheet+Blocks.m in Sources */,
 				9B3156091ACB764600611592 /* MEOCacheManager.m in Sources */,
 				9B9727B71BA9431A004158D6 /* MEOInstagramActivity.m in Sources */,
 				9BD4F5391ACE39E300535693 /* MEOActionSheet.m in Sources */,
@@ -1157,7 +1142,6 @@
 				9B3156011ACB764600611592 /* UIViewController+NavigationDrawer.m in Sources */,
 				9B3156381ACB764600611592 /* MyReachability.m in Sources */,
 				9B3155D51ACB764600611592 /* Categories.m in Sources */,
-				9B3155EB1ACB764600611592 /* UIAlertView+Blocks.m in Sources */,
 				9B3155E11ACB764600611592 /* NSMutableArray+Enhanced.m in Sources */,
 				9B31563E1ACB764600611592 /* MEOTableDataSource.m in Sources */,
 				9B3156341ACB764600611592 /* MEOSensor.m in Sources */,
