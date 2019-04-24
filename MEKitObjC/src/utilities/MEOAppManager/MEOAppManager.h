@@ -15,6 +15,8 @@
 +(NSString*)appScheme;
 
 +(BOOL)openApp:(NSString*)urlScheme;
++(BOOL)openApp:(NSString*)urlScheme completion:(void (^)(BOOL success))completion;
+
 +(BOOL)openMapsApp:(NSString*)target;
 
 @end

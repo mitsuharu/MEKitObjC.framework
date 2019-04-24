@@ -108,7 +108,9 @@
         }
         if (result) 
         {
-            managedObjectContext_ = [[NSManagedObjectContext alloc] init];
+            // NSMainQueueConcurrencyType
+            // NSPrivateQueueConcurrencyType
+            managedObjectContext_ = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSMainQueueConcurrencyType];
             [managedObjectContext_ setPersistentStoreCoordinator:persistentStoreCoordinator_];
         }        
     }

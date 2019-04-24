@@ -12,8 +12,8 @@
 @class MEOActionSheet;
 
 typedef void (^MEOActionSheetCompletion)(MEOActionSheet *actionSheet, NSInteger buttonIndex);
-typedef void (^MEOActionSheetShownCompletion)();
-typedef void (^MEOActionSheetRemovedCompletion)();
+typedef void (^MEOActionSheetShownCompletion)(void);
+typedef void (^MEOActionSheetRemovedCompletion)(void);
 
 @interface MEOActionSheet : NSObject
 

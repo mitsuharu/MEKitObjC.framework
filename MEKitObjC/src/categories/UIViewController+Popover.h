@@ -11,7 +11,7 @@
 #define POPOVER_ANIMATION_DURATION 0.25
 #define POPOVER_ANIMATION_DURATION_CLOSE 0.3
 
-typedef void (^MEOPopoverDidTapOutside)();
+typedef void (^MEOPopoverDidTapOutside)(void);
 
 
 @interface UIViewController (Popover)

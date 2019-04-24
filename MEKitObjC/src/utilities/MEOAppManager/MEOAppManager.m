@@ -16,12 +16,11 @@
 
 -(NSString*)encodeUrlString
 {
-    return (NSString *)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(
-                                                                                 NULL,
-                                                                                 (CFStringRef)self,
-                                                                                 NULL,
-                                                                                 (CFStringRef)@"!*'();:@&=+$,/?%#[]",
-                                                                                 kCFStringEncodingUTF8 ));
+    NSString *str = nil;
+    if ([self respondsToSelector:@selector(stringByAddingPercentEncodingWithAllowedCharacters:)]) {
+        str = [self stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet alphanumericCharacterSet]];
+    }
+    return str;
 }
 
 @end
@@ -107,15 +106,27 @@
     return name;
 }
 
-+(BOOL)openApp:(NSString*)urlScheme
++(BOOL)openApp:(NSString*)urlScheme {
+    return [MEOAppManager openApp:urlScheme completion:nil];
+}
+
++(BOOL)openApp:(NSString*)urlScheme completion:(void (^)(BOOL success))completion
 {
-    BOOL result = false;
     NSURL *url = [NSURL URLWithString:urlScheme];
     UIApplication *app = [UIApplication sharedApplication];
     if ([app canOpenURL:url]) {
-        result = [app openURL:url];
+        [app openURL:url options:@{} completionHandler:^(BOOL success) {
+            if (completion){
+                completion(success);
+            }
+        }];
+        return true;
+    }else{
+        if (completion){
+            completion(false);
+        }
+        return false;
     }
-    return result;
 }
 
 +(BOOL)openMapsApp:(NSString*)target
@@ -133,17 +144,17 @@
         NSString *prm0 = [NSString stringWithFormat:@"q=%@&zoom=14", [target encodeUrlString]];
         NSString *prm1 = xCallbackPrm;
         NSString *scheme = [NSString stringWithFormat:@"%@?%@&%@", gcScheme, prm0, prm1];
-        result = [app openURL:[NSURL URLWithString:scheme]];
+        result = [MEOAppManager openApp:scheme];
     }else if ([app canOpenURL:[NSURL URLWithString:gmScheme]])
     {
         NSString *prm0 = [NSString stringWithFormat:@"q=%@&zoom=14", [target encodeUrlString]];
         NSString *scheme = [NSString stringWithFormat:@"%@?%@", gmScheme, prm0];
-        result = [app openURL:[NSURL URLWithString:scheme]];
+        result = [MEOAppManager openApp:scheme];
     }else if ([app canOpenURL:[NSURL URLWithString:amScheme]])
     {
         NSString *prm0 = [NSString stringWithFormat:@"q=%@", [target encodeUrlString]];
         NSString *scheme = [NSString stringWithFormat:@"%@?%@", amScheme, prm0];
-        result = [app openURL:[NSURL URLWithString:scheme]];
+        result = [MEOAppManager openApp:scheme];
     }
     
     return result;

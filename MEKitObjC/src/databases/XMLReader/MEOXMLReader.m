@@ -88,14 +88,14 @@ NSString *const meoXMLReaderTextNodeKey = @"text";
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         
         // Clear out any old data
-        dictionaryStack_ = nil;
-        textInProgress_ = nil;
+        self->dictionaryStack_ = nil;
+        self->textInProgress_ = nil;
         
-        dictionaryStack_ = [[NSMutableArray alloc] init];
-        textInProgress_ = [[NSMutableString alloc] init];
+        self->dictionaryStack_ = [[NSMutableArray alloc] init];
+        self->textInProgress_ = [[NSMutableString alloc] init];
         
         // Initialize the stack with a fresh dictionary
-        [dictionaryStack_ addObject:[NSMutableDictionary dictionary]];
+        [self->dictionaryStack_ addObject:[NSMutableDictionary dictionary]];
         
         // Parse the XML
         NSXMLParser *parser = [[NSXMLParser alloc] initWithData:data];
@@ -106,10 +106,10 @@ NSString *const meoXMLReaderTextNodeKey = @"text";
             
             NSDictionary *dict = nil;
             if (success){
-                dict = [dictionaryStack_ objectAtIndex:0];
+                dict = [self->dictionaryStack_ objectAtIndex:0];
             }
-            if (delegate_ && [delegate_ respondsToSelector:@selector(xmlReader:parsed:)]) {
-                [delegate_ xmlReader:self parsed:dict];
+            if (self->delegate_ && [self->delegate_ respondsToSelector:@selector(xmlReader:parsed:)]) {
+                [self->delegate_ xmlReader:self parsed:dict];
             }
             if (completion) {
                 completion(dict);

@@ -41,16 +41,8 @@
 
 - (NSInteger)age
 {
-    NSCalendarUnit unit;
-    float version = [[[UIDevice currentDevice] systemVersion] floatValue];
-    if(version >= 8.0){
-        unit = NSCalendarUnitYear;
-    }else{
-        unit = NSYearCalendarUnit;
-    }
-    
     NSCalendar *cal = [NSCalendar currentCalendar];
-    NSDateComponents *def = [cal components:unit
+    NSDateComponents *def = [cal components:NSCalendarUnitYear
                                    fromDate:self
                                      toDate:[NSDate date]
                                     options:0];

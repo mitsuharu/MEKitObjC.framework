@@ -200,23 +200,23 @@ static BOOL hideTabBarTemporally = NO;
 
 @implementation UITabBarController (Extension)
 
--(void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
-                               duration:(NSTimeInterval)duration
-{
-    if (self.tabBar.hidden) {
-        showTabBarTemporally = YES;
-        [self tabBarHidden:NO animated:NO];
-    }
+- (void)viewWillTransitionToSize:(CGSize)size
+        withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator{
+    
+    [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext>  _Nonnull context) {
+        if (self.tabBar.hidden) {
+            showTabBarTemporally = YES;
+            [self tabBarHidden:NO animated:NO];
+        }
+    } completion:^(id<UIViewControllerTransitionCoordinatorContext>  _Nonnull context) {
+        if (showTabBarTemporally) {
+            showTabBarTemporally = NO;
+            [self tabBarHidden:YES animated:NO];
+        }
+    }];
+    
+    [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
 }
-
--(void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
-{
-    if (showTabBarTemporally) {
-        showTabBarTemporally = NO;
-        [self tabBarHidden:YES animated:NO];
-    }
-}
-
 
 -(void)willTransitionToTraitCollection:(UITraitCollection *)newCollection
              withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator
