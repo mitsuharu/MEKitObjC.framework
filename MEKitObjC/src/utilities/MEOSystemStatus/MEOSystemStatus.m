@@ -198,7 +198,8 @@ const NSString*  NotificationNetworkBecomeFailure = @"NotificationNetworkBecomeF
     // 4xx: request error
     // 5xx: server error
     
-    NSInteger code = -1;
+    __block NSInteger code = -1;
+    __block NSError *tempError = nil;
 
     if ([self reachabile] == NO)
     {
@@ -210,17 +211,28 @@ const NSString*  NotificationNetworkBecomeFailure = @"NotificationNetworkBecomeF
         return code;
     }
     
+    dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
+    
     NSURLRequest *urlRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:url]];
-    NSHTTPURLResponse *response = nil;
-    NSError *err = nil;
-    NSData *responseData = [NSURLConnection sendSynchronousRequest:urlRequest
-                                                 returningResponse:&response
-                                                             error:&err];
-    code = [response statusCode];
-    if (error) {
-        *error = err;
+    NSURLSessionConfiguration *config = [NSURLSessionConfiguration ephemeralSessionConfiguration];
+    NSURLSession *session = [NSURLSession sessionWithConfiguration:config];
+    NSURLSessionDataTask *task = [session dataTaskWithRequest:urlRequest completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable err) {
+        if (err) {
+            tempError = err;
+            dispatch_semaphore_signal(semaphore);
+            return;
+        }
+        NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
+        code = httpResponse.statusCode;
+        dispatch_semaphore_signal(semaphore);
+    }];
+    [task resume];
+    
+    dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);
+    
+    if (error && tempError){
+        *error = tempError;
     }
-    responseData = nil;
     
     return code;
 }

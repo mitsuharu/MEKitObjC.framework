@@ -166,15 +166,7 @@ NSString *meo_localizedString(NSString *key)
     NSString *str = nil;
     if ([self respondsToSelector:@selector(stringByAddingPercentEncodingWithAllowedCharacters:)]) {
         str = [self stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet alphanumericCharacterSet]];
-    }else{
-        str = (NSString *)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(
-                                                                                    NULL,
-                                                                                    (CFStringRef)self,
-                                                                                    NULL,
-                                                                                    (CFStringRef)@"!*'();:@&=+$,/?%#[]",
-                                                                                    kCFStringEncodingUTF8 ));
     }
-    
     return str;
 }
 
@@ -183,13 +175,7 @@ NSString *meo_localizedString(NSString *key)
     NSString *str = nil;
     if ([self respondsToSelector:@selector(stringByRemovingPercentEncoding)]) {
         str = [self stringByRemovingPercentEncoding];
-    }else{
-        str = (NSString *) CFBridgingRelease(CFURLCreateStringByReplacingPercentEscapesUsingEncoding(NULL,
-                                                                                                     (CFStringRef)self,
-                                                                                                     CFSTR(""),
-                                                                                                     kCFStringEncodingUTF8));
     }
-    
     return str;
 }
 

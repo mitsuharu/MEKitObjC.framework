@@ -16,12 +16,11 @@
 
 -(NSString*)encodeUrlString
 {
-    return (NSString *)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(
-                                                                                 NULL,
-                                                                                 (CFStringRef)self,
-                                                                                 NULL,
-                                                                                 (CFStringRef)@"!*'();:@&=+$,/?%#[]",
-                                                                                 kCFStringEncodingUTF8 ));
+    NSString *str = nil;
+    if ([self respondsToSelector:@selector(stringByAddingPercentEncodingWithAllowedCharacters:)]) {
+        str = [self stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet alphanumericCharacterSet]];
+    }
+    return str;
 }
 
 @end
@@ -107,15 +106,27 @@
     return name;
 }
 
-+(BOOL)openApp:(NSString*)urlScheme
++(BOOL)openApp:(NSString*)urlScheme {
+    return [MEOAppManager openApp:urlScheme completion:nil];
+}
+
++(BOOL)openApp:(NSString*)urlScheme completion:(void (^)(BOOL success))completion
 {
-    BOOL result = false;
     NSURL *url = [NSURL URLWithString:urlScheme];
     UIApplication *app = [UIApplication sharedApplication];
     if ([app canOpenURL:url]) {
-        result = [app openURL:url];
+        [app openURL:url options:@{} completionHandler:^(BOOL success) {
+            if (completion){
+                completion(success);
+            }
+        }];
+        return true;
+    }else{
+        if (completion){
+            completion(false);
+        }
+        return false;
     }
-    return result;
 }
 
 +(BOOL)openMapsApp:(NSString*)target

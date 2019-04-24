@@ -1,6 +1,6 @@
 # MEKit
 
-- iOS7 and later
+- iOS 10 and later
 
 ## install
 

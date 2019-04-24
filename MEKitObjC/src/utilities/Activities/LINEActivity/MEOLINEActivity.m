@@ -70,7 +70,10 @@ NSString *const MEOActivityTypeLINE = @"jp.naver.LINEActivity";
 
 - (void)openLINEOnITunes
 {
-    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"https://itunes.apple.com/jp/app/line/id443904275?ls=1&mt=8"]];
+    NSURL *url = [NSURL URLWithString:@"https://itunes.apple.com/jp/app/line/id443904275?ls=1&mt=8"];
+    [[UIApplication sharedApplication] openURL:url
+                                       options:@{}
+                             completionHandler:nil];
 }
 
 - (BOOL)openLINEWithItem:(id)item
@@ -82,7 +85,8 @@ NSString *const MEOActivityTypeLINE = @"jp.naver.LINEActivity";
     
     NSString *LINEURLString = nil;
     if ([item isKindOfClass:[NSString class]]) {
-		item = [(NSString *)item stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+        NSCharacterSet *chars = [NSCharacterSet alphanumericCharacterSet];
+        item = [(NSString*)item stringByAddingPercentEncodingWithAllowedCharacters:chars];
         LINEURLString = [NSString stringWithFormat:@"line://msg/text/%@", item];
     } else if ([item isKindOfClass:[UIImage class]]) {
         UIPasteboard *pasteboard =  [UIPasteboard generalPasteboard];
@@ -94,7 +98,7 @@ NSString *const MEOActivityTypeLINE = @"jp.naver.LINEActivity";
     }
     
     NSURL *LINEURL = [NSURL URLWithString:LINEURLString];
-    [[UIApplication sharedApplication] openURL:LINEURL];
+    [[UIApplication sharedApplication] openURL:LINEURL options:@{} completionHandler:nil];
     return YES;
 }
 

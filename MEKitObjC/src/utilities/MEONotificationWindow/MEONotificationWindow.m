@@ -189,11 +189,11 @@ static NSMutableArray *notificationContentArray_ = nil;
     
     [UIView animateWithDuration:interval
                      animations:^{
-                         notificationView_.alpha = 1.0;
-                         notificationView_.layer.transform = CATransform3DIdentity;
+                         self->notificationView_.alpha = 1.0;
+                         self->notificationView_.layer.transform = CATransform3DIdentity;
                      }
                      completion:^(BOOL finished) {
-                         isVisible_ = YES;
+                         self->isVisible_ = YES;
                          
                          if (completion) {
                              completion();
@@ -232,11 +232,11 @@ static NSMutableArray *notificationContentArray_ = nil;
         
         [UIView animateWithDuration:interval
                          animations:^{
-                             notificationView_.layer.transform = transform;
-                             notificationView_.alpha = 0.0;
+                             self->notificationView_.layer.transform = transform;
+                             self->notificationView_.alpha = 0.0;
                          }
                          completion:^(BOOL finished) {
-                             notificationView_.layer.transform = CATransform3DIdentity;
+                             self->notificationView_.layer.transform = CATransform3DIdentity;
                              
                              NSArray *windows = [[UIApplication sharedApplication] windows];
                              for (UIWindow *window in windows) {
@@ -254,7 +254,7 @@ static NSMutableArray *notificationContentArray_ = nil;
                                  [window makeKeyAndVisible];
                              }
                              
-                             isVisible_ = NO;
+                             self->isVisible_ = NO;
                              isRemoving = false;
                              
                              if (completion) {

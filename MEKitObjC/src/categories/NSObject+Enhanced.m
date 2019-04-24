@@ -300,7 +300,7 @@ NSString *const kKeyboardAccessoryLeftButtonCompletion = @"kKeyboardAccessoryLef
         method_exchangeImplementations(from_m, to_m);
     }else{
         IMP imp = method_getImplementation(to_m);
-        void (^block)() = ^{};
+        void (^block)(void) = ^{};
         imp = imp_implementationWithBlock(block);
         const char *type = method_getTypeEncoding(to_m);
         class_addMethod([self class], method1, imp, type);

@@ -13,8 +13,8 @@
 @class MEOAlertView;
 
 typedef void (^MEOAlertViewCompletion)(MEOAlertView *alertView, NSInteger buttonIndex);
-typedef void (^MEOAlertViewShownCompletion)();
-typedef void (^MEOAlertViewRemovedCompletion)();
+typedef void (^MEOAlertViewShownCompletion)(void);
+typedef void (^MEOAlertViewRemovedCompletion)(void);
 
 @interface MEOAlertView : NSObject
 

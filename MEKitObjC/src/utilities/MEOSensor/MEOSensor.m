@@ -142,26 +142,26 @@ void MEOSensorDataInit(MEOSensorData s){
         {
             static CMAcceleration pAcceleration;
             
-            sensorData_.timestamp = accelerometerData.timestamp;
-            if (CMAccelerationIsEqual(sensorData_.acceleration, CMAccelerationMake(0, 0, 0))) {
-                sensorData_.acceleration = accelerometerData.acceleration;
+            self->sensorData_.timestamp = accelerometerData.timestamp;
+            if (CMAccelerationIsEqual(self->sensorData_.acceleration, CMAccelerationMake(0, 0, 0))) {
+                self->sensorData_.acceleration = accelerometerData.acceleration;
                 pAcceleration = CMAccelerationMake(0, 0, 0);
-                forceData_.previous = CMAccelerationLpf(sensorData_.acceleration);
+                self->forceData_.previous = CMAccelerationLpf(self->sensorData_.acceleration);
             }else{
-                sensorData_.acceleration = CMAccelerationLowpassFilter(sensorData_.acceleration,
+                self->sensorData_.acceleration = CMAccelerationLowpassFilter(self->sensorData_.acceleration,
                                                                        pAcceleration,
                                                                        kFilteringFactor);
-                forceData_.current = CMAccelerationLpf(sensorData_.acceleration);
+                self->forceData_.current = CMAccelerationLpf(self->sensorData_.acceleration);
             }
             
             if (comletion) {
                 comletion(self, true);
             }
-            if (delegate_ && [delegate_ respondsToSelector:@selector(measuredAccelerometer:completion:)]) {
-                [delegate_ measuredAccelerometer:self completion:YES];
+            if (self->delegate_ && [self->delegate_ respondsToSelector:@selector(measuredAccelerometer:completion:)]) {
+                [self->delegate_ measuredAccelerometer:self completion:YES];
             }
             
-            MEOForceDataUpdate(forceData_);
+            MEOForceDataUpdate(self->forceData_);
         };
         
         [motionManager_ startAccelerometerUpdatesToQueue:[NSOperationQueue currentQueue]
